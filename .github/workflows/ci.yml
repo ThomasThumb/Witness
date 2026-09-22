@@ -56,6 +56,9 @@ jobs:
           .\target\release\witness.exe verify $b.FullName
           if ($LASTEXITCODE -eq 0) { throw 'edited bundle verified OK; that is a bug' }
           "tamper correctly rejected (exit $LASTEXITCODE)"
+          # GitHub's pwsh wrapper ends every step with `exit $LASTEXITCODE`, which
+          # would report the rejection we just wanted as a failure. Say otherwise.
+          exit 0
       - name: witness.log
         if: always()
         shell: pwsh
