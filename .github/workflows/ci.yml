@@ -32,22 +32,29 @@ jobs:
       - name: smoke
         shell: pwsh
         run: |
-          .\target\release\witness.exe check
-          .\target\release\witness.exe fingerprint
-          .\target\release\witness.exe selftest
+          # PowerShell 7.4 turns any non-zero native exit into a terminating error;
+          # one of these commands is *supposed* to fail, so judge exit codes by hand.
+          $PSNativeCommandUseErrorActionPreference = $false
+          $w = '.\target\release\witness.exe'
+          & $w check;       if ($LASTEXITCODE) { throw "check exit $LASTEXITCODE" }
+          & $w fingerprint; if ($LASTEXITCODE) { throw "fingerprint exit $LASTEXITCODE" }
+          & $w selftest;    if ($LASTEXITCODE) { throw "selftest exit $LASTEXITCODE" }
           $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -First 1
-          .\target\release\witness.exe verify $b.FullName
+          if (-not $b) { throw 'selftest wrote no bundle' }
+          & $w verify $b.FullName; if ($LASTEXITCODE) { throw "verify exit $LASTEXITCODE" }
           Add-Content -Path (Join-Path $b.FullName 'report.html') -Value '<!-- edited -->'
-          if ((& .\target\release\witness.exe verify $b.FullName; $LASTEXITCODE) -eq 0) { throw 'edited bundle must fail verification' }
+          & $w verify $b.FullName
+          if ($LASTEXITCODE -eq 0) { throw 'edited bundle verified OK; that is a bug' }
+          "tamper correctly rejected (exit $LASTEXITCODE)"
 
   supply-chain:
-    name: deny + audit
+    name: cargo-deny (advisories, bans, licences, sources)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Covers the RustSec advisory DB too, so no separate audit action (which
+      # would need `checks: write`; this workflow stays read-only).
       - uses: EmbarkStudios/cargo-deny-action@v2
-      - uses: rustsec/audit-check@v2
-        with: { token: "${{ secrets.GITHUB_TOKEN }}" }
 
   unsafe-inventory:
     name: unsafe stays where it belongs
