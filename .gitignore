@@ -1,0 +1,8 @@
+/target
+/target-repro-*
+/.cargo-home
+*.tmp
+/phase2-results
+/phase4-results
+/tests/triggers/*.exe
+/tests/triggers/*.obj

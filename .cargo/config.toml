@@ -1,0 +1,13 @@
+# Self-hardening. Witness watches for exploit mitigations firing;
+# it had better be running with all of them on itself.
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+  "-C", "control-flow-guard=yes",
+  "-C", "link-args=/CETCOMPAT /DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800",
+]
+
+[target.aarch64-pc-windows-msvc]
+rustflags = [
+  "-C", "control-flow-guard=yes",
+  "-C", "link-args=/DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800",
+]

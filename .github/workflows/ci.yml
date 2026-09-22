@@ -1,0 +1,80 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: core (linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { components: "rustfmt, clippy" }
+      - run: cargo fmt --all --check
+      - run: cargo clippy -p witness-core --all-targets --locked -- -D warnings
+      - run: cargo test -p witness-core --locked
+
+  windows:
+    name: windows binary
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { components: "clippy" }
+      - run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - run: cargo test --workspace --locked
+      - run: cargo build --release --locked -p witness-win
+      - name: smoke
+        shell: pwsh
+        run: |
+          .\target\release\witness.exe check
+          .\target\release\witness.exe fingerprint
+          .\target\release\witness.exe selftest
+          $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -First 1
+          .\target\release\witness.exe verify $b.FullName
+          Add-Content -Path (Join-Path $b.FullName 'report.html') -Value '<!-- edited -->'
+          if ((& .\target\release\witness.exe verify $b.FullName; $LASTEXITCODE) -eq 0) { throw 'edited bundle must fail verification' }
+
+  supply-chain:
+    name: deny + audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+      - uses: rustsec/audit-check@v2
+        with: { token: "${{ secrets.GITHUB_TOKEN }}" }
+
+  unsafe-inventory:
+    name: unsafe stays where it belongs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: core must contain no unsafe
+        run: "! grep -rn 'unsafe' crates/witness-core/src --include='*.rs' | grep -v -E 'forbid|unsafe-inline'"
+      - name: windows unsafe is confined to four files
+        run: |
+          set -e
+          bad=$(grep -rln 'unsafe' crates/witness-win/src --include='*.rs' | grep -v -E 'eventlog.rs|keys.rs|harden.rs|notify.rs' || true)
+          if [ -n "$bad" ]; then echo "unsafe in unexpected file(s): $bad"; exit 1; fi
+
+  fuzz-smoke:
+    name: fuzz (60 s per target, nightly)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+      - run: cargo install cargo-fuzz --locked
+      - run: cargo +nightly fuzz run winevt_parse -- -max_total_time=60
+      - run: cargo +nightly fuzz run rules_parse -- -max_total_time=60
+
+  contacts-fresh:
+    name: contacts checked within 6 months
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_contacts.py rules/contacts.toml

@@ -1,0 +1,264 @@
+# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text, the rule doesn't ship.
+#
+# Event IDs for the Security-Mitigations channels follow Microsoft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACG   3/4 child process   5/6 low-integrity image   7/8 remote image
+#   9/10 win32k   11/12 CIG   13/14 EAF   15/16 EAF+   17/18 IAF
+#   19/20 ROP StackPivot   21/22 ROP CallerCheck   23/24 ROP SimExec
+# Kernel-enforced mitigations (ACG, image-load, CIG, child process) write to
+# the KernelMode channel; the EMET-heritage ones (EAF/IAF/ROP, enforced in
+# user mode by PayloadRestrictions.dll) write to UserMode. VERIFY against a
+# live machine before changing (BUILD_PLAN.md phase 2, step 4) and record the
+# result in tests/triggers/README.md.
+#
+# Process names in process_any MUST be lower-case basenames.
+
+# ---- Hardware-enforced stack protection / fast-fail -------------------------
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 1000 arrives with named fields (AppPath, ExceptionCode); the parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. Raised by /GS cookie failures,
+# CET shadow-stack violations and __fastfail(). All three mean "memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked break-in attempt looks like from the outside. Witness cannot tell the difference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Do not uninstall the app or 'clean' the computer yet. That destroys evidence.",
+  "Note what you were doing: had you just received a message, file, link or call from someone you don't know?",
+  "If it happens again with the same app within a few days, treat it as serious.",
+  "If you are a journalist, lawyer, activist, or work with people who are, contact one of the helplines below. It is free and they will not think you are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happening, or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit events (odd IDs) are noise unless you are tuning.
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): events 2 (ACG) and
+# 8 (remote image) carry only the calling process, not the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Code Guard. It is also the step almost every memory-corruption exploit needs. Look at which program it was."
+what_to_do = [
+  "Check the process name in this report. If it is an app you deliberately protected with Exploit Protection and it is known not to work with ACG, that is the cause.",
+  "If it is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a program from loading code from an untrusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected program tried to load a code library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the evidence folder and contact a helpline or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 11 26200: Chromium browsers (Brave observed; Chrome and
+# Edge use the same sandbox) turn CIG on for their own GPU/renderer processes
+# and are then refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. This is recorded in witness.log in case a technical helper wants to see it."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage, user-mode enforced (UserMode) -------
+# These are only active for programs the user (or a helper) explicitly opted
+# in through Exploit Protection. They have few innocent triggers.
+
+[[rule]]
+id = "eaf-block"
+title = "Windows blocked a program from reading its own address book"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 14
+[rule.triage]
+what_happened = "Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs do not, and stopped it."
+what_it_might_mean = "This is a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does."
+what_to_do = [
+  "Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.",
+  "Keep the evidence folder. Contact a helpline below today.",
+]
+
+[[rule]]
+id = "iaf-block"
+title = "Windows blocked a program from reading its own address book"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 18
+[rule.triage]
+what_happened = "Windows' Import Address Filtering caught a program reading the table of functions it imports in a way normal programs do not, and stopped it."
+what_it_might_mean = "Like Export Address Filtering above: a classic exploit step with few innocent causes."
+what_to_do = [
+  "Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.",
+  "Keep the evidence folder. Contact a helpline below today.",
+]
+
+[[rule]]
+id = "rop-stackpivot-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 20
+[rule.triage]
+what_happened = "Windows' exploit protection detected a program's control flow being hijacked in a way that has no ordinary explanation, and stopped it."
+what_it_might_mean = "This specific check (stack pivot detection) has very few innocent causes. It is not proof of an attack, but it is the closest thing on this list."
+what_to_do = [
+  "Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.",
+  "Keep the evidence folder. Contact a helpline below today.",
+  "If you are a journalist, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 22
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in."
+what_to_do = [
+  "Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.",
+  "Keep the evidence folder. Contact a helpline below today.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules above. Rarely innocent."
+what_to_do = [
+  "Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.",
+  "Keep the evidence folder. Contact a helpline below today.",
+]

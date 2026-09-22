@@ -1,0 +1,27 @@
+[package]
+name = "witness-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+witness-core = { path = "../crates/witness-core" }
+
+# Not a workspace member: cargo-fuzz needs nightly and its own profile settings.
+[workspace]
+
+[[bin]]
+name = "winevt_parse"
+path = "fuzz_targets/winevt_parse.rs"
+test = false
+doc = false
+
+[[bin]]
+name = "rules_parse"
+path = "fuzz_targets/rules_parse.rs"
+test = false
+doc = false

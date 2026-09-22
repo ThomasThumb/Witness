@@ -1,0 +1,28 @@
+[package]
+name = "witness-core"
+description = "Platform-independent rules engine, evidence bundling and signing for Witness."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+# Every dependency here is attack surface and audit burden. Justify additions in the PR.
+serde = { version = "1", features = ["derive"] }   # event.json / manifest.json / rules
+serde_json = "1"                                    # manifest + event serialisation
+toml = "0.8"                                        # rules and contacts files
+blake3 = "1"                                        # per-file hashes, key fingerprint
+# Pure-Rust ML-DSA (FIPS 204 final) from RustCrypto. Pinned exactly: pre-1.0,
+# re-review the diff on every bump. `zeroize` wipes the seed/expanded key on drop.
+ml-dsa = { version = "=0.1.1", default-features = false, features = ["alloc", "zeroize"] }
+getrandom = "0.3"                                   # 32-byte seed on first run, nothing else
+hex = "0.4"                                         # manifest hashes as text
+roxmltree = "0.20"                                  # Event Log XML; no DTD, no entities, no network
+
+[dev-dependencies]
+tempfile = "3"
+proptest = "1"

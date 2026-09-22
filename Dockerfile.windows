@@ -1,0 +1,31 @@
+# escape=`
+# Second, independent build machine for BUILD_PLAN.md phase 4: a Windows
+# container with nothing on it but the pinned toolchain. scripts\reproduce.ps1
+# builds witness.exe here and on the host from the same path and compares
+# SHA-256. If the two differ, something about the environment leaks into the
+# binary and a release must not go out until it is found.
+#
+# Build once (downloads VS Build Tools; expect 20-40 minutes and ~8 GB):
+#   docker build -f Dockerfile.windows -t witness-build .
+# Docker Desktop must be in "Windows containers" mode.
+FROM mcr.microsoft.com/windows/servercore:ltsc2022
+SHELL ["cmd", "/S", "/C"]
+
+# MSVC linker + Windows SDK. Exit code 3010 means "installed, reboot wanted"; fine in a container.
+ADD https://aka.ms/vs/17/release/vs_buildtools.exe C:\TEMP\vs_buildtools.exe
+RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
+      --installPath C:\BuildTools `
+      --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended `
+    || IF "%ERRORLEVEL%"=="3010" EXIT 0
+
+# Exactly the toolchain rust-toolchain.toml pins. Nothing else.
+ADD https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe C:\TEMP\rustup-init.exe
+RUN C:\TEMP\rustup-init.exe -y --no-modify-path --profile minimal `
+      --default-toolchain 1.95.0-x86_64-pc-windows-msvc `
+    && del C:\TEMP\rustup-init.exe C:\TEMP\vs_buildtools.exe
+ENV PATH="C:\Users\ContainerAdministrator\.cargo\bin;C:\Windows\system32;C:\Windows"
+
+# The source is mounted at C:\src by reproduce.ps1 and mapped to W:\ so both
+# machines compile from an identical absolute path (rustc embeds source paths).
+WORKDIR C:\src
+ENTRYPOINT ["cmd", "/S", "/C", "subst W: C:\\src && W: && call C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat -arch=amd64 -no_logo && cargo build --release --locked --offline -p witness-win --target-dir W:\\target-repro-container"]

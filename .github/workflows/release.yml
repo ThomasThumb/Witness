@@ -1,0 +1,62 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  id-token: write      # Sigstore keyless signing + provenance attestation
+  attestations: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        target: [x86_64-pc-windows-msvc, aarch64-pc-windows-msvc]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: "${{ matrix.target }}" }
+      - run: cargo build --release --locked -p witness-win --target ${{ matrix.target }}
+      - run: cargo install cargo-cyclonedx --locked
+      - run: cargo cyclonedx --format json --override-filename sbom-${{ matrix.target }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: witness-${{ matrix.target }}
+          path: |
+            target/${{ matrix.target }}/release/witness.exe
+            sbom-${{ matrix.target }}.json
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: dist }
+      - name: rename and hash
+        run: |
+          set -e
+          cd dist
+          for d in witness-*; do
+            mv "$d/witness.exe" "$d.exe"; mv "$d"/sbom-*.json "sbom-$d.json"; rmdir "$d"
+          done
+          sha256sum * > SHA256SUMS
+      - uses: sigstore/cosign-installer@v3
+      - name: keyless sign every artifact
+        run: |
+          cd dist
+          for f in *; do cosign sign-blob --yes --bundle "$f.sigstore" "$f"; done
+      - uses: actions/attest-build-provenance@v2
+        with: { subject-path: "dist/*.exe" }
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body: |
+            Verify before running:
+              cosign verify-blob --bundle witness-x86_64-pc-windows-msvc.exe.sigstore \
+                --certificate-identity-regexp 'github.com/thomasthumb/witness' \
+                --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+                witness-x86_64-pc-windows-msvc.exe
+              gh attestation verify witness-x86_64-pc-windows-msvc.exe --repo thomasthumb/witness
+            Authenticode signing via SignPath is added in Phase 4 (BUILD_PLAN.md).

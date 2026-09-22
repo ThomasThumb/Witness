@@ -1,0 +1,33 @@
+[package]
+name = "witness-win"
+description = "Witness for Windows: watches exploit-mitigation events, explains them, keeps evidence."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[[bin]]
+name = "witness"
+path = "src/main.rs"
+
+[dependencies]
+witness-core = { version = "0.1.0", path = "../witness-core" }
+serde = { version = "1", features = ["derive"] }   # contacts.toml
+toml = "0.8"                                        # contacts.toml
+zeroize = "1"                                       # wipe the seed after key derivation (already in tree via ml-dsa)
+# Toast notifications. Small, no network, WinRT only.
+tauri-winrt-notification = "0.7"
+# All OS access goes through the official Microsoft bindings. Only the
+# features we use; each one is a line in DESIGN.md.
+[dependencies.windows]
+version = "0.61"
+features = [
+  "Win32_Foundation",               # HLOCAL / LocalFree for DPAPI output
+  "Win32_System_EventLog",          # EvtSubscribe / EvtRender
+  "Win32_System_Threading",         # SetProcessMitigationPolicy (self-hardening)
+  "Win32_System_SystemServices",    # PROCESS_MITIGATION_*_POLICY structs
+  "Win32_Security_Cryptography",    # CryptProtectData / CryptUnprotectData
+  "Win32_UI_Shell",                 # ShellExecuteW to open the report
+  "Win32_UI_WindowsAndMessaging",   # SW_SHOWNORMAL
+]

@@ -1,0 +1,24 @@
+[workspace]
+resolver = "2"
+members = ["crates/witness-core", "crates/witness-win"]
+# `cargo test` / `cargo clippy` with no `-p` builds only the portable core, so
+# the security-relevant logic is checked on any OS. Build the binary explicitly
+# on Windows: `cargo build --release -p witness-win`.
+default-members = ["crates/witness-core"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/thomasthumb/witness"
+rust-version = "1.85"
+
+# Release profile tuned for auditability and hardening, not speed.
+[profile.release]
+opt-level = 2
+debug = false
+strip = "symbols"
+lto = "thin"
+codegen-units = 1
+panic = "abort"       # No unwinding into unknown states after a fault.
+overflow-checks = true # Arithmetic overflow is a bug; make it loud.

@@ -1,0 +1,35 @@
+# Who to call. Shown for severity "look" and "urgent".
+# Keep this short. A frightened person will not read twelve options.
+# Addresses are shown as text on purpose: the user should type them, not click.
+# Check each one still exists before every release and update `checked`
+# (YYYY-MM). CI fails when any entry is older than six months.
+
+[[contact]]
+name = "Access Now Digital Security Helpline"
+for_whom = "journalists, activists, human-rights defenders, and civil society; 24/7, free, multilingual"
+how = "accessnow.org/help"
+checked = "2026-09"
+
+[[contact]]
+name = "Amnesty International Security Lab"
+for_whom = "people who believe they were targeted with spyware"
+how = "securitylab.amnesty.org"
+checked = "2026-09"
+
+[[contact]]
+name = "Citizen Lab (University of Toronto)"
+for_whom = "journalists and civil society targeted by governments"
+how = "citizenlab.ca"
+checked = "2026-09"
+
+[[contact]]
+name = "Freedom of the Press Foundation Digital Security"
+for_whom = "journalists and newsrooms"
+how = "freedom.press/digisec"
+checked = "2026-09"
+
+[[contact]]
+name = "Australian Cyber Security Centre (ACSC) hotline"
+for_whom = "anyone in Australia"
+how = "1300 CYBER1 (1300 292 371) or cyber.gov.au"
+checked = "2026-09"

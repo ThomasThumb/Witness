@@ -1,0 +1,6 @@
+# Pin before the first tagged release (BUILD_PLAN.md phase 4): reproducible
+# builds need an exact toolchain. Keep in step with the version CI uses.
+[toolchain]
+channel = "1.95.0"
+profile = "minimal"
+components = ["rustfmt", "clippy"]
