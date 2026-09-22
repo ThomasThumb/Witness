@@ -29,23 +29,37 @@ jobs:
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - run: cargo test --workspace --locked
       - run: cargo build --release --locked -p witness-win
-      - name: smoke
+      # One step per command so a failure is visible from the job's step list
+      # alone. pwsh 7.4 fails a step on any non-zero native exit; the tamper
+      # step expects one, so it reads $LASTEXITCODE by hand.
+      - name: smoke check
+        shell: pwsh
+        run: .\target\release\witness.exe check
+      - name: smoke fingerprint
+        shell: pwsh
+        run: .\target\release\witness.exe fingerprint
+      - name: smoke selftest
+        shell: pwsh
+        run: .\target\release\witness.exe selftest
+      - name: smoke verify
         shell: pwsh
         run: |
-          # PowerShell 7.4 turns any non-zero native exit into a terminating error;
-          # one of these commands is *supposed* to fail, so judge exit codes by hand.
-          $PSNativeCommandUseErrorActionPreference = $false
-          $w = '.\target\release\witness.exe'
-          & $w check;       if ($LASTEXITCODE) { throw "check exit $LASTEXITCODE" }
-          & $w fingerprint; if ($LASTEXITCODE) { throw "fingerprint exit $LASTEXITCODE" }
-          & $w selftest;    if ($LASTEXITCODE) { throw "selftest exit $LASTEXITCODE" }
           $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -First 1
           if (-not $b) { throw 'selftest wrote no bundle' }
-          & $w verify $b.FullName; if ($LASTEXITCODE) { throw "verify exit $LASTEXITCODE" }
+          .\target\release\witness.exe verify $b.FullName
+      - name: smoke tamper is rejected
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $false
+          $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -First 1
           Add-Content -Path (Join-Path $b.FullName 'report.html') -Value '<!-- edited -->'
-          & $w verify $b.FullName
+          .\target\release\witness.exe verify $b.FullName
           if ($LASTEXITCODE -eq 0) { throw 'edited bundle verified OK; that is a bug' }
           "tamper correctly rejected (exit $LASTEXITCODE)"
+      - name: witness.log
+        if: always()
+        shell: pwsh
+        run: Get-Content "$env:LOCALAPPDATA\Witness\witness.log" -ErrorAction SilentlyContinue
 
   supply-chain:
     name: cargo-deny (advisories, bans, licences, sources)
