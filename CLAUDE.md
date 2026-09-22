@@ -44,7 +44,7 @@ Brave false positive, now the `cig-self-bundled` rule). Not yet fired: 4, 6
 run), and the UserMode family 14–24 (no triggers, on purpose: whether a
 public repo should carry them is the maintainer's call).
 
-Repository: `github.com/thomasthumb/witness`. Not yet pushed; CI has never run.
+Repository: `github.com/ThomasThumb/Witness`. First push pending; CI has never run.
 
 ## How to work here
 

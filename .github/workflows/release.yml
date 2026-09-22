@@ -55,8 +55,8 @@ jobs:
           body: |
             Verify before running:
               cosign verify-blob --bundle witness-x86_64-pc-windows-msvc.exe.sigstore \
-                --certificate-identity-regexp 'github.com/thomasthumb/witness' \
+                --certificate-identity-regexp 'github.com/ThomasThumb/Witness' \
                 --certificate-oidc-issuer https://token.actions.githubusercontent.com \
                 witness-x86_64-pc-windows-msvc.exe
-              gh attestation verify witness-x86_64-pc-windows-msvc.exe --repo thomasthumb/witness
+              gh attestation verify witness-x86_64-pc-windows-msvc.exe --repo ThomasThumb/Witness
             Authenticode signing via SignPath is added in Phase 4 (BUILD_PLAN.md).

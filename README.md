@@ -1,6 +1,6 @@
 # Witness
 
-[![ci](https://github.com/thomasthumb/witness/actions/workflows/ci.yml/badge.svg)](https://github.com/thomasthumb/witness/actions/workflows/ci.yml)
+[![ci](https://github.com/ThomasThumb/Witness/actions/workflows/ci.yml/badge.svg)](https://github.com/ThomasThumb/Witness/actions/workflows/ci.yml)
 ![no network](https://img.shields.io/badge/network-none-2b2b2b)
 ![signatures](https://img.shields.io/badge/evidence%20signed-ML--DSA--87-2b2b2b)
 ![licence](https://img.shields.io/badge/licence-MIT%20or%20Apache--2.0-2b2b2b)
