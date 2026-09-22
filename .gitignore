@@ -6,3 +6,5 @@
 /phase4-results
 /tests/triggers/*.exe
 /tests/triggers/*.obj
+desktop.ini
+Thumbs.db
