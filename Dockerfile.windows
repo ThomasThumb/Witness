@@ -1,9 +1,14 @@
 # escape=`
 # Second, independent build machine for BUILD_PLAN.md phase 4: a Windows
 # container with nothing on it but the pinned toolchain. scripts\reproduce.ps1
-# builds witness.exe here and on the host from the same path and compares
-# SHA-256. If the two differ, something about the environment leaks into the
-# binary and a release must not go out until it is found.
+# runs scripts\build-release.ps1 here and on the host and compares SHA-256.
+# If the two differ, something about the environment leaks into the binary
+# and a release must not go out until it is found.
+#
+# The MSVC linker and C runtime objects end up inside witness.exe, so the
+# Build Tools here must match the host's. The bootstrapper below installs the
+# current VS 2022 (17.x) servicing release; each side's build-info.txt lists
+# the MSVC build numbers in its binary, so a mismatch is visible, not a mystery.
 #
 # Build once (downloads VS Build Tools; expect 20-40 minutes and ~8 GB):
 #   docker build -f Dockerfile.windows -t witness-build .
@@ -18,14 +23,17 @@ RUN C:\TEMP\vs_buildtools.exe --quiet --wait --norestart --nocache `
       --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended `
     || IF "%ERRORLEVEL%"=="3010" EXIT 0
 
-# Exactly the toolchain rust-toolchain.toml pins. Nothing else.
+# Exactly the toolchain rust-toolchain.toml pins, with the components it
+# lists, so rustup has nothing to download when the build starts.
 ADD https://static.rust-lang.org/rustup/dist/x86_64-pc-windows-msvc/rustup-init.exe C:\TEMP\rustup-init.exe
 RUN C:\TEMP\rustup-init.exe -y --no-modify-path --profile minimal `
-      --default-toolchain 1.95.0-x86_64-pc-windows-msvc `
+      --default-toolchain 1.95.0-x86_64-pc-windows-msvc --component rustfmt --component clippy `
     && del C:\TEMP\rustup-init.exe C:\TEMP\vs_buildtools.exe
-ENV PATH="C:\Users\ContainerAdministrator\.cargo\bin;C:\Windows\system32;C:\Windows"
+ENV PATH="C:\Users\ContainerAdministrator\.cargo\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\WindowsPowerShell\v1.0"
 
-# The source is mounted at C:\src by reproduce.ps1 and mapped to W:\ so both
-# machines compile from an identical absolute path (rustc embeds source paths).
+# reproduce.ps1 mounts the checkout at C:\src with the crates already fetched
+# into C:\src\.cargo-home; the build runs offline from those. Paths need not
+# match the host's: build-release.ps1 remaps them out of the binary.
+ENV CARGO_HOME=C:\src\.cargo-home CARGO_NET_OFFLINE=true
 WORKDIR C:\src
-ENTRYPOINT ["cmd", "/S", "/C", "subst W: C:\\src && W: && call C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat -arch=amd64 -no_logo && cargo build --release --locked --offline -p witness-win --target-dir W:\\target-repro-container"]
+ENTRYPOINT ["cmd", "/S", "/C", "call C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat -arch=amd64 -no_logo && powershell -NoProfile -ExecutionPolicy Bypass -File C:\\src\\scripts\\build-release.ps1 -TargetDir C:\\src\\target-repro-container"]

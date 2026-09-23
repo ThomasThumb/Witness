@@ -1,13 +1,17 @@
 # Self-hardening. Witness watches for exploit mitigations firing;
 # it had better be running with all of them on itself.
+#
+# /Brepro: the linker otherwise stamps the link time into the PE header and a
+# random GUID into the debug directory, so no two builds could ever match
+# (BUILD_PLAN.md phase 4). With it, both are hashes of the output.
 [target.x86_64-pc-windows-msvc]
 rustflags = [
   "-C", "control-flow-guard=yes",
-  "-C", "link-args=/CETCOMPAT /DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800",
+  "-C", "link-args=/CETCOMPAT /DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800 /Brepro",
 ]
 
 [target.aarch64-pc-windows-msvc]
 rustflags = [
   "-C", "control-flow-guard=yes",
-  "-C", "link-args=/DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800",
+  "-C", "link-args=/DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG:0x800 /Brepro",
 ]
