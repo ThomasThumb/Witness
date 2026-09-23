@@ -42,9 +42,24 @@ pub fn esc(s: &str) -> String {
     out
 }
 
-/// Render the report.
+/// Shown above everything else when `witness selftest` made the report.
+const TEST_BANNER: &str = "<p class=\"box\"><strong>THIS IS A TEST.</strong> Nothing happened on this computer. \
+<code>witness selftest</code> made this report so you know what a real one looks like. \
+Its folder is safe to delete.</p>";
+
+/// Render the report. `test` is true only for `witness selftest`: it adds a
+/// banner, so a practice run can never be mistaken for a finding. It is an
+/// explicit flag, never inferred from the event, so a real event can never
+/// be labelled a test.
 #[must_use]
-pub fn render(ev: &Event, rule: &Rule, contacts: &[Contact], fingerprint: &str, bundle_dir: &str) -> String {
+pub fn render(
+    ev: &Event,
+    rule: &Rule,
+    contacts: &[Contact],
+    fingerprint: &str,
+    bundle_dir: &str,
+    test: bool,
+) -> String {
     let mut h = String::with_capacity(4096);
     let tone = match rule.severity {
         Severity::Bug => "This is almost certainly an ordinary software bug.",
@@ -60,11 +75,12 @@ pub fn render(ev: &Event, rule: &Rule, contacts: &[Contact], fingerprint: &str, 
 <style>body{{font-family:system-ui,sans-serif;max-width:40em;margin:2em auto;padding:0 1em;line-height:1.5}}\
 h1{{font-size:1.4em}}h2{{font-size:1.1em;margin-top:1.6em}}code{{word-break:break-all}}\
 .box{{border:2px solid #444;padding:1em;margin:1em 0}}</style></head><body>\
-<h1>{title}</h1>\
+{banner}<h1>{title}</h1>\
 <p class=\"box\"><strong>{tone}</strong></p>\
 <h2>What happened</h2><p>{what}</p>\
 <h2>What it might mean</h2><p>{mean}</p>\
 <h2>What to do</h2><ol>",
+        banner = if test { TEST_BANNER } else { "" },
         title = esc(&rule.title),
         tone = esc(tone),
         what = esc(&rule.triage.what_happened),
@@ -163,7 +179,9 @@ mod tests {
             how: "help.example".into(),
             checked: "2026-09".into(),
         }];
-        let html = render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x");
+        let html = render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", false);
+        assert!(!html.contains("THIS IS A TEST"), "a real report must never say it is a test");
+        assert!(render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", true).contains("THIS IS A TEST"));
         assert!(!html.contains("<script"));
         assert!(html.contains("&lt;script&gt;"));
         assert!(html.contains("<strong>script&gt;</strong>"), "basename (after the last slash) shown first, escaped");

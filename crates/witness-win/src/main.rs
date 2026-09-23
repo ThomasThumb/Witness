@@ -85,6 +85,9 @@ struct App {
     id: Identity,
     evidence_root: PathBuf,
     last_notified: HashMap<String, Instant>,
+    /// `witness selftest`: bundles go under `evidence\selftest\` and the report
+    /// and toast say TEST. Never set by `run`.
+    test: bool,
 }
 
 fn main() -> ExitCode {
@@ -122,7 +125,7 @@ fn main() -> ExitCode {
 }
 
 impl App {
-    fn load(evidence_subdir: Option<&str>) -> Result<Self, String> {
+    fn load(test: bool) -> Result<Self, String> {
         let base = paths::base()?;
         let rules = RuleSet::parse(&override_or(&base, "rules.toml", EMBEDDED_RULES)?).map_err(|e| e.to_string())?;
         let contacts: Contacts =
@@ -130,11 +133,11 @@ impl App {
         let seed = keys::load_or_create_seed()?;
         let id = Identity::from_seed(&seed).map_err(|e| e.to_string())?;
         let mut evidence_root = base.join("evidence");
-        if let Some(sub) = evidence_subdir {
-            evidence_root.push(sub);
+        if test {
+            evidence_root.push("selftest");
         }
         fs::create_dir_all(&evidence_root).map_err(|e| e.to_string())?;
-        Ok(App { rules, contacts: contacts.contact, id, evidence_root, last_notified: HashMap::new() })
+        Ok(App { rules, contacts: contacts.contact, id, evidence_root, last_notified: HashMap::new(), test })
     }
 
     /// One event, start to finish. Returns the bundle directory if one was written.
@@ -160,7 +163,8 @@ impl App {
             return Ok(None); // logged, not shown
         }
         let dir = evidence::bundle_dir(&self.evidence_root, &ev, rule);
-        let html = report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &dir.display().to_string());
+        let html =
+            report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &dir.display().to_string(), self.test);
         evidence::write_bundle(&dir, &ev, rule, &html, &self.id)
             .map_err(|e| format!("bundle {}: {e}", dir.display()))?;
 
@@ -171,7 +175,8 @@ impl App {
             return Ok(Some(dir));
         }
         self.last_notified.insert(key, now);
-        if let Err(e) = notify::toast(&rule.title, "Witness noticed something. Tap to read what it means.") {
+        let title = if self.test { format!("TEST: {}", rule.title) } else { rule.title.clone() };
+        if let Err(e) = notify::toast(&title, "Witness noticed something. Tap to read what it means.") {
             log(&format!("toast failed (report still written): {e}"));
         }
         if let Err(e) = notify::open(&dir.join("report.html")) {
@@ -192,7 +197,7 @@ fn override_or(base: &Path, name: &str, embedded: &str) -> Result<String, String
 }
 
 fn run() -> Result<(), String> {
-    let mut app = App::load(None)?;
+    let mut app = App::load(false)?;
     let (tx, rx) = mpsc::channel::<String>();
     let _subs = eventlog::subscribe_all(CHANNELS, &tx)?; // dropped on exit = unsubscribed
     drop(tx); // only the OS callbacks hold senders now; rx ends when they are gone
@@ -208,7 +213,7 @@ fn run() -> Result<(), String> {
 }
 
 fn check() -> Result<(), String> {
-    let app = App::load(None)?;
+    let app = App::load(false)?;
     println!("witness {}", witness_core::VERSION);
     println!("rules:    {} loaded", app.rules.rules.len());
     println!("contacts: {} loaded", app.contacts.len());
@@ -232,7 +237,7 @@ fn check() -> Result<(), String> {
 }
 
 fn selftest() -> Result<(), String> {
-    let mut app = App::load(Some("selftest"))?;
+    let mut app = App::load(true)?;
     log("selftest: pushing the built-in sample event");
     println!("Pushing a built-in sample event (a fast-fail in notepad.exe) through Witness.");
     println!("You should see a toast and the report should open in your browser.");
