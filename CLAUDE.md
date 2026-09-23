@@ -93,7 +93,8 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
    The host half is proven. If it mismatches, compare the two
    `build-info.txt` first: the MSVC build numbers must match.
 4. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
-5. `SUPPORT.md`, SignPath application, winget manifest (Phase 4/6).
+5. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
+   drafted; it is user-facing text, so it goes through the Phase 3 review.
 
 Open decisions for the maintainer (HANDOFF.md, "Things I would still argue
 about"): the untested UserMode rules at `urgent`; `cig-self-bundled` for
