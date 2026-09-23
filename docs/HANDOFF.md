@@ -78,6 +78,66 @@ First real compile found:
 - Docker is for Phase 4 (second machine for reproducibility), not for
   Phase 2; Windows containers cannot see the host's Event Log or toasts.
 
+## Second session: Claude Code on the maintainer's machine (2026-09-23)
+
+Picked up from the chat session with the tree clean and `aa4d418` unpushed.
+Baseline first: fmt, clippy, 26 tests, `cargo deny`, release build,
+`check`: all green, same key fingerprint as before, so nothing had
+drifted. Then, each its own commit, each proven on this machine:
+
+1. **Golden tests over every captured fixture.** Events 2, 8 and 12 were
+   checked in but nothing read them, although README said the golden tests
+   did. Added, plus the Brave event with the DLL moved out of Brave's
+   folder. Mutation check: dropping `image_in_process_dir` fails the test.
+2. **`verify` followed manifest names anywhere.** The manifest and
+   `pubkey.bin` both come from whoever hands over the bundle, so a crafted
+   one signs cleanly under its own key, and its file names went straight
+   into `dir.join()`. `..\x` read outside the bundle; `\\host\share\x`
+   would have made `witness verify` open SMB from a helpline's machine
+   and offer its NTLM credentials. Now the manifest must list exactly the
+   three bundle files, checked before anything is opened; signature files
+   are size-capped; unsigned extra files are named (a warning: Windows
+   drops `desktop.ini` by itself). All ten real bundles still verify.
+3. **selftest says TEST.** Not keyed off record id 0 as suggested below:
+   a real event without an `EventRecordID` also parses as 0, and a real
+   alarm stamped "test" is the worst thing this tool could do. Explicit
+   flag, set only by `selftest`; a test asserts a real render never has it.
+4. **A disabled channel was "ok".** Called `EvtSubscribe` directly from
+   PowerShell: a *disabled* channel subscribes cleanly (only a missing one
+   fails, 15007), then nothing ever arrives. `.NET`'s `EventLogWatcher`
+   even hides the missing-channel error. `check` now reads the channel's
+   Enabled flag (`EvtOpenChannelConfig`, no admin, no new feature: the
+   Security feature was already implied) and prints DISABLED with the
+   `wevtutil` fix. The DISABLED branch is not proven end to end: that needs
+   a Security-Mitigations channel switched off, which is the maintainer's
+   machine to change, not mine.
+5. **Reproducible builds, host half.** The binary carried the link time,
+   a random PDB GUID, and `C:\Users\<builder>\.cargo\…` in 71 panic
+   locations. `/Brepro` plus `--remap-path-prefix` fixes all three.
+   Trap found on the way: RUSTFLAGS (and `trim-paths`, still unstable in
+   1.95) are no good; RUSTFLAGS *replaces* the CFG/CET flags and the build
+   still succeeds. `cargo --config` merges; checked by reading GUARD_CF and
+   CETCOMPAT back out of the PE. Two builds sharing no path (other source
+   folder, other CARGO_HOME via a junction, other target dir) were
+   byte-identical, under Windows PowerShell 5.1 as the container will run it.
+   What still has to match across machines is MSVC: its CRT objects are
+   linked in. `build-info.txt` lists the builds from the Rich header.
+6. **`release.yml`, before it ever ran.** Workflow-wide `contents: write`
+   and `id-token: write` meant every dependency's build script and an
+   unpinned `cargo install` could publish or sign as the repo; the cosign
+   command in the release notes used an unanchored identity regexp that a
+   branch named `github.com/ThomasThumb/Witness` in anyone's repository
+   satisfies; the arm64 target went to `stable` while `rust-toolchain.toml`
+   builds with 1.95.0 (CI logs show exactly that); `upload-artifact` with
+   several paths keeps directories, so `publish` would not have found
+   `witness.exe`; and the SBOM lands in `crates/witness-win/`, not the root
+   (checked by running cargo-cyclonedx 0.5.9). All fixed; a manual trigger
+   builds and uploads without publishing, so it can be proven before a tag.
+
+Not done, deliberately: the elevated `phase2-admin.ps1` run (it changes
+Exploit Protection settings and opens a share, so the maintainer runs it),
+the Docker image (an ~8 GB download, the maintainer's call), and the push.
+
 ## Things I would still argue about
 
 - The `Application` channel subscription sees every application event on
@@ -86,6 +146,15 @@ First real compile found:
 - `rop-*`/`eaf-*`/`iaf-*` rules ship untested. Either write the triggers
   behind an opt-in build flag, or mark those rules `severity = "look"`
   until confirmed, so an unverified rule cannot produce an "urgent".
-- `selftest` bundles live under `evidence\selftest\` but the toast and
-  report look real. A "THIS WAS A TEST" banner in the report when the
-  record id is 0 would cost five lines.
+- `cig-self-bundled` trusts "the DLL is in the program's own folder". For
+  Program Files that folder needs admin to write, so the line holds. But
+  Signal, Discord, Slack, new Teams and per-user Chrome install under
+  `%LOCALAPPDATA%`, where anything running as the user can plant a DLL,
+  and DLL side-loading is a real technique. A CIG block there is
+  classified `bug` and never shown. Narrowing the predicate to non-user-
+  writable folders brings back the per-user-Chrome false positive at every
+  browser start. That trade-off is the maintainer's; flagged, not changed.
+- The toast says "Tap to read what it means", but the report already opens
+  by itself, and the toast is attributed to PowerShell's AppUserModelID,
+  so tapping it may just open PowerShell. Untested; worth one look, and a
+  Phase 3 wording question either way.

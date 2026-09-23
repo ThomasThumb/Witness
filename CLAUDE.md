@@ -46,13 +46,25 @@ public repo should carry them is the maintainer's call).
 
 Repository: `github.com/ThomasThumb/Witness`. Pushed; CI green on all six jobs as of 3fd70ee (2026-09-23).
 
+Second session (Claude Code on the maintainer's machine, 2026-09-23; details in HANDOFF.md):
+all four captured fixtures golden-tested; `verify` no longer follows
+manifest file names out of the bundle (a crafted `\\host\share\x` would
+have made it reach the network) and names unsigned extra files; selftest
+reports say TEST via an explicit flag; `check` reports a *disabled*
+channel instead of "ok"; release builds are byte-reproducible on one
+machine via `scripts\build-release.ps1` (`/Brepro` + path remapping);
+`release.yml` fixed before it ever ran (least-privilege jobs, exact cosign
+identity, arm64 target on the pinned toolchain, flat artifacts, dry-run
+trigger).
+
 ## How to work here
 
 ```
 cargo test                      # core only (workspace default-members); runs on any OS
 cargo clippy --all-targets -- -D warnings
 cargo deny check
-cargo build --release -p witness-win        # Windows + MSVC only
+cargo build --release -p witness-win        # Windows + MSVC only; day-to-day
+powershell -ExecutionPolicy Bypass -File scripts\build-release.ps1      # the release build: reproducible, writes build-info.txt
 powershell -ExecutionPolicy Bypass -File scripts\phase2.ps1          # full local proof, no admin
 powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1    # elevated: the opt-in cases
 powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1 -CleanupOnly
@@ -71,14 +83,21 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 
 ## What is next (in order)
 
-1. Elevated `phase2-admin.ps1` → record events 4 and 6 in
-   `tests/triggers/README.md`, add their XML as fixtures + golden tests.
-2. `git init`, commit, push; watch CI (fuzz, deny, audit, contacts, Windows smoke).
-3. Phase 4 reproducibility: build the container image, run `reproduce.ps1`.
-   Expect a mismatch first time (PDB path / link timestamp); likely fix is
-   `/Brepro` and `/PDBALTPATH` in `.cargo/config.toml` link-args. Prove it.
+1. Elevated `phase2-admin.ps1`, run by the maintainer (it changes Exploit
+   Protection settings and opens a share; Claude Code does not do that
+   itself) → record events 4 and 6 in `tests/triggers/README.md`, add their
+   XML as fixtures + golden tests.
+2. Push; watch CI; then run the release workflow by hand (Actions → release
+   → Run workflow): a dry run that builds both targets and publishes nothing.
+3. Phase 4, second machine: build the container image, run `reproduce.ps1`.
+   The host half is proven. If it mismatches, compare the two
+   `build-info.txt` first: the MSVC build numbers must match.
 4. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
 5. `SUPPORT.md`, SignPath application, winget manifest (Phase 4/6).
+
+Open decisions for the maintainer (HANDOFF.md, "Things I would still argue
+about"): the untested UserMode rules at `urgent`; `cig-self-bundled` for
+programs installed in user-writable folders.
 
 ## Style the maintainer expects
 

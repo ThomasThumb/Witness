@@ -3,14 +3,13 @@
 Each phase has an exit test. Nothing moves to the next phase until it passes.
 "Done" means merged, tested in CI, and documented; not "works on my machine".
 
-Honest status (2026-09-23): `witness-core` compiles, passes 24 tests
-(unit, property, and golden tests over the shipped rules) and clippy
-pedantic on Linux. `witness-win` type-checks in full against the `windows`
-0.61.3 bindings (done on Linux with the crate's `cfg(windows)` gates
-patched out; the scaffold's two real mismatches — `LocalFree`'s module and
-the `PROCESS_MITIGATION_*` struct module — are fixed). What has **not**
-happened yet is a link + run on real Windows, and the live-machine
-confirmation of event IDs in `tests/triggers/README.md`. That is Phase 2.
+Honest status (2026-09-23, end of day): CI green on all six jobs.
+`witness-win` is built, run and proven on Windows 11 Pro 26200: fast-fail,
+ACG, remote-image and CIG fired live and are golden-tested from the
+captured XML. Not yet: events 4 and 6 (needs the elevated
+`phase2-admin.ps1`), the UserMode family (no triggers, by decision), the
+hour-long fuzz run, the container half of the reproducibility check, and
+all of Phase 3.
 
 ## Phase 0 — Repository hygiene (half a day)
 
@@ -34,9 +33,11 @@ Exit: CI green on an empty commit; `cargo deny check` and `cargo audit` pass.
    seeded from the captured fixtures; CI runs each for 60 s on nightly.
    [ ] Run each for an hour locally (`cargo +nightly fuzz run winevt_parse --
    -max_total_time=3600`) and commit the grown corpus.
-4. [~] Golden tests over the shipped `rules/default.toml` and `contacts.toml`
-   with realistic synthetic XML (`crates/witness-core/tests/shipped_files.rs`).
-   Still wanted: five *captured* `EvtRender` samples from a live machine.
+4. [x] Golden tests over the shipped `rules/default.toml` and `contacts.toml`
+   (`crates/witness-core/tests/shipped_files.rs`): synthetic XML plus every
+   *captured* sample, events 1000, 2, 8 and 12 from build 26200, including
+   the Brave CIG false positive and the same event with the DLL moved out of
+   Brave's folder. Add 4 and 6 when they are fired.
    Also fixed: Application Error 1000 field mapping (the path is `%11`, the
    scaffold read `%10`, the start time).
 
@@ -66,6 +67,10 @@ clippy pedantic has no new warnings.
    what the live machine actually writes. Fix the file, not the machine.
 5. Test on a machine with Exploit Protection entirely off: Witness should
    say so in `check` (baseline snapshot is v0.2, but a one-line warning is v0.1).
+   [~] `check` now reports a channel that is subscribable but *disabled*
+   (Windows writes nothing to it) as DISABLED with the `wevtutil` fix, and
+   `run` logs it; before, it said "ok". Still to do: the per-program
+   Exploit Protection side.
 
 Exit: every rule has been fired on real hardware; `witness verify` passes on
 every generated bundle; an edited bundle fails; a fresh install prints a
@@ -90,16 +95,34 @@ Exit: written sign-off from one outside reviewer on the triage text.
 
 1. `--locked` reproducible builds; document the exact command and confirm
    two independent machines produce byte-identical `witness.exe`.
-   [~] Tooling in place: `Dockerfile.windows` (the second machine: bare
-   servercore + Build Tools + rustup 1.95.0) and `scripts\reproduce.ps1`,
-   which builds on host and container from the same `W:\` path and same
-   `CARGO_HOME`, then compares SHA-256. [ ] Run it; fix whatever differs.
+   [x] The exact command is `scripts\build-release.ps1`, used by the
+   release workflow, `reproduce.ps1` and the container alike. `/Brepro`
+   replaces the link timestamp and debug GUID with hashes;
+   `--remap-path-prefix` (through `cargo --config`, which merges with the
+   hardening flags; RUSTFLAGS would replace them) takes CARGO_HOME, the
+   checkout and the target dir out of the binary, and with them the
+   builder's user name. It writes `build-info.txt`: hash, rustc, and the
+   MSVC build numbers read from the binary's Rich header.
+   [x] Proven on one machine: two builds from different source folders,
+   CARGO_HOME paths and target dirs, byte-identical (x86_64 `3df053c6…`
+   with rustc 1.95.0 and MSVC 14.44.35207), PE flags and CETCOMPAT intact.
+   [ ] The second machine: build the container image, run `reproduce.ps1`.
+   The MSVC toolset has to match too; compare the two `build-info.txt`.
 2. SignPath Foundation application for free OSS Authenticode signing. Until
    approved, releases carry a SmartScreen warning; the README explains why
    and how to verify with cosign instead.
-3. Release workflow produces: two `.exe`, two SBOMs, `SHA256SUMS`, Sigstore
-   bundles, GitHub provenance attestation. Release notes contain the
-   verification commands (already in `release.yml`).
+3. Release workflow produces: two `.exe`, two SBOMs, two `build-info`,
+   `SHA256SUMS`, Sigstore bundles, GitHub provenance attestation. Release
+   notes contain the verification commands (already in `release.yml`).
+   [x] Fixed before it ever ran: the build job had `contents: write` and
+   `id-token: write` while running every dependency's build script (now
+   read-only; only `publish` can write or sign); the published cosign
+   check used an unanchored identity regexp any repository could satisfy
+   from a branch named `github.com/ThomasThumb/Witness` (now the exact
+   workflow and tag); the arm64 target was added to `stable`, not the
+   pinned toolchain; artifacts were uploaded nested, so `publish` could not
+   find them. [ ] Dry run: Actions → release → Run workflow (builds and
+   uploads, publishes nothing) before the first tag.
 4. `winget` manifest submitted after the first signed release.
 5. `verify_bundle.py`: a 40-line dependency-light Python script (using a
    pure-Python ML-DSA or calling `witness verify`) so a helpline can verify a
