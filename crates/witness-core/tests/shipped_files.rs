@@ -110,6 +110,31 @@ fn shipped_rules_classify_realistic_events() {
             include_str!("fixtures/win11-26200-app-error-1000-fastfail.xml").replace("trigger.exe", "signal.exe"),
             Some(("fastfail-messaging-browser", Severity::Urgent)),
         ),
+        // Captured on Windows 11 build 26200: `trigger rwx` with BlockDynamicCode on.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-2-acg-trigger.xml").to_string(),
+            Some(("acg-block-kernel", Severity::Look)),
+        ),
+        // Captured on Windows 11 build 26200: `trigger remote` over a loopback share.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-8-remote-image-trigger.xml").to_string(),
+            Some(("remote-image-block", Severity::Urgent)),
+        ),
+        // Captured on Windows 11 build 26200: Brave's GPU process refused its own
+        // bundled vulkan-1.dll. The false positive that made `cig-self-bundled`.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-12-cig-brave.xml").to_string(),
+            Some(("cig-self-bundled", Severity::Bug)),
+        ),
+        // The same real event with the library moved outside Brave's folder must
+        // fall through to the rule a person sees.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-12-cig-brave.xml").replace(
+                r"\Program Files\BraveSoftware\Brave-Browser\Application\153.1.95.104\vulkan-1.dll",
+                r"\Users\x\AppData\Local\Temp\vulkan-1.dll",
+            ),
+            Some(("cig-block", Severity::Look)),
+        ),
     ];
     for (xml, expected) in cases {
         let ev = winevt::parse(xml).expect("fixture parses");
