@@ -202,6 +202,11 @@ fn run() -> Result<(), String> {
     let _subs = eventlog::subscribe_all(CHANNELS, &tx)?; // dropped on exit = unsubscribed
     drop(tx); // only the OS callbacks hold senders now; rx ends when they are gone
     log(&format!("running; {} rules; key {}", app.rules.rules.len(), app.id.fingerprint()));
+    for ch in CHANNELS {
+        if eventlog::enabled(ch) == Ok(false) {
+            log(&format!("warning: channel {ch} is disabled; nothing from it will arrive (see `witness check`)"));
+        }
+    }
     for xml in rx {
         match app.handle(&xml) {
             Ok(Some(dir)) => log(&format!("bundle written: {}", dir.display())),
@@ -221,8 +226,13 @@ fn check() -> Result<(), String> {
     println!("base:     {}", paths::base()?.display());
     let mut unavailable = 0;
     for ch in CHANNELS {
-        match eventlog::probe(ch) {
-            Ok(()) => println!("channel:  {ch}  ok"),
+        match eventlog::probe(ch).and_then(|()| eventlog::enabled(ch)) {
+            Ok(true) => println!("channel:  {ch}  ok"),
+            Ok(false) => {
+                unavailable += 1;
+                println!("channel:  {ch}  DISABLED: Windows writes nothing here, so Witness sees nothing from it.");
+                println!("          To turn it on, as administrator:  wevtutil sl \"{ch}\" /e:true");
+            }
             Err(e) => {
                 unavailable += 1;
                 println!("channel:  {ch}  UNAVAILABLE ({e})");

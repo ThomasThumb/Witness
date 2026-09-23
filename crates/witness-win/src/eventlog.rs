@@ -15,8 +15,9 @@ use std::{ffi::c_void, sync::mpsc::Sender};
 use windows::{
     core::HSTRING,
     Win32::System::EventLog::{
-        EvtClose, EvtRender, EvtRenderEventXml, EvtSubscribe, EvtSubscribeActionDeliver, EvtSubscribeToFutureEvents,
-        EVT_HANDLE, EVT_SUBSCRIBE_NOTIFY_ACTION,
+        EvtChannelConfigEnabled, EvtClose, EvtGetChannelConfigProperty, EvtOpenChannelConfig, EvtRender,
+        EvtRenderEventXml, EvtSubscribe, EvtSubscribeActionDeliver, EvtSubscribeToFutureEvents, EvtVarTypeBoolean,
+        EVT_HANDLE, EVT_SUBSCRIBE_NOTIFY_ACTION, EVT_VARIANT,
     },
 };
 use witness_core::winevt::MAX_EVENT_BYTES;
@@ -84,6 +85,33 @@ pub fn probe(channel: &str) -> Result<(), String> {
     subscribe(channel, tx).map(drop)
 }
 
+/// Is Windows actually writing to this channel? Subscribing to a *disabled*
+/// channel succeeds (observed on Windows 11 26200), and then nothing ever
+/// arrives: `probe` alone would call a blind Witness "ok". Reading the flag
+/// needs no admin. A missing channel is an error, as with `probe`.
+pub fn enabled(channel: &str) -> Result<bool, String> {
+    let path = HSTRING::from(channel);
+    // SAFETY: `path` outlives the call; no session handle means the local machine.
+    let cfg = unsafe { EvtOpenChannelConfig(None, &path, 0) }.map_err(|e| format!("config {channel}: {e}"))?;
+    let mut value = EVT_VARIANT::default();
+    let mut used: u32 = 0;
+    let size = u32::try_from(std::mem::size_of::<EVT_VARIANT>()).map_err(|e| e.to_string())?;
+    // SAFETY: `cfg` is a live channel-config handle. A boolean property fits in
+    // one EVT_VARIANT with no trailing data, so `size` bytes at `value` suffice;
+    // `value` and `used` outlive the call.
+    let read = unsafe {
+        EvtGetChannelConfigProperty(cfg, EvtChannelConfigEnabled, 0, size, Some(&raw mut value), &raw mut used)
+    };
+    // SAFETY: `cfg` came from a successful EvtOpenChannelConfig and is closed exactly once.
+    let _ = unsafe { EvtClose(cfg) };
+    read.map_err(|e| format!("config {channel}: {e}"))?;
+    if i32::try_from(value.Type) != Ok(EvtVarTypeBoolean.0) {
+        return Err(format!("config {channel}: Enabled has variant type {}, expected boolean", value.Type));
+    }
+    // SAFETY: `Type` says the union holds `BooleanVal`.
+    Ok(unsafe { value.Anonymous.BooleanVal }.as_bool())
+}
+
 unsafe extern "system" fn callback(action: EVT_SUBSCRIBE_NOTIFY_ACTION, ctx: *const c_void, event: EVT_HANDLE) -> u32 {
     if action != EvtSubscribeActionDeliver || ctx.is_null() {
         return 0; // EvtSubscribeActionError: nothing we can do; `witness check` covers it
@@ -117,4 +145,17 @@ unsafe fn render_xml(event: EVT_HANDLE) -> Option<String> {
     }
     let len = buf.iter().position(|&c| c == 0).unwrap_or(buf.len());
     Some(String::from_utf16_lossy(&buf[..len]))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::enabled;
+
+    #[test]
+    fn reads_whether_a_channel_is_enabled() {
+        assert_eq!(enabled("Application"), Ok(true));
+        // Analytic channels ship disabled on every Windows install.
+        assert_eq!(enabled("Microsoft-Windows-Kernel-Process/Analytic"), Ok(false));
+        assert!(enabled("No-Such-Channel/Operational").is_err());
+    }
 }
