@@ -20,6 +20,19 @@ use std::{
     path::{Path, PathBuf},
 };
 
+/// The files a manifest lists: exactly these, each once. `verify_bundle`
+/// rejects any other name before opening a single file, because the manifest
+/// comes from whoever handed the bundle over, and a crafted `..\x` or
+/// `\\host\share\x` would otherwise make `witness verify` read outside the
+/// bundle, or reach across the network from a helper's machine.
+pub const BUNDLE_FILES: [&str; 3] = ["event.json", "event.raw.xml", "report.html"];
+
+/// Written beside the listed files; the signature itself covers them.
+const SIGNATURE_FILES: [&str; 3] = ["manifest.json", "manifest.sig", "pubkey.bin"];
+
+/// A real manifest, signature or public key is a few KB. Refuse to read more.
+const MAX_META_BYTES: u64 = 1024 * 1024;
+
 /// One file entry in a manifest.
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub struct FileEntry {
@@ -111,9 +124,9 @@ pub fn write_bundle(dir: &Path, ev: &Event, rule: &Rule, report_html: &str, id: 
 /// # Errors
 /// A human-readable reason: missing file, bad signature, fingerprint mismatch, or a modified file.
 pub fn verify_bundle(dir: &Path) -> Result<Manifest, String> {
-    let manifest_bytes = fs::read(dir.join("manifest.json")).map_err(|e| format!("manifest.json: {e}"))?;
-    let sig = fs::read(dir.join("manifest.sig")).map_err(|e| format!("manifest.sig: {e}"))?;
-    let pk = fs::read(dir.join("pubkey.bin")).map_err(|e| format!("pubkey.bin: {e}"))?;
+    let manifest_bytes = read_capped(dir, "manifest.json")?;
+    let sig = read_capped(dir, "manifest.sig")?;
+    let pk = read_capped(dir, "pubkey.bin")?;
     let manifest: Manifest = serde_json::from_slice(&manifest_bytes).map_err(|e| format!("manifest: {e}"))?;
     if manifest.algorithm != crate::signing::ALGORITHM {
         return Err(format!(
@@ -122,17 +135,57 @@ pub fn verify_bundle(dir: &Path) -> Result<Manifest, String> {
             crate::signing::ALGORITHM
         ));
     }
+    let mut listed: Vec<&str> = manifest.files.iter().map(|f| f.name.as_str()).collect();
+    listed.sort_unstable();
+    let mut want = BUNDLE_FILES;
+    want.sort_unstable();
+    if listed != want {
+        return Err(format!("manifest lists {listed:?}; a Witness bundle lists exactly {BUNDLE_FILES:?}"));
+    }
     crate::signing::verify(&pk, &manifest_bytes, &sig).map_err(|e| format!("signature: {e}"))?;
     if manifest.key_fingerprint != crate::signing::fingerprint_of(&pk) {
         return Err("manifest fingerprint does not match pubkey.bin".into());
     }
     for f in &manifest.files {
-        let bytes = fs::read(dir.join(&f.name)).map_err(|e| format!("{}: {e}", f.name))?;
+        let path = dir.join(&f.name);
+        let len = fs::metadata(&path).map_err(|e| format!("{}: {e}", f.name))?.len();
+        if len != f.bytes {
+            return Err(format!("{} has been modified", f.name));
+        }
+        let bytes = fs::read(&path).map_err(|e| format!("{}: {e}", f.name))?;
         if blake3::hash(&bytes).to_hex().as_str() != f.blake3 || bytes.len() as u64 != f.bytes {
             return Err(format!("{} has been modified", f.name));
         }
     }
     Ok(manifest)
+}
+
+/// Anything in `dir` the signature does not cover, sorted. A helper should not
+/// trust, say, a `README.txt` added after Witness wrote the bundle. A warning,
+/// not a failure: Windows itself sometimes drops `desktop.ini` into folders.
+///
+/// # Errors
+/// The directory cannot be listed.
+pub fn unsigned_entries(dir: &Path) -> io::Result<Vec<String>> {
+    let mut extra = Vec::new();
+    for entry in fs::read_dir(dir)? {
+        let name = entry?.file_name().to_string_lossy().into_owned();
+        if !BUNDLE_FILES.contains(&name.as_str()) && !SIGNATURE_FILES.contains(&name.as_str()) {
+            extra.push(name);
+        }
+    }
+    extra.sort();
+    Ok(extra)
+}
+
+/// Read one of the signature files, refusing anything larger than a real one could be.
+fn read_capped(dir: &Path, name: &str) -> Result<Vec<u8>, String> {
+    let path = dir.join(name);
+    let len = fs::metadata(&path).map_err(|e| format!("{name}: {e}"))?.len();
+    if len > MAX_META_BYTES {
+        return Err(format!("{name} is {len} bytes; a real one is a few KB"));
+    }
+    fs::read(&path).map_err(|e| format!("{name}: {e}"))
 }
 
 /// Make a timestamp safe for a directory name: keep digits, drop everything else.
@@ -193,6 +246,65 @@ mod tests {
 
         fs::write(dir.join("report.html"), "<html>edited</html>").map_err(|e| e.to_string())?;
         assert!(verify_bundle(&dir).is_err(), "edited file must fail verification");
+        Ok(())
+    }
+
+    #[test]
+    fn manifest_naming_anything_else_is_refused_before_any_file_is_read() -> Result<(), String> {
+        let tmp = tempfile::tempdir().map_err(|e| e.to_string())?;
+        let id = Identity::from_seed(&[4u8; 32]).map_err(|e| e.to_string())?;
+        let (ev, rule) = fixture();
+        // `.invalid` never resolves (RFC 6761), so even a regression cannot reach a network.
+        let crafted: &[&[&str]] = &[
+            &[r"..\secret", "event.raw.xml", "report.html"],
+            &["../secret", "event.raw.xml", "report.html"],
+            &[r"C:\Windows\win.ini", "event.raw.xml", "report.html"],
+            &[r"\\witness.invalid\share\x", "event.raw.xml", "report.html"],
+            &["event.json:x", "event.raw.xml", "report.html"],
+            &["CON", "event.raw.xml", "report.html"],
+            &["event.json", "event.json", "report.html"],
+            &["event.json", "event.raw.xml"],
+        ];
+        for names in crafted {
+            let dir = bundle_dir(tmp.path(), &ev, &rule);
+            write_bundle(&dir, &ev, &rule, "<html></html>", &id).map_err(|e| e.to_string())?;
+            // Re-sign with a valid key, as someone crafting a bundle would.
+            let mut m = verify_bundle(&dir)?;
+            m.files = names.iter().map(|n| FileEntry { name: (*n).into(), blake3: String::new(), bytes: 0 }).collect();
+            let bytes = serde_json::to_vec_pretty(&m).map_err(|e| e.to_string())?;
+            fs::write(dir.join("manifest.sig"), id.sign(&bytes)).map_err(|e| e.to_string())?;
+            fs::write(dir.join("manifest.json"), bytes).map_err(|e| e.to_string())?;
+            let err = verify_bundle(&dir).err().ok_or(format!("{names:?} verified"))?;
+            assert!(err.starts_with("manifest lists"), "{names:?} refused too late: {err}");
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn files_the_signature_does_not_cover_are_reported_not_fatal() -> Result<(), String> {
+        let tmp = tempfile::tempdir().map_err(|e| e.to_string())?;
+        let id = Identity::from_seed(&[5u8; 32]).map_err(|e| e.to_string())?;
+        let (ev, rule) = fixture();
+        let dir = bundle_dir(tmp.path(), &ev, &rule);
+        write_bundle(&dir, &ev, &rule, "<html></html>", &id).map_err(|e| e.to_string())?;
+        assert!(unsigned_entries(&dir).map_err(|e| e.to_string())?.is_empty());
+        fs::write(dir.join("README.txt"), "call this number instead").map_err(|e| e.to_string())?;
+        fs::write(dir.join("desktop.ini"), "").map_err(|e| e.to_string())?;
+        verify_bundle(&dir)?;
+        assert_eq!(unsigned_entries(&dir).map_err(|e| e.to_string())?, ["README.txt", "desktop.ini"]);
+        Ok(())
+    }
+
+    #[test]
+    fn oversized_manifest_is_not_read() -> Result<(), String> {
+        let tmp = tempfile::tempdir().map_err(|e| e.to_string())?;
+        let id = Identity::from_seed(&[6u8; 32]).map_err(|e| e.to_string())?;
+        let (ev, rule) = fixture();
+        let dir = bundle_dir(tmp.path(), &ev, &rule);
+        write_bundle(&dir, &ev, &rule, "<html></html>", &id).map_err(|e| e.to_string())?;
+        fs::write(dir.join("manifest.json"), vec![b' '; 2 * 1024 * 1024]).map_err(|e| e.to_string())?;
+        let err = verify_bundle(&dir).err().ok_or("2 MiB manifest verified")?;
+        assert!(err.contains("a real one is a few KB"), "{err}");
         Ok(())
     }
 

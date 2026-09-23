@@ -257,6 +257,11 @@ fn verify(dir: &Path) -> Result<(), String> {
         m.witness_version,
         m.key_fingerprint
     );
+    println!("The key must match the fingerprint written down when Witness was installed; if it differs, another install made this bundle.");
+    let extra = evidence::unsigned_entries(dir).map_err(|e| e.to_string())?;
+    if !extra.is_empty() {
+        println!("NOT covered by the signature, do not trust: {}", extra.join(", "));
+    }
     Ok(())
 }
 
