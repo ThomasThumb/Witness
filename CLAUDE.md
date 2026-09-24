@@ -92,12 +92,12 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 
 ## What is next (in order)
 
-1. Phase 4, second machine: the release dry run (2026-09-24) passed, but
-   GitHub's runner links with MSVC 14.51 and this machine with 14.44, so
-   the hashes differ. Match the toolsets (the maintainer's call: pin the
-   release job, or install 14.51 here), then compare `build-info.txt` and
-   the hash again. Docker needs Windows features that are off here.
+1. Phase 4, second machine: MSVC is pinned (14.44, release job on
+   windows-2022). The hashes still differ by Visual Studio servicing level:
+   runner 17.14.37628.2, this machine 17.14.36717.8. Match them (the
+   maintainer's call), then compare `build-info.txt` and the hash again.
 2. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
+   The packet is `docs/review/phase3-wording.md`; the maintainer sends it.
 3. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
    drafted; it is user-facing text, so it goes through the Phase 3 review.
 

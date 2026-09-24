@@ -81,6 +81,8 @@ fingerprint and the same fingerprint appears in every report.
 1. Every `triage` block reviewed by at least one person who has done digital
    security support for at-risk users. Access Now's helpline and Freedom of
    the Press Foundation both have people who will do this if asked kindly.
+   [~] Packet ready: `docs/review/phase3-wording.md` (every message verbatim,
+   context, questions, sign-off form); request drafted. [ ] Send; get sign-off.
 2. Test the report with three non-technical people. Watch them read it. If
    any of them asks "so am I hacked?", the text is not done.
 3. `contacts.toml` verified: every entry answers. [x] `checked = "YYYY-MM"`
@@ -112,8 +114,14 @@ Exit: written sign-off from one outside reviewer on the triage text.
    the runner linked with MSVC 14.51 (builds 36256, 35721), this machine
    with 14.44 (35221, 35207). Same rustc. The remap held on the runner (no
    runner paths; CFG/CET intact) and the runner's binary runs and
-   self-hardens on the maintainer's machine. [ ] Match the toolsets (pin the
-   release job's MSVC, or install the runner's locally) and compare again.
+   self-hardens on the maintainer's machine. [x] Toolset pinned:
+   build-release.ps1 enters MSVC 14.44 and fails if the binary was linked
+   with anything else; the release job runs on windows-2022. Second dry run
+   (`58ae4f9`): same toolset folder (14.44.35207) and SDK (10.0.26100.0) on
+   both sides, differing bytes down from 163,534 to 76,985. What is left is
+   the Visual Studio servicing level: the runner has VS 2022 17.14.37628.2
+   (a CRT object at build 35228), this machine 17.14.36717.8 (35221).
+   [ ] Bring the two to the same servicing level, then compare again.
    The container route needs the Windows "Containers" and "Hyper-V"
    features, which are off on the maintainer's machine.
 2. SignPath Foundation application for free OSS Authenticode signing. Until
