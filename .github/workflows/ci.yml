@@ -59,6 +59,16 @@ jobs:
           # GitHub's pwsh wrapper ends every step with `exit $LASTEXITCODE`, which
           # would report the rejection we just wanted as a failure. Say otherwise.
           exit 0
+      - name: smoke output names no user
+        shell: pwsh
+        run: |
+          # check and selftest output gets pasted into emails and bug reports.
+          # It must show %LOCALAPPDATA%\Witness, never the expanded path.
+          $out = (& .\target\release\witness.exe check) + (& .\target\release\witness.exe selftest)
+          foreach ($w in $env:USERNAME, $env:USERPROFILE, $env:LOCALAPPDATA) {
+            if ($out -match [regex]::Escape($w)) { throw "output contains '$w'" }
+          }
+          'no user name or profile path in check or selftest output'
       - name: witness.log
         if: always()
         shell: pwsh

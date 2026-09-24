@@ -29,6 +29,10 @@ with a helpline or a person you trust, never in a public issue or forum.
 
 ## Bugs in Witness itself
 
+Anything posted publicly can be read by the people Witness exists to catch.
+If being linked to Witness could put you at risk, file from an account not
+tied to your name, or ask a helper to file it for you.
+
 * **Security problems** (Witness could lie, leak, be forged, or talk to a
   network): report privately, see [SECURITY.md](SECURITY.md).
 * **A rule that fires on something innocent, or text that confused or
@@ -36,8 +40,8 @@ with a helpline or a person you trust, never in a public issue or forum.
   example `cig-block`) and the program's name. Describe the event in
   words; do not paste `event.raw.xml`.
 * **Anything else that is broken**: open an issue with the output of
-  `witness check`, after deleting two lines: `base:` contains your Windows
-  user name, and `key:` would link any evidence you ever share to you.
+  `witness check`, after deleting the `key:` line and anything that looks
+  like a folder path. `key:` would link any evidence you ever share to you.
 
 This list mirrors `rules/contacts.toml`, which is what the reports show.
 If the two ever disagree, the reports are right and this file is a bug.

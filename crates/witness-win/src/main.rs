@@ -163,10 +163,9 @@ impl App {
             return Ok(None); // logged, not shown
         }
         let dir = evidence::bundle_dir(&self.evidence_root, &ev, rule);
-        let html =
-            report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &dir.display().to_string(), self.test);
+        let html = report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);
         evidence::write_bundle(&dir, &ev, rule, &html, &self.id)
-            .map_err(|e| format!("bundle {}: {e}", dir.display()))?;
+            .map_err(|e| format!("bundle {}: {e}", paths::shown(&dir)))?;
 
         let key = format!("{}|{}", rule.id, ev.process_basename().unwrap_or_default());
         let now = Instant::now();
@@ -190,7 +189,7 @@ impl App {
 fn override_or(base: &Path, name: &str, embedded: &str) -> Result<String, String> {
     let p = base.join(name);
     if p.exists() {
-        fs::read_to_string(&p).map_err(|e| format!("{}: {e}", p.display()))
+        fs::read_to_string(&p).map_err(|e| format!("{}: {e}", paths::shown(&p)))
     } else {
         Ok(embedded.to_string())
     }
@@ -209,7 +208,7 @@ fn run() -> Result<(), String> {
     }
     for xml in rx {
         match app.handle(&xml) {
-            Ok(Some(dir)) => log(&format!("bundle written: {}", dir.display())),
+            Ok(Some(dir)) => log(&format!("bundle written: {}", paths::shown(&dir))),
             Ok(None) => {}
             Err(e) => log(&e), // this event is lost; the watcher keeps running (DESIGN.md)
         }
@@ -223,7 +222,7 @@ fn check() -> Result<(), String> {
     println!("rules:    {} loaded", app.rules.rules.len());
     println!("contacts: {} loaded", app.contacts.len());
     println!("key:      {}", app.id.fingerprint());
-    println!("base:     {}", paths::base()?.display());
+    println!("base:     {}", paths::SHOWN_BASE);
     let mut unavailable = 0;
     for ch in CHANNELS {
         match eventlog::probe(ch).and_then(|()| eventlog::enabled(ch)) {
@@ -254,7 +253,7 @@ fn selftest() -> Result<(), String> {
     match app.handle(SELFTEST_XML)? {
         Some(dir) => {
             let m = evidence::verify_bundle(&dir)?;
-            println!("OK: bundle {} rule={} severity={} verified", dir.display(), m.rule_id, m.severity);
+            println!("OK: bundle {} rule={} severity={} verified", paths::shown(&dir), m.rule_id, m.severity);
             println!("This was a test. The folder above is safe to delete.");
             Ok(())
         }
@@ -266,7 +265,7 @@ fn verify(dir: &Path) -> Result<(), String> {
     let m = evidence::verify_bundle(dir)?;
     println!(
         "OK: bundle {} rule={} severity={} witness={} key={}",
-        dir.display(),
+        paths::shown(dir),
         m.rule_id,
         m.severity,
         m.witness_version,
