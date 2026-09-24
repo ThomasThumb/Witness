@@ -73,7 +73,7 @@ pub fn render(
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\
 <title>Witness: {title}</title>\
 <style>body{{font-family:system-ui,sans-serif;max-width:40em;margin:2em auto;padding:0 1em;line-height:1.5}}\
-h1{{font-size:1.4em}}h2{{font-size:1.1em;margin-top:1.6em}}code{{word-break:break-all}}\
+h1{{font-size:1.4em}}h2{{font-size:1.1em;margin-top:1.6em}}code{{overflow-wrap:anywhere}}\
 .box{{border:2px solid #444;padding:1em;margin:1em 0}}</style></head><body>\
 {banner}<h1>{title}</h1>\
 <p class=\"box\"><strong>{tone}</strong></p>\
