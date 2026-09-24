@@ -23,7 +23,7 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $out = Join-Path $root 'phase2-results'
 New-Item -ItemType Directory -Force -Path $out | Out-Null
 $summary = Join-Path $out 'summary.txt'
-"phase2 run $(Get-Date -Format o) on $env:COMPUTERNAME" | Set-Content $summary
+"phase2 run $((Get-Date).ToUniversalTime().ToString('o'))" | Set-Content $summary
 "os: $((Get-CimInstance Win32_OperatingSystem).Caption) build $((Get-CimInstance Win32_OperatingSystem).BuildNumber)" | Add-Content $summary
 
 function Step($name, [scriptblock]$body) {

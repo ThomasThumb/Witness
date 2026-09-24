@@ -23,7 +23,7 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $out = Join-Path $root 'phase4-results'
 New-Item -ItemType Directory -Force -Path $out | Out-Null
 $report = Join-Path $out 'reproduce.txt'
-"reproduce run $(Get-Date -Format o) on $env:COMPUTERNAME" | Set-Content $report
+"reproduce run $((Get-Date).ToUniversalTime().ToString('o'))" | Set-Content $report
 
 $os = (& docker info --format '{{.OSType}}' 2>$null)
 if ($os -ne 'windows') { "STOP  Docker is in '$os' container mode; switch Docker Desktop to Windows containers" | Add-Content $report; Get-Content $report; exit 1 }

@@ -21,7 +21,7 @@ $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $out = Join-Path $root 'phase2-results'
 New-Item -ItemType Directory -Force -Path $out | Out-Null
 $summary = Join-Path $out 'admin-summary.txt'
-"phase2-admin run $(Get-Date -Format o) on $env:COMPUTERNAME" | Set-Content $summary
+"phase2-admin run $((Get-Date).ToUniversalTime().ToString('o'))" | Set-Content $summary
 
 function Step($name, [scriptblock]$body) {
     try { $r = & $body; if ($r -is [string]) { "PASS  $name  $r" | Add-Content $summary } else { "PASS  $name" | Add-Content $summary } }
@@ -35,6 +35,9 @@ $exe = Join-Path $root 'target\release\witness.exe'
 $trigDir = Join-Path $root 'tests\triggers'
 $trig = Join-Path $trigDir 'trigger.exe'
 foreach ($f in $exe, $trig) { if (-not (Test-Path $f)) { "STOP  $f missing; run scripts\phase2.ps1 first" | Add-Content $summary; Get-Content $summary; exit 1 } }
+# A trigger.exe older than trigger.c lacks the newest cases and answers them
+# with its usage text, exit 1. Observed 2026-09-24: `child` and `lowil` did.
+if ((Get-Item $trig).LastWriteTime -lt (Get-Item (Join-Path $trigDir 'trigger.c')).LastWriteTime) { "STOP  trigger.exe is older than trigger.c; rebuild it (scripts\phase2.ps1 does)" | Add-Content $summary; Get-Content $summary; exit 1 }
 $base = Join-Path $env:LOCALAPPDATA 'Witness'
 $share = 'witnesstest'
 
