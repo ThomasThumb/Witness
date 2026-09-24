@@ -98,6 +98,10 @@ in the tree, none with network capability. Tests: 26 unit/property in
   with the raw XML checked in as a fixture and a golden test.
 - **Hardening flags go through `.cargo/config.toml` or `cargo --config`,
   never `RUSTFLAGS`**, which silently replaces them and still builds.
+- **Nothing public identifies the maintainer or a user.** No names, emails,
+  machine names, SIDs, key fingerprints or expanded user paths in files,
+  fixtures, commit messages or authors, or Witness's own output. The people
+  Witness exists to catch can read anything public. See `CLAUDE.md`.
 - **Tone with the maintainer:** direct, sceptical, say what was proven and
   what was not. Never report a step done that has not run on real hardware.
 
@@ -132,8 +136,8 @@ runner via CI:
   off on the maintainer's machine). `fingerprint`; `selftest` writes and
   signs a bundle (toast + browser confirmed on the maintainer's machine, headless on the runner)
   and says TEST in the toast and report; `verify` accepts it; an edited
-  `report.html` is rejected. Key fingerprint on the maintainer's machine:
-  (not recorded).
+  `report.html` is rejected. The key fingerprint is deliberately not recorded
+  here: it would link that machine's evidence to this repository.
 - Live-fired and matched, raw XML checked in:
   - Application Error 1000 via `trigger fastfail` and `trigger gs` →
     `fastfail-any`. **Finding:** Win11 writes this event with named fields

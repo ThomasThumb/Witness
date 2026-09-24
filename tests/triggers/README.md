@@ -55,6 +55,23 @@ a maintainer decision, not a technical one. Until it is made, those rules rest
 on Microsoft's documentation plus the channel assignment reasoning in
 `rules/default.toml`, and the table below says so.
 
+## Before checking in a captured event
+
+The repository is public, and so is everything in it. Replace what
+identifies the machine before committing a capture to
+`crates/witness-core/tests/fixtures/` or `fuzz/corpus/`:
+
+| Field | Replace with |
+|---|---|
+| `<Computer>` | `EXAMPLE-PC` |
+| any `S-1-5-21-…` SID (`<Security UserID=…>`) | `S-1-5-21-0000000000-0000000000-0000000000-1001` |
+| `IntegratorReportId` | `00000000-0000-0000-0000-000000000000` |
+| a user name inside a path | `x` (as in `C:\Users\x\…`) |
+
+`captured_fixtures_carry_no_real_identifiers` fails the build if one of the
+first three slips through. Never commit `phase2-results\`: it is git-ignored
+because it holds unscrubbed output.
+
 ## Verification log
 
 Record here what each Windows build actually wrote, so the event IDs and

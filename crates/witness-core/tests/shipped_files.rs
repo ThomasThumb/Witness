@@ -143,6 +143,39 @@ fn shipped_rules_classify_realistic_events() {
     }
 }
 
+/// Captured fixtures are public, and so is anything that identifies the
+/// machine that captured them. Before one is checked in, its computer name,
+/// account SID and error-report id are replaced by these fakes
+/// (`tests/triggers/README.md`). This fails if a real one slips through.
+#[test]
+fn captured_fixtures_carry_no_real_identifiers() {
+    const FAKE_SID: &str = "S-1-5-21-0000000000-0000000000-0000000000-1001";
+    let root = std::path::Path::new(env!("CARGO_MANIFEST_DIR"));
+    for dir in [root.join("tests/fixtures"), root.join("../../fuzz/corpus/winevt_parse")] {
+        for entry in std::fs::read_dir(&dir).expect("fixture dir") {
+            let path = entry.expect("dir entry").path();
+            if !path.file_name().is_some_and(|n| n.to_string_lossy().starts_with("win11-")) {
+                continue; // fuzzer-grown corpus files are not captures
+            }
+            let xml = String::from_utf8_lossy(&std::fs::read(&path).expect("fixture")).into_owned();
+            let name = path.display();
+            for (open, close, fake) in [
+                ("<Computer>", "</Computer>", "EXAMPLE-PC"),
+                ("IntegratorReportId'>", "<", "00000000-0000-0000-0000-000000000000"),
+            ] {
+                for piece in xml.split(open).skip(1) {
+                    assert_eq!(piece.split(close).next(), Some(fake), "{name}: a real {open} value is checked in");
+                }
+            }
+            assert_eq!(
+                xml.matches("S-1-5-21-").count(),
+                xml.matches(FAKE_SID).count(),
+                "{name}: a real SID is checked in"
+            );
+        }
+    }
+}
+
 #[test]
 fn shipped_contacts_parse_and_are_dated() {
     let c: Contacts = toml::from_str(CONTACTS).expect("rules/contacts.toml must parse");

@@ -31,6 +31,12 @@ THREAT_MODEL.md before proposing a feature.
   (`image_in_process_dir`) over a vendor allowlist.
 - Every fix a live machine forced is recorded in `tests/triggers/README.md`
   with the raw XML checked in under `crates/witness-core/tests/fixtures/`.
+- Nothing public may identify the maintainer or any user: no names,
+  emails, machine names, SIDs, key fingerprints or expanded user paths in
+  files, fixtures, commit messages, commit authors or Witness's own output.
+  Anything public can be read by the people this tool exists to catch.
+  Fixtures get the fakes listed in `tests/triggers/README.md`; commits use
+  the repo-local GitHub no-reply identity; output shows `%LOCALAPPDATA%\Witness`.
 
 ## State as of 2026-09-23
 
