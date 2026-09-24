@@ -7,14 +7,20 @@ on:
 permissions:
   contents: read
 
+# Every action is pinned to a commit, not a tag: a tag can be moved to other
+# code by whoever controls that repository, a commit cannot. The comment
+# names the release the commit was, for whoever updates it. `persist-credentials:
+# false` keeps the checkout token out of .git/config, where every later step
+# (and every dependency build script) could otherwise read it.
 jobs:
   core:
     name: core (linux)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with: { components: "rustfmt, clippy" }
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09
+        with: { toolchain: stable, components: "rustfmt, clippy" }
       - run: cargo fmt --all --check
       - run: cargo clippy -p witness-core --all-targets --locked -- -D warnings
       - run: cargo test -p witness-core --locked
@@ -23,9 +29,10 @@ jobs:
     name: windows binary
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with: { components: "clippy" }
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09
+        with: { toolchain: stable, components: "clippy" }
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - run: cargo test --workspace --locked
       - run: cargo build --release --locked -p witness-win
@@ -47,6 +54,8 @@ jobs:
           $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -First 1
           if (-not $b) { throw 'selftest wrote no bundle' }
           .\target\release\witness.exe verify $b.FullName
+          $fp = (.\target\release\witness.exe fingerprint)[0].Trim()
+          .\target\release\witness.exe verify $b.FullName $fp
       - name: smoke tamper is rejected
         shell: pwsh
         run: |
@@ -58,6 +67,15 @@ jobs:
           "tamper correctly rejected (exit $LASTEXITCODE)"
           # GitHub's pwsh wrapper ends every step with `exit $LASTEXITCODE`, which
           # would report the rejection we just wanted as a failure. Say otherwise.
+          exit 0
+      - name: smoke wrong fingerprint is rejected
+        shell: pwsh
+        run: |
+          $PSNativeCommandUseErrorActionPreference = $false
+          $b = Get-ChildItem "$env:LOCALAPPDATA\Witness\evidence\selftest" -Directory | Select-Object -Last 1
+          .\target\release\witness.exe verify $b.FullName 0000-0000-0000-0000-0000-0000-0000-0000
+          if ($LASTEXITCODE -eq 0) { throw 'a wrong expected fingerprint verified OK; that is a bug' }
+          "wrong fingerprint correctly rejected (exit $LASTEXITCODE)"
           exit 0
       - name: smoke output names no user
         shell: pwsh
@@ -78,16 +96,18 @@ jobs:
     name: cargo-deny (advisories, bans, licences, sources)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
       # Covers the RustSec advisory DB too, so no separate audit action (which
       # would need `checks: write`; this workflow stays read-only).
-      - uses: EmbarkStudios/cargo-deny-action@v2
+      - uses: EmbarkStudios/cargo-deny-action@3c6349835b2b7b196a839186cb8b78e02f7b5f25 # v2.1.1
 
   unsafe-inventory:
     name: unsafe stays where it belongs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
       - name: core must contain no unsafe
         run: "! grep -rn 'unsafe' crates/witness-core/src --include='*.rs' | grep -v -E 'forbid|unsafe-inline'"
       - name: windows unsafe is confined to four files
@@ -100,9 +120,11 @@ jobs:
     name: fuzz (60 s per target, nightly)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@nightly
-      - run: cargo install cargo-fuzz --locked
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
+      - uses: dtolnay/rust-toolchain@02cb101ec7c40f2c49e1d9714d64511d8e1b74de # master, 2026-09
+        with: { toolchain: nightly }
+      - run: cargo install cargo-fuzz --locked --version 0.13.2
       - run: cargo +nightly fuzz run winevt_parse -- -max_total_time=60
       - run: cargo +nightly fuzz run rules_parse -- -max_total_time=60
 
@@ -110,5 +132,6 @@ jobs:
     name: contacts checked within 6 months
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
       - run: python3 scripts/check_contacts.py rules/contacts.toml

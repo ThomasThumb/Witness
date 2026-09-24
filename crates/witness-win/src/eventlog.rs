@@ -2,16 +2,31 @@
 //! the OS, and one of only four modules with `unsafe` (see keys.rs, harden.rs,
 //! notify.rs).
 //!
-//! SAFETY model: each subscription owns a leaked `Box<Sender<String>>` passed
-//! to the OS as an opaque context pointer. The OS calls `callback` on its own
-//! thread with that pointer. We unsubscribe (`EvtClose`) *before* freeing the
-//! box in `Drop`, so the pointer is never dangling while the OS can call us.
+//! SAFETY model: each subscription owns a leaked `Box<SyncSender<String>>`
+//! passed to the OS as an opaque context pointer. The OS calls `callback` on
+//! its own thread with that pointer. We unsubscribe (`EvtClose`) *before*
+//! freeing the box in `Drop`, so the pointer is never dangling while the OS
+//! can call us.
+//!
+//! The queue between the OS thread and the watcher is bounded twice: by
+//! record count (the channel) and by bytes ([`MAX_QUEUE_BYTES`]). Any process
+//! on the machine can raise a mitigation event at will, and each rendered
+//! record can be up to 8 MB; an unbounded queue would let a flood of them
+//! grow the watcher's memory until Windows killed it. When the queue is full
+//! the record is dropped and counted; the watcher logs the count. Windows
+//! keeps the record in the Event Log regardless.
 //!
 //! Signatures below were checked by hand against `windows` 0.61.3
 //! (`Win32::System::EventLog`). If a bump changes one, this file is where it
 //! shows up.
 
-use std::{ffi::c_void, sync::mpsc::Sender};
+use std::{
+    ffi::c_void,
+    sync::{
+        atomic::{AtomicU64, AtomicUsize, Ordering},
+        mpsc::{SyncSender, TrySendError},
+    },
+};
 use windows::{
     core::HSTRING,
     Win32::System::EventLog::{
@@ -22,10 +37,50 @@ use windows::{
 };
 use witness_core::winevt::MAX_EVENT_BYTES;
 
+/// Records the queue may hold. Real records are a few KB, so this is far more
+/// than a burst (Chromium's four CIG events at start) and far less than a flood.
+pub const QUEUE_RECORDS: usize = 256;
+
+/// Bytes the queue may hold across all records; a second, tighter bound for
+/// the case where records are large.
+pub const MAX_QUEUE_BYTES: usize = 64 * 1024 * 1024;
+
+static QUEUED_BYTES: AtomicUsize = AtomicUsize::new(0);
+static DROPPED: AtomicU64 = AtomicU64::new(0);
+
+/// Hand a rendered record to the watcher, or drop and count it if the queue
+/// is full. Never blocks: this runs on the OS's callback thread.
+pub fn enqueue(tx: &SyncSender<String>, xml: String) {
+    let len = xml.len();
+    if QUEUED_BYTES.load(Ordering::Relaxed).saturating_add(len) > MAX_QUEUE_BYTES {
+        DROPPED.fetch_add(1, Ordering::Relaxed);
+        return;
+    }
+    match tx.try_send(xml) {
+        Ok(()) => {
+            QUEUED_BYTES.fetch_add(len, Ordering::Relaxed);
+        }
+        Err(TrySendError::Full(_)) => {
+            DROPPED.fetch_add(1, Ordering::Relaxed);
+        }
+        Err(TrySendError::Disconnected(_)) => {} // receiver gone = we are shutting down
+    }
+}
+
+/// The watcher calls this for every record it takes off the queue.
+pub fn dequeued(len: usize) {
+    QUEUED_BYTES.fetch_sub(len, Ordering::Relaxed);
+}
+
+/// Records dropped since start because the queue was full.
+pub fn dropped() -> u64 {
+    DROPPED.load(Ordering::Relaxed)
+}
+
 /// One live subscription. Dropping it unsubscribes.
 pub struct Subscription {
     handle: EVT_HANDLE,
-    ctx: *mut Sender<String>,
+    ctx: *mut SyncSender<String>,
 }
 
 // SAFETY: the OS thread only touches `ctx` through the callback; we never touch
@@ -46,11 +101,11 @@ impl Drop for Subscription {
 }
 
 /// Subscribe to every channel; deliver rendered XML through `tx`.
-pub fn subscribe_all(channels: &[&str], tx: &Sender<String>) -> Result<Vec<Subscription>, String> {
+pub fn subscribe_all(channels: &[&str], tx: &SyncSender<String>) -> Result<Vec<Subscription>, String> {
     channels.iter().map(|ch| subscribe(ch, tx.clone())).collect()
 }
 
-fn subscribe(channel: &str, tx: Sender<String>) -> Result<Subscription, String> {
+fn subscribe(channel: &str, tx: SyncSender<String>) -> Result<Subscription, String> {
     let ctx = Box::into_raw(Box::new(tx));
     let channel_w = HSTRING::from(channel);
     let query_w = HSTRING::from("*");
@@ -81,7 +136,7 @@ fn subscribe(channel: &str, tx: Sender<String>) -> Result<Subscription, String> 
 
 /// Can we open this channel at all? Used by `witness check`.
 pub fn probe(channel: &str) -> Result<(), String> {
-    let (tx, _rx) = std::sync::mpsc::channel();
+    let (tx, _rx) = std::sync::mpsc::sync_channel(1);
     subscribe(channel, tx).map(drop)
 }
 
@@ -116,12 +171,12 @@ unsafe extern "system" fn callback(action: EVT_SUBSCRIBE_NOTIFY_ACTION, ctx: *co
     if action != EvtSubscribeActionDeliver || ctx.is_null() {
         return 0; // EvtSubscribeActionError: nothing we can do; `witness check` covers it
     }
-    // SAFETY: `ctx` is the `Box<Sender<String>>` we leaked in `subscribe`, and is
-    // alive because Drop closes the subscription before freeing it.
-    let tx = unsafe { &*ctx.cast::<Sender<String>>() };
+    // SAFETY: `ctx` is the `Box<SyncSender<String>>` we leaked in `subscribe`,
+    // and is alive because Drop closes the subscription before freeing it.
+    let tx = unsafe { &*ctx.cast::<SyncSender<String>>() };
     // SAFETY: `event` is a valid handle for the duration of this callback.
     if let Some(xml) = unsafe { render_xml(event) } {
-        let _ = tx.send(xml); // receiver gone = we are shutting down; ignore.
+        enqueue(tx, xml);
     }
     0
 }
@@ -149,7 +204,22 @@ unsafe fn render_xml(event: EVT_HANDLE) -> Option<String> {
 
 #[cfg(test)]
 mod tests {
-    use super::enabled;
+    use super::{dequeued, dropped, enabled, enqueue};
+
+    #[test]
+    fn a_full_queue_drops_and_counts_instead_of_growing() {
+        let (tx, rx) = std::sync::mpsc::sync_channel::<String>(1);
+        let before = dropped();
+        enqueue(&tx, "<Event>1</Event>".into());
+        enqueue(&tx, "<Event>2</Event>".into()); // queue of one: dropped
+        assert_eq!(dropped(), before + 1);
+        let got = rx.try_recv().unwrap_or_default();
+        dequeued(got.len());
+        assert_eq!(got, "<Event>1</Event>", "the first record is queued");
+        assert!(rx.try_recv().is_err(), "the dropped record never arrives");
+        enqueue(&tx, "<Event>3</Event>".into()); // room again
+        assert_eq!(dropped(), before + 1);
+    }
 
     #[test]
     fn reads_whether_a_channel_is_enabled() {

@@ -4,7 +4,9 @@
 //!   run          watch the event log until closed (what the scheduled task runs)
 //!   check        print status: rules loaded, channels reachable, key fingerprint
 //!   selftest     push a built-in sample event through the whole pipeline
-//!   verify DIR   verify an evidence bundle's signature and hashes
+//!   verify DIR [FINGERPRINT]
+//!                verify an evidence bundle's signature and hashes; with the
+//!                fingerprint the user wrote down, also that this install made it
 //!   fingerprint  print the signing-key fingerprint to write down
 //!   install      print the one-line Scheduled Task command (we do not silently persist)
 //!
@@ -101,14 +103,15 @@ fn main() -> ExitCode {
         "run" => run(),
         "check" => check(),
         "selftest" => selftest(),
-        "verify" => {
-            args.get(2).map_or_else(|| Err("usage: witness verify <bundle-dir>".into()), |d| verify(Path::new(d)))
-        }
+        "verify" => args.get(2).map_or_else(
+            || Err("usage: witness verify <bundle-dir> [expected-fingerprint]".into()),
+            |d| verify(Path::new(d), args.get(3).map(String::as_str)),
+        ),
         "fingerprint" => fingerprint(),
         "install" => install(),
         _ => {
             println!(
-                "witness {} — see README.md\n  run | check | selftest | verify <dir> | fingerprint | install",
+                "witness {} — see README.md\n  run | check | selftest | verify <dir> [fingerprint] | fingerprint | install",
                 witness_core::VERSION
             );
             Ok(())
@@ -158,9 +161,12 @@ impl App {
             }
             return Ok(None);
         };
-        log(&format!("match {} ({}) process={:?}", rule.id, rule.severity, ev.process));
+        // The refused library is named too, so a helper reading the log can
+        // judge a `bug`-severity CIG event, which gets no bundle, for themselves.
+        let image = ["ImageName", "ImagePath"].iter().find_map(|k| ev.data.get(*k));
+        log(&format!("match {} ({}) process={:?} image={:?}", rule.id, rule.severity, ev.process, image));
         if rule.severity == Severity::Bug {
-            return Ok(None); // logged, not shown
+            return Ok(None); // logged, not shown; the Event Log keeps the record
         }
         let dir = evidence::bundle_dir(&self.evidence_root, &ev, rule);
         let html = report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);
@@ -197,7 +203,7 @@ fn override_or(base: &Path, name: &str, embedded: &str) -> Result<String, String
 
 fn run() -> Result<(), String> {
     let mut app = App::load(false)?;
-    let (tx, rx) = mpsc::channel::<String>();
+    let (tx, rx) = mpsc::sync_channel::<String>(eventlog::QUEUE_RECORDS);
     let _subs = eventlog::subscribe_all(CHANNELS, &tx)?; // dropped on exit = unsubscribed
     drop(tx); // only the OS callbacks hold senders now; rx ends when they are gone
     log(&format!("running; {} rules; key {}", app.rules.rules.len(), app.id.fingerprint()));
@@ -206,11 +212,22 @@ fn run() -> Result<(), String> {
             log(&format!("warning: channel {ch} is disabled; nothing from it will arrive (see `witness check`)"));
         }
     }
+    let mut dropped_seen = 0;
     for xml in rx {
+        eventlog::dequeued(xml.len());
         match app.handle(&xml) {
             Ok(Some(dir)) => log(&format!("bundle written: {}", paths::shown(&dir))),
             Ok(None) => {}
             Err(e) => log(&e), // this event is lost; the watcher keeps running (DESIGN.md)
+        }
+        let dropped = eventlog::dropped();
+        if dropped != dropped_seen {
+            log(&format!(
+                "warning: {} event(s) dropped because they arrived faster than Witness could handle them; \
+                 {dropped} since start. Windows keeps them in the Event Log.",
+                dropped - dropped_seen
+            ));
+            dropped_seen = dropped;
         }
     }
     Ok(())
@@ -252,7 +269,7 @@ fn selftest() -> Result<(), String> {
     println!("You should see a toast and the report should open in your browser.");
     match app.handle(SELFTEST_XML)? {
         Some(dir) => {
-            let m = evidence::verify_bundle(&dir)?;
+            let m = evidence::verify_bundle(&dir, Some(&app.id.fingerprint()))?;
             println!("OK: bundle {} rule={} severity={} verified", paths::shown(&dir), m.rule_id, m.severity);
             println!("This was a test. The folder above is safe to delete.");
             Ok(())
@@ -261,20 +278,32 @@ fn selftest() -> Result<(), String> {
     }
 }
 
-fn verify(dir: &Path) -> Result<(), String> {
-    let m = evidence::verify_bundle(dir)?;
+/// Everything printed here came from the bundle, or from a folder name someone
+/// else chose, so it goes through `visible`: nothing in it may carry a line
+/// break or an escape sequence that could forge or hide the key line a helper
+/// is about to compare. The manifest fields have already passed their grammar
+/// checks; `visible` is the second line of defence.
+fn verify(dir: &Path, expected: Option<&str>) -> Result<(), String> {
+    let m = evidence::verify_bundle(dir, expected)?;
     println!(
-        "OK: bundle {} rule={} severity={} witness={} key={}",
-        paths::shown(dir),
-        m.rule_id,
-        m.severity,
-        m.witness_version,
-        m.key_fingerprint
+        "OK: bundle {} rule={} severity={} witness={} created={}",
+        evidence::visible(&paths::shown(dir)),
+        evidence::visible(&m.rule_id),
+        evidence::visible(&m.severity),
+        evidence::visible(&m.witness_version),
+        evidence::visible(&m.created)
     );
-    println!("The key must match the fingerprint written down when Witness was installed; if it differs, another install made this bundle.");
+    println!("key: {}", evidence::visible(&m.key_fingerprint));
+    if expected.is_some() {
+        println!("The key matches the fingerprint you gave: this bundle was made by that install.");
+    } else {
+        println!("The key must match the fingerprint written down when Witness was installed; if it differs, another install made this bundle.");
+        println!("To have Witness check instead:  witness verify <bundle-dir> <fingerprint>");
+    }
     let extra = evidence::unsigned_entries(dir).map_err(|e| e.to_string())?;
     if !extra.is_empty() {
-        println!("NOT covered by the signature, do not trust: {}", extra.join(", "));
+        let names: Vec<String> = extra.iter().map(|n| evidence::visible(n)).collect();
+        println!("NOT covered by the signature, do not trust: {}", names.join(", "));
     }
     Ok(())
 }

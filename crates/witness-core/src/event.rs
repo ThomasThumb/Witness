@@ -47,27 +47,43 @@ impl Event {
     /// (`brave.exe` → `<install>\<version>\vulkan-1.dll`). That is a bug in the
     /// program's own configuration, not an intrusion, and rules use this to
     /// keep it quiet. `false` whenever either path is unknown.
+    ///
+    /// Volumes count. The same folder path on another drive is another folder,
+    /// so two named volumes must be the same, spelt the same way (a drive
+    /// letter cannot be matched to a `\Device\HarddiskVolumeN` name without
+    /// asking the OS, so that pair proves nothing). The kernel writes CIG's
+    /// `ImageName` with no volume at all; then the folders alone decide, as
+    /// observed on Windows 11.
     #[must_use]
     pub fn image_in_process_dir(&self) -> bool {
         let Some(process) = self.process.as_deref() else { return false };
         let Some(image) = ["ImageName", "ImagePath"].iter().find_map(|k| self.data.get(*k)) else { return false };
-        let process = normalize_path(process);
+        let (process_volume, process) = split_volume(process);
+        let (image_volume, image) = split_volume(image);
+        match (process_volume, image_volume) {
+            (Some(a), Some(b)) if a != b => return false,
+            (None, Some(_)) => return false,
+            _ => {}
+        }
         let Some(dir) = process.rfind('\\').map(|i| &process[..=i]) else { return false };
-        normalize_path(image).starts_with(dir)
+        image.starts_with(dir)
     }
 }
 
-/// Lower-case, backslashes only, and strip the two prefixes the kernel and the
-/// Win32 layer disagree about: `\Device\HarddiskVolumeN` and a drive letter.
-/// Good enough to compare two paths from the same event; not a general canonicaliser.
-fn normalize_path(p: &str) -> String {
-    let mut s = p.replace('/', "\\").to_ascii_lowercase();
-    if let Some(rest) = s.strip_prefix("\\device\\harddiskvolume") {
-        s = rest.trim_start_matches(|c: char| c.is_ascii_digit()).to_string();
-    } else if s.len() > 2 && s.as_bytes()[1] == b':' {
-        s = s[2..].to_string();
+/// Lower-case with backslashes only, split into the volume the OS named, if
+/// any, and the path on it: `\Device\HarddiskVolume3\x` → (`harddiskvolume3`,
+/// `\x`), `C:\x` → (`c:`, `\x`), `\x` → (none, `\x`). Good enough to compare
+/// two paths from the same event; not a general canonicaliser.
+fn split_volume(p: &str) -> (Option<String>, String) {
+    let s = p.replace('/', "\\").to_ascii_lowercase();
+    if let Some(rest) = s.strip_prefix("\\device\\") {
+        let end = rest.find('\\').unwrap_or(rest.len());
+        return (Some(rest[..end].to_string()), rest[end..].to_string());
     }
-    s
+    if s.len() > 2 && s.as_bytes()[1] == b':' {
+        return (Some(s[..2].to_string()), s[2..].to_string());
+    }
+    (None, s)
 }
 
 /// Parse a hex or decimal code such as `c0000409`, `0xC0000409` or `3221226505`.
@@ -120,12 +136,41 @@ mod tests {
             r"\Program Files\BraveSoftware\Brave-Browser\Application\153.1.95.104\vulkan-1.dll".into(),
         );
         assert!(e.image_in_process_dir());
-        e.data.insert("ImageName".into(), r"C:\PROGRAM FILES\BraveSoftware\Brave-Browser\Application\x.dll".into());
-        assert!(e.image_in_process_dir(), "drive letter and case must not matter");
+        e.data.insert("ImageName".into(), r"\PROGRAM FILES\BraveSoftware\Brave-Browser\Application\x.dll".into());
+        assert!(e.image_in_process_dir(), "case must not matter");
+        e.data.insert("ImageName".into(), r"C:\Program Files\BraveSoftware\Brave-Browser\Application\x.dll".into());
+        assert!(!e.image_in_process_dir(), "a drive letter cannot be matched to a device volume: prove nothing");
         e.data.insert("ImageName".into(), r"\Users\x\AppData\Local\Temp\evil.dll".into());
         assert!(!e.image_in_process_dir());
         e.data.insert("ImageName".into(), r"\Program Files\BraveSoftware\Brave-Browser\Application-evil\x.dll".into());
         assert!(!e.image_in_process_dir(), "sibling directory with a shared prefix must not match");
+    }
+
+    #[test]
+    fn image_in_process_dir_keeps_volumes_apart() {
+        let mut e = Event {
+            time: String::new(),
+            channel: String::new(),
+            provider: String::new(),
+            event_id: 12,
+            record_id: 0,
+            process: Some(r"\Device\HarddiskVolume3\Apps\Chat\chat.exe".into()),
+            exception_code: None,
+            data: BTreeMap::new(),
+            raw: String::new(),
+        };
+        e.data.insert("ImageName".into(), r"\Device\HarddiskVolume3\Apps\Chat\helper.dll".into());
+        assert!(e.image_in_process_dir(), "same device volume, same folder");
+        e.data.insert("ImageName".into(), r"\Device\HarddiskVolume4\Apps\Chat\helper.dll".into());
+        assert!(!e.image_in_process_dir(), "the same folder path on another volume is another folder");
+        e.process = Some(r"D:\Apps\Chat\chat.exe".into());
+        e.data.insert("ImageName".into(), r"D:\Apps\Chat\helper.dll".into());
+        assert!(e.image_in_process_dir(), "same drive, same folder");
+        e.data.insert("ImageName".into(), r"E:\Apps\Chat\helper.dll".into());
+        assert!(!e.image_in_process_dir(), "another drive");
+        e.process = Some(r"\Apps\Chat\chat.exe".into());
+        e.data.insert("ImageName".into(), r"D:\Apps\Chat\helper.dll".into());
+        assert!(!e.image_in_process_dir(), "a process with no volume cannot vouch for an image with one");
     }
 
     #[test]
