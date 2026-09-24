@@ -53,6 +53,7 @@ if ($Msvc) {
     $vcvarsall = Join-Path $vs 'VC\Auxiliary\Build\vcvarsall.bat'
     $vars = & cmd /c "`"$vcvarsall`" $arch -vcvars_ver=$Msvc >nul 2>&1 && set"
     if ($LASTEXITCODE -ne 0) { throw "vcvarsall $arch -vcvars_ver=$Msvc failed: is MSVC $Msvc installed for $arch?" }
+    $vsVersion = "{0} ({1})" -f (& $vswhere -path $vs -property catalog_productDisplayVersion), (& $vswhere -path $vs -property installationVersion)
     foreach ($line in $vars) {
         $i = $line.IndexOf('=')
         if ($i -gt 0) { [Environment]::SetEnvironmentVariable($line.Substring(0, $i), $line.Substring($i + 1)) }
@@ -66,6 +67,12 @@ foreach ($p in $cargoHome, $root, $TargetDir) {
 
 # Literal TOML strings ('...'): backslashes pass through untouched.
 $remap = "'--remap-path-prefix=$cargoHome=/cargo', '--remap-path-prefix=$root=/witness', '--remap-path-prefix=$TargetDir=/target'"
+# A release build starts clean for its target. Cargo does not notice an MSVC
+# update: C code a dependency compiles with cl.exe (blake3's SIMD code) stays
+# cached, and the old objects end up in the new binary. Observed 2026-09-24:
+# after a Visual Studio update, even with witness.exe deleted, the build
+# still carried the old compiler's objects. Costs a full rebuild; correct.
+Remove-Item -Recurse -Force -Path "$TargetDir\$Target\release" -ErrorAction SilentlyContinue
 Push-Location $root
 try {
     # PowerShell 5.1 turns cargo's progress (stderr) into errors whenever the
@@ -110,7 +117,7 @@ $info = @(
     "target       $Target",
     "rustc        $rustc",
     "linker       MSVC $linker (PE header)",
-    "toolset      $(if ($Msvc) { "MSVC $env:VCToolsVersion, Windows SDK $($env:WindowsSDKVersion.TrimEnd('\'))" } else { 'machine default (not pinned)' })",
+    "toolset      $(if ($Msvc) { "MSVC $env:VCToolsVersion, Visual Studio $vsVersion, Windows SDK $($env:WindowsSDKVersion.TrimEnd('\'))" } else { 'machine default (not pinned)' })",
     "msvc builds  $richBuilds (Rich header: every MSVC tool and CRT object linked in)"
 )
 $info | Set-Content -Path (Join-Path (Split-Path -Parent $exe) 'build-info.txt') -Encoding ascii

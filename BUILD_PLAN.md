@@ -121,7 +121,13 @@ Exit: written sign-off from one outside reviewer on the triage text.
    both sides, differing bytes down from 163,534 to 76,985. What is left is
    the Visual Studio servicing level: the runner has VS 2022 17.14.37628.2
    (a CRT object at build 35228), this machine 17.14.36717.8 (35221).
-   [ ] Bring the two to the same servicing level, then compare again.
+   This machine was then updated to 17.14.41 (September 2026) and, built
+   clean, carries 35229: one step past the runner. The code section is the
+   same size on both (691,783 B); only 256 B of .rdata differ, where the
+   CRT/C-compiler objects sit. [ ] When GitHub's windows-2022 image reaches
+   17.14.41 (its readme lists the version), re-run the dry run and compare.
+   Lesson: build-release.ps1 now starts each release build clean, because
+   cargo kept objects compiled by the old cl.exe after the update.
    The container route needs the Windows "Containers" and "Hyper-V"
    features, which are off on the maintainer's machine.
 2. SignPath Foundation application for free OSS Authenticode signing. Until

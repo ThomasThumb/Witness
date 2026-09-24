@@ -93,9 +93,11 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 ## What is next (in order)
 
 1. Phase 4, second machine: MSVC is pinned (14.44, release job on
-   windows-2022). The hashes still differ by Visual Studio servicing level:
-   runner 17.14.37628.2, this machine 17.14.36717.8. Match them (the
-   maintainer's call), then compare `build-info.txt` and the hash again.
+   windows-2022). The hashes differ only by Visual Studio servicing level:
+   this machine is on 17.14.41 (CRT objects 35229), the runner image on
+   17.14.37628.2 (35228). When the image reaches 17.14.41 (see
+   actions/runner-images, Windows2022-Readme.md), re-run the release dry run
+   and compare `build-info.txt` and the hash.
 2. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
    The packet is `docs/review/phase3-wording.md`; the maintainer sends it.
 3. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
