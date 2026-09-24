@@ -81,6 +81,18 @@ Two crates, one direction of dependency:
 3. **Bundle → world.** `manifest.json` lists every file with BLAKE3 and size;
    `manifest.sig` is ML-DSA-87 over the manifest bytes; `pubkey.bin` travels
    with it. Verification needs nothing but those three files.
+4. **World → verifier.** A bundle a helper receives is untrusted input that
+   brings its own key, so a crafted one signs cleanly. `verify_bundle`
+   therefore: checks every manifest text field against a fixed grammar and
+   the file list against the fixed three names before any name is used;
+   checks the signature, and the expected fingerprint if the helper gave
+   one, before any payload is opened; opens each file without following
+   links and judges the handle it holds (a link or a non-regular file is
+   refused); reads metadata through a 1 MiB budget and hashes payloads as a
+   stream through a 64 MiB one, so nothing in the bundle sizes an
+   allocation. The CLI prints bundle text only through `visible()`, which
+   keeps printable ASCII and escapes the rest, so no name or field can move
+   the cursor or hide the key line a helper is about to compare.
 4. **Report → browser.** Local file, `Content-Security-Policy: default-src
    'none'; style-src 'unsafe-inline'`. No script, no images, no fonts, no
    links. Contacts are text the user types. Every `<Data>` field the OS
@@ -129,6 +141,15 @@ evidence is no longer needed.
   cannot parse, and we would rather miss than guess.
 * Bundle write failure: fatal for that event, logged with the OS error;
   the watcher keeps running (`App::handle` returns a `String`, `run` logs it).
+  A bundle directory that already exists counts as a failure: evidence is
+  never written over, whatever `bundle_dir` came up with.
+* Event flood: the queue between the OS callback and the watcher holds at
+  most 256 records and 64 MiB. Any process can raise mitigation events at
+  will, and each record can be 8 MB, so an unbounded queue was a way to
+  grow the watcher until Windows killed it. Records that arrive while it is
+  full are dropped and counted; the watcher logs the count. Windows keeps
+  every record in the Event Log regardless, so nothing is lost for a helper
+  who looks there.
 * Toast/open failure: ignored; the bundle exists and `witness.log` says so.
 * `panic = "abort"` in release: a bug in Witness ends Witness rather than
   continuing in an unknown state. The scheduled task restarts it at next logon.

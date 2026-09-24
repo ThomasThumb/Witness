@@ -265,6 +265,19 @@ deliberately: the elevated `phase2-admin.ps1` run (it changes Exploit
 Protection settings and opens a share, so the maintainer runs it), the
 Docker image, and the push.
 
+## 6a. Codex security scan (2026-09-24)
+
+The maintainer ran OpenAI Codex's deep security scan over the working
+folder. Ten findings, one medium, nine low; the medium and four of the lows
+were about the superseded pre-repository copies (scaffold folder and two
+ZIPs), which the maintainer deletes. The rest changed the live code: the
+verifier opens nothing through a link, reads through size budgets, checks
+every manifest field's grammar before printing it, escapes what it prints,
+and takes an expected fingerprint; the event queue is bounded; bundles are
+never overwritten; the CIG comparison keeps volumes apart; every action in
+the workflows is pinned to a commit. Full record, with what was declined
+and why: `docs/reviews/2026-09-24-codex-deep-scan.md`.
+
 ## 7. Decisions and why
 
 | Decision | Reason |
@@ -334,6 +347,10 @@ Docker image, and the push.
    classified `bug` and never shown. Narrowing the predicate to non-user-
    writable folders brings back the per-user-Chrome false positive at every
    browser start. That trade-off is the maintainer's; flagged, not changed.
+   Since the Codex scan (2026-09-24, `docs/reviews/`): the comparison keeps
+   volume identity, so the same folder on another drive no longer counts,
+   and `witness.log` names the refused library on every match, so a quiet
+   one can be judged from the log.
 3. **The toast says "Tap to read what it means"**, but the report already
    opens by itself, and the toast is attributed to PowerShell's
    AppUserModelID, so tapping it may just open PowerShell. Untested; worth
@@ -341,6 +358,8 @@ Docker image, and the push.
 4. **The `Application` subscription** sees every application event on the
    machine; only 1000/Application Error is acted on. Fine for v0.1; a
    structured XPath filter in `EvtSubscribe` would cut the noise later.
+   The queue behind it is bounded now (256 records, 64 MiB; drops are
+   counted and logged), so the noise costs bounded memory.
 5. **Repeat-offender escalation** (same process, same rule, N times in a
    window → bump severity) is wanted for v0.2 and needs a small state file.
 

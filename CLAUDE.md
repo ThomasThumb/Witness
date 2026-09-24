@@ -66,6 +66,13 @@ machine via `scripts\build-release.ps1` (`/Brepro` + path remapping);
 identity, arm64 target on the pinned toolchain, flat artifacts, dry-run
 trigger).
 
+Codex security scan (2026-09-24): ten findings; seven fixed in code
+(verify: no-follow opens, size budgets, manifest grammar, escaped output,
+`witness verify <dir> <fingerprint>`; bounded event queue; bundles never
+overwritten; CIG volume identity; workflow actions pinned to commits), the
+rest were the pre-repository archives, which the maintainer deletes. Record
+and what was declined: `docs/reviews/2026-09-24-codex-deep-scan.md`.
+
 ## How to work here
 
 ```
@@ -99,7 +106,7 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
    actions/runner-images, Windows2022-Readme.md), re-run the release dry run
    and compare `build-info.txt` and the hash.
 2. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
-   The packet is `docs/review/phase3-wording.md`; the maintainer sends it.
+   The packet is `docs/reviews/phase3-wording.md`; the maintainer sends it.
 3. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
    drafted; it is user-facing text, so it goes through the Phase 3 review.
 

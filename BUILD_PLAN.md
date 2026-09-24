@@ -81,7 +81,7 @@ fingerprint and the same fingerprint appears in every report.
 1. Every `triage` block reviewed by at least one person who has done digital
    security support for at-risk users. Access Now's helpline and Freedom of
    the Press Foundation both have people who will do this if asked kindly.
-   [~] Packet ready: `docs/review/phase3-wording.md` (every message verbatim,
+   [~] Packet ready: `docs/reviews/phase3-wording.md` (every message verbatim,
    context, questions, sign-off form); request drafted. [ ] Send; get sign-off.
 2. Test the report with three non-technical people. Watch them read it. If
    any of them asks "so am I hacked?", the text is not done.
