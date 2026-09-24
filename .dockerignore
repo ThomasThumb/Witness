@@ -1,0 +1,4 @@
+# Dockerfile.windows copies nothing from the build context: reproduce.ps1
+# mounts the checkout at run time. Without this, `docker build` would send
+# the whole folder, target\ included (gigabytes), for nothing.
+*

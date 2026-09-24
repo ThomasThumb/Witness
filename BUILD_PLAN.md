@@ -106,8 +106,16 @@ Exit: written sign-off from one outside reviewer on the triage text.
    [x] Proven on one machine: two builds from different source folders,
    CARGO_HOME paths and target dirs, byte-identical (x86_64 `3df053c6…`
    with rustc 1.95.0 and MSVC 14.44.35207), PE flags and CETCOMPAT intact.
-   [ ] The second machine: build the container image, run `reproduce.ps1`.
-   The MSVC toolset has to match too; compare the two `build-info.txt`.
+   [~] The second machine. GitHub's runner, in the release dry run of
+   2026-09-24, built `1958d53` through the same script: same size as the
+   local build (859,136 B), different hash, and `build-info.txt` says why:
+   the runner linked with MSVC 14.51 (builds 36256, 35721), this machine
+   with 14.44 (35221, 35207). Same rustc. The remap held on the runner (no
+   runner paths; CFG/CET intact) and the runner's binary runs and
+   self-hardens on the maintainer's machine. [ ] Match the toolsets (pin the
+   release job's MSVC, or install the runner's locally) and compare again.
+   The container route needs the Windows "Containers" and "Hyper-V"
+   features, which are off on the maintainer's machine.
 2. SignPath Foundation application for free OSS Authenticode signing. Until
    approved, releases carry a SmartScreen warning; the README explains why
    and how to verify with cosign instead.
@@ -121,8 +129,9 @@ Exit: written sign-off from one outside reviewer on the triage text.
    from a branch named `github.com/ThomasThumb/Witness` (now the exact
    workflow and tag); the arm64 target was added to `stable`, not the
    pinned toolchain; artifacts were uploaded nested, so `publish` could not
-   find them. [ ] Dry run: Actions → release → Run workflow (builds and
-   uploads, publishes nothing) before the first tag.
+   find them. [x] Dry run 2026-09-24: both targets built (arm64 for the
+   first time), artifacts staged flat with SBOM and build-info, publish
+   skipped as designed.
 4. `winget` manifest submitted after the first signed release.
 5. `verify_bundle.py`: a 40-line dependency-light Python script (using a
    pure-Python ML-DSA or calling `witness verify`) so a helpline can verify a

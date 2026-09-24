@@ -92,13 +92,13 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 
 ## What is next (in order)
 
-1. Run the release workflow by hand (Actions → release → Run workflow): a
-   dry run that builds both targets and publishes nothing.
-2. Phase 4, second machine: build the container image, run `reproduce.ps1`.
-   The host half is proven. If it mismatches, compare the two
-   `build-info.txt` first: the MSVC build numbers must match.
-3. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
-4. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
+1. Phase 4, second machine: the release dry run (2026-09-24) passed, but
+   GitHub's runner links with MSVC 14.51 and this machine with 14.44, so
+   the hashes differ. Match the toolsets (the maintainer's call: pin the
+   release job, or install 14.51 here), then compare `build-info.txt` and
+   the hash again. Docker needs Windows features that are off here.
+2. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
+3. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
    drafted; it is user-facing text, so it goes through the Phase 3 review.
 
 `phase2-admin.ps1` is the maintainer's to run (it changes Exploit
