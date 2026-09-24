@@ -1,7 +1,7 @@
 # Witness — hand-off to Claude Code
 
-*As of 2026-09-23. Local `main` is eleven commits ahead of GitHub
-(`3fd70ee`, CI green); the push is the maintainer's job. `CLAUDE.md` is the
+*As of 2026-09-24. Everything is pushed. Every commit was rewritten that day
+to remove identifying data, so older commit IDs no longer exist. `CLAUDE.md` is the
 short version Claude Code reads automatically; this is the complete one.
 Three sessions have touched this code: the chat session that built it, a
 Claude Code session on the maintainer's machine that hardened it, and the
@@ -195,11 +195,11 @@ smoke (nightly, 60 s per target), contacts freshness. First run needed two
 fixes, both CI plumbing: `rustsec/audit-check` was dropped (needs
 `checks: write`; cargo-deny covers the same DB), and the tamper step ends
 with `exit 0` because GitHub's pwsh wrapper appends `exit $LASTEXITCODE`.
-Green at `3fd70ee`. The eleven commits since are local only.
+Green at `86c49e6` (rewritten ID). Everything since was pushed with the 2026-09-24 history rewrite.
 
 ## 6. Second session: Claude Code on the maintainer's machine (2026-09-23)
 
-Picked up from the chat session with the tree clean and `aa4d418` unpushed.
+Picked up from the chat session with the tree clean and `257b934` (rewritten ID) unpushed.
 Baseline first: fmt, clippy, 26 tests, `cargo deny`, release build,
 `check`: all green, same key fingerprint as before, so nothing had
 drifted. Then, each its own commit, each proven on this machine:

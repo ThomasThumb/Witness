@@ -36,7 +36,9 @@ THREAT_MODEL.md before proposing a feature.
   files, fixtures, commit messages, commit authors or Witness's own output.
   Anything public can be read by the people this tool exists to catch.
   Fixtures get the fakes listed in `tests/triggers/README.md`; commits use
-  the repo-local GitHub no-reply identity; output shows `%LOCALAPPDATA%\Witness`.
+  the repo-local GitHub no-reply identity and UTC (`$env:TZ='UTC'` before
+  `git commit`; otherwise the local timezone is stamped in); output shows
+  `%LOCALAPPDATA%\Witness`.
 
 ## State as of 2026-09-23
 
@@ -50,7 +52,7 @@ Brave false positive, now the `cig-self-bundled` rule). Not yet fired: 4, 6
 run), and the UserMode family 14–24 (no triggers, on purpose: whether a
 public repo should carry them is the maintainer's call).
 
-Repository: `github.com/ThomasThumb/Witness`. Pushed; CI green on all six jobs as of 3fd70ee (2026-09-23).
+Repository: `github.com/ThomasThumb/Witness`. Every commit's history was rewritten on 2026-09-24 to remove identifying data, so commit IDs from before then no longer exist. CI was green on all six jobs at `86c49e6` (rewritten ID).
 
 Second session (Claude Code on the maintainer's machine, 2026-09-23; details in HANDOFF.md):
 all four captured fixtures golden-tested; `verify` no longer follows
@@ -93,7 +95,7 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
    Protection settings and opens a share; Claude Code does not do that
    itself) → record events 4 and 6 in `tests/triggers/README.md`, add their
    XML as fixtures + golden tests.
-2. Push; watch CI; then run the release workflow by hand (Actions → release
+2. Watch CI on the rewritten, pushed history; then run the release workflow by hand (Actions → release
    → Run workflow): a dry run that builds both targets and publishes nothing.
 3. Phase 4, second machine: build the container image, run `reproduce.ps1`.
    The host half is proven. If it mismatches, compare the two
