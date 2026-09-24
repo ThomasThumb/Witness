@@ -29,10 +29,35 @@
 #>
 param(
     [string]$Target = 'x86_64-pc-windows-msvc',
-    [string]$TargetDir
+    [string]$TargetDir,
+    # The MSVC toolset, pinned the way rust-toolchain.toml pins rustc: its
+    # linker and C runtime objects end up inside witness.exe, so a build with
+    # another version cannot match. 14.44 is Visual Studio 2022 17.14's; the
+    # release job's windows-2022 image has it for x64 and ARM64. Observed
+    # 2026-09-24: windows-latest defaults to 14.51 and the hashes differed.
+    # Empty = the machine's default, which will not reproduce a release.
+    [string]$Msvc = '14.44'
 )
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+
+if ($Msvc) {
+    # Enter the pinned toolset's developer environment, as a Developer prompt
+    # would. rustc then links with that toolset's link.exe and libraries.
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+    $vs = & $vswhere -products * -property installationPath |
+        Where-Object { Get-ChildItem (Join-Path $_ 'VC\Tools\MSVC') -Directory -Filter "$Msvc.*" -ErrorAction SilentlyContinue } |
+        Select-Object -First 1
+    if (-not $vs) { throw "MSVC $Msvc is not installed. Add 'MSVC v143 build tools (v$Msvc)' in the Visual Studio Installer, or pass -Msvc '' (that build will not reproduce a release)." }
+    $arch = if ($Target -like 'aarch64-*') { 'x64_arm64' } else { 'x64' }
+    $vcvarsall = Join-Path $vs 'VC\Auxiliary\Build\vcvarsall.bat'
+    $vars = & cmd /c "`"$vcvarsall`" $arch -vcvars_ver=$Msvc >nul 2>&1 && set"
+    if ($LASTEXITCODE -ne 0) { throw "vcvarsall $arch -vcvars_ver=$Msvc failed: is MSVC $Msvc installed for $arch?" }
+    foreach ($line in $vars) {
+        $i = $line.IndexOf('=')
+        if ($i -gt 0) { [Environment]::SetEnvironmentVariable($line.Substring(0, $i), $line.Substring($i + 1)) }
+    }
+}
 if (-not $TargetDir) { $TargetDir = Join-Path $root 'target' }
 $cargoHome = if ($env:CARGO_HOME) { $env:CARGO_HOME } else { Join-Path $env:USERPROFILE '.cargo' }
 foreach ($p in $cargoHome, $root, $TargetDir) {
@@ -59,6 +84,7 @@ $exe = Join-Path $TargetDir "$Target\release\witness.exe"
 $b = [IO.File]::ReadAllBytes($exe)
 $pe = [BitConverter]::ToInt32($b, 0x3C)
 $linker = '{0}.{1}' -f $b[$pe + 26], $b[$pe + 27]
+if ($Msvc -and -not "$Msvc.".StartsWith("$linker.")) { throw "linked with MSVC $linker, not the pinned ${Msvc}: the pin did not take effect" }
 
 # The Rich header (between the DOS stub and the PE header) lists the build
 # number of every MSVC tool and library object that went into the link.
@@ -76,7 +102,7 @@ for ($i = 0x80; $i -lt $pe - 4; $i += 4) {
         break
     }
 }
-$msvc = ($builds | Sort-Object -Unique -Descending) -join ', '
+$richBuilds = ($builds | Sort-Object -Unique -Descending) -join ', '
 $hash = (Get-FileHash $exe -Algorithm SHA256).Hash.ToLower()
 
 $info = @(
@@ -84,7 +110,8 @@ $info = @(
     "target       $Target",
     "rustc        $rustc",
     "linker       MSVC $linker (PE header)",
-    "msvc builds  $msvc (Rich header: every MSVC tool and CRT object linked in)"
+    "toolset      $(if ($Msvc) { "MSVC $env:VCToolsVersion, Windows SDK $($env:WindowsSDKVersion.TrimEnd('\'))" } else { 'machine default (not pinned)' })",
+    "msvc builds  $richBuilds (Rich header: every MSVC tool and CRT object linked in)"
 )
 $info | Set-Content -Path (Join-Path (Split-Path -Parent $exe) 'build-info.txt') -Encoding ascii
 $info

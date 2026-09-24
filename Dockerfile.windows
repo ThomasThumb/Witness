@@ -36,4 +36,5 @@ ENV PATH="C:\Users\ContainerAdministrator\.cargo\bin;C:\Windows\system32;C:\Wind
 # match the host's: build-release.ps1 remaps them out of the binary.
 ENV CARGO_HOME=C:\src\.cargo-home CARGO_NET_OFFLINE=true
 WORKDIR C:\src
-ENTRYPOINT ["cmd", "/S", "/C", "call C:\\BuildTools\\Common7\\Tools\\VsDevCmd.bat -arch=amd64 -no_logo && powershell -NoProfile -ExecutionPolicy Bypass -File C:\\src\\scripts\\build-release.ps1 -TargetDir C:\\src\\target-repro-container"]
+# build-release.ps1 enters the pinned MSVC toolset's environment itself.
+ENTRYPOINT ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\src\\scripts\\build-release.ps1", "-TargetDir", "C:\\src\\target-repro-container"]

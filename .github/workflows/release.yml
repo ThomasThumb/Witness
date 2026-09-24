@@ -17,7 +17,11 @@ jobs:
     strategy:
       matrix:
         target: [x86_64-pc-windows-msvc, aarch64-pc-windows-msvc]
-    runs-on: windows-latest
+    # Not windows-latest: that image moves (on 2026-09-24 it defaulted to MSVC
+    # 14.51 and had no 14.44 ARM64 tools), and the MSVC toolset ends up inside
+    # the binary. windows-2022 has Visual Studio 2022 17.14 with MSVC 14.44 for
+    # x64 and ARM64; build-release.ps1 pins 14.44 and fails if it cannot.
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
         with: { persist-credentials: false }
