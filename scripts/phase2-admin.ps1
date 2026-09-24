@@ -42,6 +42,11 @@ function KernelEvents($since, $id) {
     Get-WinEvent -LogName 'Microsoft-Windows-Security-Mitigations/KernelMode' -ErrorAction SilentlyContinue |
         Where-Object { $_.TimeCreated -gt $since -and $_.Id -eq $id -and $_.ToXml() -match 'trigger\.exe' }
 }
+# Run trigger.exe in THIS console. Started in a window of its own, a console
+# program has to launch conhost.exe, and "Do not allow child processes" blocks
+# that: trigger.exe then dies at start with 0xC0000142 before any test runs.
+# Observed 2026-09-24: event 4 for conhost.exe on every trigger run.
+function Trigger([string[]]$argv) { $null = & $trig @argv 2>&1; $LASTEXITCODE }
 function FreshLog($epoch) {
     Get-Content (Join-Path $base 'witness.log') -ErrorAction SilentlyContinue | Where-Object { [int64]($_ -split ' ')[0] -ge $epoch }
 }
@@ -90,44 +95,45 @@ try {
     Start-Sleep 3
 
     Step 'trigger-rwx-acg' {
-        $p = Start-Process -FilePath $trig -ArgumentList 'rwx' -PassThru -Wait -WindowStyle Hidden
+        $code = Trigger @('rwx')
         Start-Sleep 5
         $ev = KernelEvents $before 2 | Select-Object -First 1
-        if (-not $ev) { throw "trigger exit $($p.ExitCode); no KernelMode event 2 for trigger.exe (ACG opt-in not effective?)" }
+        if (-not $ev) { throw "trigger exit $code; no KernelMode event 2 for trigger.exe (ACG opt-in not effective?)" }
         $ev.ToXml() | Set-Content (Join-Path $out 'admin-events-acg.xml')
         $m = FreshLog $epoch | Where-Object { $_ -match 'match acg-block-kernel' }
         if (-not $m) { throw "event 2 written but witness.log shows no acg-block-kernel match; log: $((FreshLog $epoch) -join ' || ')" }
-        "exit $($p.ExitCode); KernelMode event 2; Witness matched acg-block-kernel"
+        "exit $code; KernelMode event 2; Witness matched acg-block-kernel"
     }
     Step 'trigger-child' {
-        $p = Start-Process -FilePath $trig -ArgumentList 'child' -PassThru -Wait -WindowStyle Hidden
+        $code = Trigger @('child')
         Start-Sleep 5
-        $ev = KernelEvents $before 4 | Select-Object -First 1
-        if (-not $ev) { throw "trigger exit $($p.ExitCode) (0 = child ran, block not effective); no KernelMode event 4" }
+        # Only a refused cmd.exe counts; a refused conhost.exe means trigger.exe never ran.
+        $ev = KernelEvents $before 4 | Where-Object { $_.ToXml() -match 'cmd\.exe' } | Select-Object -First 1
+        if (-not $ev) { throw "trigger exit $code (0 = child ran, block not effective); no KernelMode event 4 with cmd.exe as the refused child" }
         $ev.ToXml() | Set-Content (Join-Path $out 'admin-events-child.xml')
         $m = FreshLog $epoch | Where-Object { $_ -match 'match child-process-block' }
         if (-not $m) { throw "event 4 written but witness.log shows no child-process-block match; log: $((FreshLog $epoch) -join ' || ')" }
-        "exit $($p.ExitCode); KernelMode event 4; Witness matched child-process-block"
+        "exit $code; KernelMode event 4; Witness matched child-process-block"
     }
     Step 'trigger-lowil' {
-        $p = Start-Process -FilePath $trig -ArgumentList @('lowil', $lowil) -PassThru -Wait -WindowStyle Hidden
+        $code = Trigger @('lowil', $lowil)
         Start-Sleep 5
         $ev = KernelEvents $before 6 | Select-Object -First 1
-        if (-not $ev) { throw "trigger exit $($p.ExitCode) (0 = load ALLOWED; 2 = refused but no event 6); no KernelMode event 6" }
+        if (-not $ev) { throw "trigger exit $code (0 = load ALLOWED; 2 = refused but no event 6); no KernelMode event 6" }
         $ev.ToXml() | Set-Content (Join-Path $out 'admin-events-lowil.xml')
         $m = FreshLog $epoch | Where-Object { $_ -match 'match low-integrity-image-block' }
         if (-not $m) { throw "event 6 written but witness.log shows no low-integrity-image-block match; log: $((FreshLog $epoch) -join ' || ')" }
-        "exit $($p.ExitCode); KernelMode event 6; Witness matched low-integrity-image-block"
+        "exit $code; KernelMode event 6; Witness matched low-integrity-image-block"
     }
     Step 'trigger-remote-image' {
-        $p = Start-Process -FilePath $trig -ArgumentList @('remote', "\\localhost\$share\trigger.exe") -PassThru -Wait -WindowStyle Hidden
+        $code = Trigger @('remote', "\\localhost\$share\trigger.exe")
         Start-Sleep 5
         $ev = KernelEvents $before 8 | Select-Object -First 1
-        if (-not $ev) { throw "trigger exit $($p.ExitCode) (0 = load ALLOWED, mitigation not effective; 2 = refused but no event 8); check admin-summary" }
+        if (-not $ev) { throw "trigger exit $code (0 = load ALLOWED, mitigation not effective; 2 = refused but no event 8); check admin-summary" }
         $ev.ToXml() | Set-Content (Join-Path $out 'admin-events-remote.xml')
         $m = FreshLog $epoch | Where-Object { $_ -match 'match remote-image-block' }
         if (-not $m) { throw "event 8 written but witness.log shows no remote-image-block match; log: $((FreshLog $epoch) -join ' || ')" }
-        "exit $($p.ExitCode); KernelMode event 8; Witness matched remote-image-block (urgent)"
+        "exit $code; KernelMode event 8; Witness matched remote-image-block (urgent)"
     }
 } finally {
     Start-Sleep 2
