@@ -3,13 +3,13 @@
 Each phase has an exit test. Nothing moves to the next phase until it passes.
 "Done" means merged, tested in CI, and documented; not "works on my machine".
 
-Honest status (2026-09-23, end of day): CI green on all six jobs.
-`witness-win` is built, run and proven on Windows 11 Pro 26200: fast-fail,
-ACG, remote-image and CIG fired live and are golden-tested from the
-captured XML. Not yet: events 4 and 6 (needs the elevated
-`phase2-admin.ps1`), the UserMode family (no triggers, by decision), the
-hour-long fuzz run, the container half of the reproducibility check, and
-all of Phase 3.
+Honest status (2026-09-24): CI green on all six jobs. `witness-win` is
+built, run and proven on Windows 11 Pro 26200: fast-fail and every
+kernel-enforced mitigation Witness has a rule for (ACG, child process,
+low-integrity image, remote image, CIG) fired live and are golden-tested
+from the captured XML. Not yet: the UserMode family (no triggers, by
+decision), the hour-long fuzz run, the container half of the
+reproducibility check, and all of Phase 3.
 
 ## Phase 0 — Repository hygiene (half a day)
 
@@ -35,9 +35,9 @@ Exit: CI green on an empty commit; `cargo deny check` and `cargo audit` pass.
    -max_total_time=3600`) and commit the grown corpus.
 4. [x] Golden tests over the shipped `rules/default.toml` and `contacts.toml`
    (`crates/witness-core/tests/shipped_files.rs`): synthetic XML plus every
-   *captured* sample, events 1000, 2, 8 and 12 from build 26200, including
-   the Brave CIG false positive and the same event with the DLL moved out of
-   Brave's folder. Add 4 and 6 when they are fired.
+   *captured* sample, events 1000, 2, 4, 6, 8 and 12 from build 26200,
+   including the Brave CIG false positive and the same event with the DLL
+   moved out of Brave's folder.
    Also fixed: Application Error 1000 field mapping (the path is `%11`, the
    scaffold read `%10`, the start time).
 

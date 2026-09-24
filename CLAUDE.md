@@ -40,17 +40,18 @@ THREAT_MODEL.md before proposing a feature.
   `git commit`; otherwise the local timezone is stamped in); output shows
   `%LOCALAPPDATA%\Witness`.
 
-## State as of 2026-09-23
+## State as of 2026-09-24
 
 Phase 0–2 of BUILD_PLAN.md are done except where marked. Proven on the
 maintainer's Windows 11 Pro 26200 machine:
 build, PE hardening flags, runtime self-hardening, `check`/`selftest`/
 `verify`/tamper rejection, and live-fired events: Application Error 1000
-(named fields on Win11!), KernelMode 2 (ACG), 8 (remote image), 12 (CIG —
-Brave false positive, now the `cig-self-bundled` rule). Not yet fired: 4, 6
-(triggers written, `scripts/phase2-admin.ps1` runs them, needs an elevated
-run), and the UserMode family 14–24 (no triggers, on purpose: whether a
-public repo should carry them is the maintainer's call).
+(named fields on Win11!), KernelMode 2 (ACG), 4 (child process), 6
+(low-integrity image), 8 (remote image), 12 (CIG — Brave false positive,
+now the `cig-self-bundled` rule); 4 and 6 from the elevated
+`scripts/phase2-admin.ps1` on 2026-09-24. Not yet fired: the UserMode
+family 14–24 (no triggers, on purpose: whether a public repo should carry
+them is the maintainer's call).
 
 Repository: `github.com/ThomasThumb/Witness`. Every commit's history was rewritten on 2026-09-24 to remove identifying data, so commit IDs from before then no longer exist. CI was green on all six jobs at `86c49e6` (rewritten ID).
 
@@ -91,18 +92,18 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 
 ## What is next (in order)
 
-1. Elevated `phase2-admin.ps1`, run by the maintainer (it changes Exploit
-   Protection settings and opens a share; Claude Code does not do that
-   itself) → record events 4 and 6 in `tests/triggers/README.md`, add their
-   XML as fixtures + golden tests.
-2. Watch CI on the rewritten, pushed history; then run the release workflow by hand (Actions → release
-   → Run workflow): a dry run that builds both targets and publishes nothing.
-3. Phase 4, second machine: build the container image, run `reproduce.ps1`.
+1. Run the release workflow by hand (Actions → release → Run workflow): a
+   dry run that builds both targets and publishes nothing.
+2. Phase 4, second machine: build the container image, run `reproduce.ps1`.
    The host half is proven. If it mismatches, compare the two
    `build-info.txt` first: the MSVC build numbers must match.
-4. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
-5. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
+3. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
+4. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is
    drafted; it is user-facing text, so it goes through the Phase 3 review.
+
+`phase2-admin.ps1` is the maintainer's to run (it changes Exploit
+Protection settings and opens a share; Claude Code does not). Re-run it
+after every Windows feature update; all four cases passed on 2026-09-24.
 
 Open decisions for the maintainer (HANDOFF.md, "Things I would still argue
 about"): the untested UserMode rules at `urgent`; `cig-self-bundled` for

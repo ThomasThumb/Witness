@@ -115,6 +115,16 @@ fn shipped_rules_classify_realistic_events() {
             include_str!("fixtures/win11-26200-security-mitigations-2-acg-trigger.xml").to_string(),
             Some(("acg-block-kernel", Severity::Look)),
         ),
+        // Captured on Windows 11 build 26200: `trigger child` with DisallowChildProcessCreation on.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-4-child-trigger.xml").to_string(),
+            Some(("child-process-block", Severity::Look)),
+        ),
+        // Captured on Windows 11 build 26200: `trigger lowil` with BlockLowLabelImageLoads on.
+        (
+            include_str!("fixtures/win11-26200-security-mitigations-6-lowil-trigger.xml").to_string(),
+            Some(("low-integrity-image-block", Severity::Look)),
+        ),
         // Captured on Windows 11 build 26200: `trigger remote` over a loopback share.
         (
             include_str!("fixtures/win11-26200-security-mitigations-8-remote-image-trigger.xml").to_string(),
@@ -141,6 +151,26 @@ fn shipped_rules_classify_realistic_events() {
         let got = set.first_match(&ev).map(|r| (r.id.as_str(), r.severity));
         assert_eq!(got, *expected, "event {} on {}", ev.event_id, ev.channel);
     }
+}
+
+/// What the kernel-mode events captured on build 26200 actually carry, so a
+/// helper reading a report knows which fields to expect.
+#[test]
+fn captured_kernel_events_name_what_was_refused() {
+    let child = winevt::parse(include_str!("fixtures/win11-26200-security-mitigations-4-child-trigger.xml"))
+        .expect("event 4 parses");
+    assert_eq!(child.process_basename().as_deref(), Some("trigger.exe"), "the process that was refused");
+    assert_eq!(child.data.get("ChildImagePathName").map(String::as_str), Some(r"C:\WINDOWS\SYSTEM32\cmd.exe"));
+    assert_eq!(child.data.get("ChildCommandLine").map(String::as_str), Some("cmd.exe /c exit"));
+
+    let lowil = winevt::parse(include_str!("fixtures/win11-26200-security-mitigations-6-lowil-trigger.xml"))
+        .expect("event 6 parses");
+    assert_eq!(lowil.process_basename().as_deref(), Some("trigger.exe"));
+    assert_eq!(
+        lowil.data.get("ImageName").map(String::as_str),
+        Some(r"\Witness\witness\tests\triggers\lowil-copy.exe"),
+        "unlike events 2 and 8, event 6 names the refused image"
+    );
 }
 
 /// Captured fixtures are public, and so is anything that identifies the

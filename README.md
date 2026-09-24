@@ -110,8 +110,8 @@ An override replaces the built-in file entirely; there is no merging.
 |---|---|
 | Core logic (`witness-core`) | Built and tested on Linux: unit, property and golden tests; clippy pedantic; `cargo deny` clean |
 | Windows binary | Built and run on Windows 11 Pro 26200. Self-hardens with ACG, CIG, image-load and extension-point policies; CFG, CET and high-entropy ASLR from the linker |
-| Rules fired on real hardware | Fast-fail (0xC0000409), ACG, remote image, CIG. Recorded with raw XML in [`tests/triggers/README.md`](tests/triggers/README.md) |
-| Rules not yet fired on hardware | Child-process, low-integrity image (triggers written); EAF/IAF/ROP (no triggers, by decision) |
+| Rules fired on real hardware | Fast-fail (0xC0000409), ACG, child process, low-integrity image, remote image, CIG. Recorded with raw XML in [`tests/triggers/README.md`](tests/triggers/README.md) |
+| Rules not yet fired on hardware | EAF/IAF/ROP (no triggers, by decision) |
 | Plain-language review | Not yet. This is [Phase 3](BUILD_PLAN.md) and it gates any release |
 | Signed, reproducible releases | Tooling in place (`Dockerfile.windows`, `scripts/reproduce.ps1`, Sigstore in `release.yml`); not yet exercised |
 

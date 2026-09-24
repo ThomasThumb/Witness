@@ -48,7 +48,7 @@ crates/witness-core/      all security-relevant logic; #![forbid(unsafe_code)]; 
   src/evidence.rs         bundle_dir() (collision-safe), write_bundle(), verify_bundle() (manifest names pinned to the bundle)
   src/report.rs           esc(), render(); CSP default-src 'none'; Contact struct; explicit TEST flag
   tests/shipped_files.rs  golden tests: shipped rules × realistic events × every captured fixture
-  tests/fixtures/         4 raw XML captures from Windows 11 26200 (events 1000, 2, 8, 12)
+  tests/fixtures/         6 raw XML captures from Windows 11 26200 (events 1000, 2, 4, 6, 8, 12), identifiers replaced
 crates/witness-win/       the binary; unsafe ONLY in eventlog.rs, keys.rs, harden.rs, notify.rs
   src/main.rs             subcommands, App{rules,contacts,id,evidence_root,last_notified}, handle()
   src/eventlog.rs         EvtSubscribe push delivery → mpsc; EvtRender with size cap; EvtOpenChannelConfig for `check`
@@ -77,7 +77,7 @@ docs/grapheneos-proposal.md  the Android half, as a proposal not code
 
 Size: under 2,000 lines of Rust including tests. 13 direct dependencies, 61
 in the tree, none with network capability. Tests: 26 unit/property in
-`witness-core`, 3 golden test functions over the shipped files, 1 in
+`witness-core`, 5 golden test functions over the shipped files and captures, 1 in
 `witness-win`.
 
 ## 4. Non-negotiables
@@ -165,13 +165,19 @@ runner via CI:
   nothing, so a helper can tune `rules.toml`; the `run` loop no longer
   exits on a bundle-write failure; report shows the process basename before
   the kernel path; rule text no longer promises a library path that events
-  2/6/8 do not carry.
-- **Not yet fired on hardware:** events 4 (child process) and 6
-  (low-integrity image). `trigger child` and `trigger lowil` are written
-  and `phase2-admin.ps1` runs them; the elevated run has not happened since
-  they were added. EAF/IAF/ROP (UserMode 14–24): **no triggers, by the
-  maintainer's decision**; whether a public repo should carry them is his
-  call. Until then those five rules rest on Microsoft's documentation, and
+  2 and 8 do not carry (event 6 does name it, in `ImageName`).
+- **Fired on hardware 2026-09-24, elevated `phase2-admin.ps1`:** events 4
+  (child process; names the refused child in `ChildImagePathName` /
+  `ChildCommandLine`) and 6 (low-integrity image; names the refused file
+  in `ImageName`), golden-tested from the captured XML. Getting there took
+  two fixes: triggers now run in the script's own console (in a window of
+  their own, "Do not allow child processes" refused `conhost.exe` and
+  `trigger.exe` died at start with 0xC0000142), and the script refuses a
+  `trigger.exe` older than `trigger.c`.
+- **Not yet fired on hardware:** EAF/IAF/ROP (UserMode 14–24): **no
+  triggers, by the maintainer's decision**; whether a public repo should
+  carry them is the maintainer's call. Until then those five rules rest on
+  Microsoft's documentation, and
   §9 suggests capping them at `look`.
 
 ### Phase 3 — words: not started
@@ -340,12 +346,11 @@ Docker image, and the push.
 
 ## 10. Next steps, in order
 
-1. `git push origin main` (maintainer). Watch the six CI jobs.
-2. Elevated `powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1`
+1. Done 2026-09-24: pushed (after the history rewrite), CI green.
+2. Done 2026-09-24: elevated `powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1`
    (maintainer runs it: it changes Exploit Protection settings and opens a
-   share) → four PASS lines expected. Record events 4 and 6 in
-   `tests/triggers/README.md`; add their XML as fixtures with golden tests.
-   Cleanup is automatic; confirm with `Get-ProcessMitigation -Name trigger.exe`.
+   share): all four PASS; events 4 and 6 recorded, captured and golden-tested.
+   Re-run after every Windows feature update.
 3. Actions → release → Run workflow: the dry run that builds both targets
    and publishes nothing. Fix whatever it finds.
 4. Docker Desktop → Windows containers; `docker build -f Dockerfile.windows
