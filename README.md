@@ -70,7 +70,12 @@ report says so. See [THREAT_MODEL.md](THREAT_MODEL.md).
 Journalists, lawyers, activists, human-rights defenders, and the helplines
 and technical friends who support them. If you are one of the helpers, the
 evidence bundle is designed for you: zip the folder, verify it with
-`witness verify` or the public key alone, and read `event.raw.xml`.
+`witness verify <folder> <fingerprint>` (the fingerprint the person wrote
+down when they installed Witness; without it, compare the printed key by
+eye) or the public key alone, and read `event.raw.xml`. Treat a received
+bundle as untrusted: `verify` opens nothing through a link, reads through
+size budgets and escapes what it prints, but anything in the folder that
+the signature does not cover is named and should not be trusted.
 
 ## Install
 
@@ -113,7 +118,8 @@ An override replaces the built-in file entirely; there is no merging.
 | Rules fired on real hardware | Fast-fail (0xC0000409), ACG, child process, low-integrity image, remote image, CIG. Recorded with raw XML in [`tests/triggers/README.md`](tests/triggers/README.md) |
 | Rules not yet fired on hardware | EAF/IAF/ROP (no triggers, by decision) |
 | Plain-language review | Not yet. This is [Phase 3](BUILD_PLAN.md) and it gates any release |
-| Signed, reproducible releases | Tooling in place (`Dockerfile.windows`, `scripts/reproduce.ps1`, Sigstore in `release.yml`); not yet exercised |
+| Reproducible builds | Proven: GitHub's runner and the maintainer's machine build byte-identical `witness.exe` from the same commit (`scripts/build-release.ps1`: pinned MSVC, path remapping, `/Brepro`, LF forced). Anyone can rebuild a release and compare |
+| Signed releases | `release.yml` dry-run proven (both targets, SBOM, build info); Sigstore signing and provenance run on the first tag, which waits on Phase 3 |
 
 ## For reviewers
 
