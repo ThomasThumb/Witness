@@ -49,6 +49,7 @@ The report, top to bottom:
 | Part | Text |
 |---|---|
 | Title | the rule's title |
+| Repeat box (only from the third time in seven days for the same program and rule) | *"This has now happened N times in seven days to the same program. Once is usually a bug. Repeats are what a break-in attempt looks like from the outside. Treat it as serious: keep every evidence folder and contact a helpline today."* The notification title then starts with *"AGAIN (N times this week):"*, and that one notification is shown even if another for the same program was shown moments before. |
 | Box | "look" rules: *"This is unusual but usually harmless. It is worth a look."*<br>"urgent" rules: *"This pattern is sometimes seen when someone tries to break into a computer. It does not mean that happened to you."* |
 | What happened | from the rule |
 | What it might mean | from the rule |
@@ -91,6 +92,7 @@ never as links):
   be sent to a look-alike site. Sensible, or a barrier?
 - The notification wording: does "A report has opened in your browser"
   send someone to the right place, or is it missed under other windows?
+- The repeat box: is "three times in seven days" the right line, and is its wording proportionate?
 - "What Witness is not": honest without being alarming?
 - The fingerprint check assumes the person wrote their fingerprint on
   paper when Witness was installed. Realistic?

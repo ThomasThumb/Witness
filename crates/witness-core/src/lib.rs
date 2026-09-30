@@ -13,6 +13,7 @@
 
 pub mod event;
 pub mod evidence;
+pub mod history;
 pub mod report;
 pub mod rules;
 pub mod signing;

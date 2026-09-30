@@ -99,21 +99,6 @@ pub fn bundle_dir(root: &Path, ev: &Event, rule: &Rule) -> PathBuf {
     (2..10_000u32).map(|n| root.join(format!("{base}-{n}"))).find(|p| !p.exists()).unwrap_or(first)
 }
 
-/// Where a `bug`-severity event's evidence goes: `<root>/quiet/<rule>-<pair>`,
-/// where `pair` is a short hash of the process and the refused image. The
-/// same pair always maps to the same directory, so the first occurrence is
-/// captured and every repeat is skipped by an `exists()` check: Brave refusing
-/// its own `vulkan-1.dll` four times per start yields one bundle, ever, while
-/// a library never seen before in that program's folder gets its own. No
-/// state file; the directory is the memory.
-#[must_use]
-pub fn quiet_dir(root: &Path, ev: &Event, rule: &Rule) -> PathBuf {
-    let image = ["ImageName", "ImagePath"].iter().find_map(|k| ev.data.get(*k)).map_or("", String::as_str);
-    let pair = format!("{}|{}", ev.process.as_deref().unwrap_or("").to_ascii_lowercase(), image.to_ascii_lowercase());
-    let short = &blake3::hash(pair.as_bytes()).to_hex()[..16];
-    root.join("quiet").join(format!("{}-{short}", rule.id))
-}
-
 /// Write a bundle into `dir` (from [`bundle_dir`]). The directory must not
 /// exist yet: evidence is never overwritten, whatever the caller passes.
 ///
@@ -429,23 +414,6 @@ mod tests {
         fs::write(dir.join("report.html"), "<html>edited</html>").map_err(|e| e.to_string())?;
         assert!(verify_bundle(&dir, None).is_err(), "edited file must fail verification");
         Ok(())
-    }
-
-    #[test]
-    fn quiet_dir_is_one_per_program_and_library_pair() {
-        let (mut ev, rule) = fixture();
-        ev.process = Some(r"\Device\HarddiskVolume3\Program Files\Brave\brave.exe".into());
-        ev.data.insert("ImageName".into(), r"\Program Files\Brave\1.0\vulkan-1.dll".into());
-        let root = Path::new("root");
-        let a = quiet_dir(root, &ev, &rule);
-        assert!(
-            a.starts_with(root.join("quiet"))
-                && a.file_name().is_some_and(|n| n.to_string_lossy().starts_with("test-rule-"))
-        );
-        ev.time = "2027-01-01T00:00:00Z".into();
-        assert_eq!(quiet_dir(root, &ev, &rule), a, "time plays no part: a repeat maps to the same folder");
-        ev.data.insert("ImageName".into(), r"\Program Files\Brave\1.0\planted.dll".into());
-        assert_ne!(quiet_dir(root, &ev, &rule), a, "a different library is a different capture");
     }
 
     #[test]

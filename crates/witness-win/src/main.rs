@@ -42,7 +42,7 @@ use std::{
     time::{Duration, Instant},
 };
 use witness_core::{
-    evidence,
+    evidence, history,
     report::{self, Contact},
     rules::{RuleSet, Severity},
     signing::Identity,
@@ -179,25 +179,40 @@ impl App {
             // Never shown, but not lost: the first time this program is refused
             // this library, the evidence is written under evidence\quiet\, signed
             // like any other. Repeats (Brave, four per start) cost nothing.
-            let dir = evidence::quiet_dir(&self.evidence_root, &ev, rule);
+            let dir = history::quiet_dir(&self.evidence_root, &ev, rule);
             if dir.exists() {
                 return Ok(None);
             }
             let html =
-                report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);
+                report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test, 1);
             evidence::write_bundle(&dir, &ev, rule, &html, &self.id)
                 .map_err(|e| format!("quiet bundle {}: {e}", paths::shown(&dir)))?;
             log(&format!("quiet bundle written (first time for this program and library): {}", paths::shown(&dir)));
             return Ok(None);
         }
         let dir = evidence::bundle_dir(&self.evidence_root, &ev, rule);
-        let html = report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);
+        // This event plus the earlier ones for the same program and rule this
+        // week. The rules' text tells people repeats are what matters; from the
+        // third, the report and the toast say it for them.
+        let basename = ev.process_basename().unwrap_or_default();
+        // A selftest always looks like a first alert; its bundles all share one date.
+        let repeats =
+            if self.test { 1 } else { 1 + history::repeats(&self.evidence_root, &rule.id, &basename, &ev.time, 7) };
+        let html =
+            report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test, repeats);
         evidence::write_bundle(&dir, &ev, rule, &html, &self.id)
             .map_err(|e| format!("bundle {}: {e}", paths::shown(&dir)))?;
+        if repeats >= report::REPEAT_THRESHOLD {
+            log(&format!("repeat: {} for {basename}, {repeats} times in 7 days", rule.id));
+        }
 
         let key = format!("{}|{}", rule.id, ev.process_basename().unwrap_or_default());
         let now = Instant::now();
-        if self.last_notified.get(&key).is_some_and(|t| now.duration_since(*t) < NOTIFY_WINDOW) {
+        // The event that crosses the repeat threshold is the one to interrupt
+        // with; it goes through the throttle. Only that one: the throttle is
+        // for Chromium tripping the same guard several times a second.
+        let crossing = repeats == report::REPEAT_THRESHOLD;
+        if !crossing && self.last_notified.get(&key).is_some_and(|t| now.duration_since(*t) < NOTIFY_WINDOW) {
             log(&format!("notification suppressed (same rule and process within {}s)", NOTIFY_WINDOW.as_secs()));
             return Ok(Some(dir));
         }
@@ -205,7 +220,11 @@ impl App {
         // Open the report first, then say what happened. The toast borrows
         // PowerShell's notification identity, so tapping it does nothing
         // (checked on Windows 11); it must never ask the person to tap.
-        let title = if self.test { format!("TEST: {}", rule.title) } else { rule.title.clone() };
+        let title = match (self.test, repeats >= report::REPEAT_THRESHOLD) {
+            (true, _) => format!("TEST: {}", rule.title),
+            (false, true) => format!("AGAIN ({repeats} times this week): {}", rule.title),
+            (false, false) => rule.title.clone(),
+        };
         let body = match notify::open(&dir.join("report.html")) {
             Ok(()) => "Witness noticed something. A report has opened in your browser.".to_string(),
             Err(e) => {

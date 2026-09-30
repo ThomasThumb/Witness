@@ -165,11 +165,14 @@ evidence is no longer needed.
 
 ## What we would revisit as it grows
 
-* Repeat-offender escalation (same process, same rule, N times in a window
-  → bump severity). Wanted; needs a small state file; v0.2. (v0.1 already
-  throttles *notifications* to one per rule+process per 60 s, in memory,
-  because Chromium trips the same mitigation several times per second; every
-  event still gets its own bundle.)
+* Done (2026-09-30): repeat-offender escalation without a state file.
+  `evidence::repeats` counts this week's bundles for the same rule and
+  program from the folder names and their `event.json`; from the third,
+  the report leads with "this has now happened N times in seven days" and
+  the toast title says AGAIN. The rule's severity is not changed, so the
+  rules file stays the truth about what an event *is*; the repeat is shown
+  as what it *means*. (Notifications are still throttled to one per
+  rule+process per 60 s, in memory; every event still gets its own bundle.)
 * Done differently (2026-09-30): `check` reads each running high-risk
   app's protections from the live process, and `protect` prints the opt-in
   commands. Still open: saying it *in the report* ("and this protection

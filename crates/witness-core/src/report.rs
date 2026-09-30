@@ -47,10 +47,16 @@ const TEST_BANNER: &str = "<p class=\"box\"><strong>THIS IS A TEST.</strong> Not
 <code>witness selftest</code> made this report so you know what a real one looks like. \
 Its folder is safe to delete.</p>";
 
+/// From this many times in a week for one program and rule, the report says
+/// so, up front. The rules' own text already tells people repeats are what
+/// to take seriously; this is Witness noticing for them.
+pub const REPEAT_THRESHOLD: usize = 3;
+
 /// Render the report. `test` is true only for `witness selftest`: it adds a
 /// banner, so a practice run can never be mistaken for a finding. It is an
 /// explicit flag, never inferred from the event, so a real event can never
-/// be labelled a test.
+/// be labelled a test. `repeats` counts this event and the earlier ones for
+/// the same program and rule in the last week.
 #[must_use]
 pub fn render(
     ev: &Event,
@@ -59,6 +65,7 @@ pub fn render(
     fingerprint: &str,
     bundle_dir: &str,
     test: bool,
+    repeats: usize,
 ) -> String {
     let mut h = String::with_capacity(4096);
     let tone = match rule.severity {
@@ -76,11 +83,20 @@ pub fn render(
 h1{{font-size:1.4em}}h2{{font-size:1.1em;margin-top:1.6em}}code{{overflow-wrap:anywhere}}\
 .box{{border:2px solid #444;padding:1em;margin:1em 0}}</style></head><body>\
 {banner}<h1>{title}</h1>\
-<p class=\"box\"><strong>{tone}</strong></p>\
+<p class=\"box\"><strong>{tone}</strong></p>{again}\
 <h2>What happened</h2><p>{what}</p>\
 <h2>What it might mean</h2><p>{mean}</p>\
 <h2>What to do</h2><ol>",
         banner = if test { TEST_BANNER } else { "" },
+        again = if repeats >= REPEAT_THRESHOLD {
+            format!(
+                "<p class=\"box\"><strong>This has now happened {repeats} times in seven days to the same program.</strong> \
+                 Once is usually a bug. Repeats are what a break-in attempt looks like from the outside. \
+                 Treat it as serious: keep every evidence folder and contact a helpline today.</p>"
+            )
+        } else {
+            String::new()
+        },
         title = esc(&rule.title),
         tone = esc(tone),
         what = esc(&rule.triage.what_happened),
@@ -179,9 +195,12 @@ mod tests {
             how: "help.example".into(),
             checked: "2026-09".into(),
         }];
-        let html = render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", false);
+        let html = render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", false, 1);
         assert!(!html.contains("THIS IS A TEST"), "a real report must never say it is a test");
-        assert!(render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", true).contains("THIS IS A TEST"));
+        assert!(render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", true, 1).contains("THIS IS A TEST"));
+        assert!(!html.contains("times in seven days"), "one occurrence is not a repeat");
+        let third = render(&ev, &rule, &contacts, "aaaa-bbbb", r"C:\evidence\x", false, REPEAT_THRESHOLD);
+        assert!(third.contains("happened 3 times in seven days"), "the third time says so up front");
         assert!(!html.contains("<script"));
         assert!(html.contains("&lt;script&gt;"));
         assert!(html.contains("<strong>script&gt;</strong>"), "basename (after the last slash) shown first, escaped");

@@ -45,7 +45,8 @@ crates/witness-core/      all security-relevant logic; #![forbid(unsafe_code)]; 
   src/winevt.rs           Event Log XML → Event (named fields first, positional fallback; 8 MB cap)
   src/rules.rs            RuleSet/Rule/Match/Triage/Severity; first-match-wins; validation
   src/signing.rs          ML-DSA-87 deterministic, seed-derived; ALGORITHM const; fingerprint
-  src/evidence.rs         bundle_dir() (collision-safe), write_bundle(), verify_bundle() (manifest names pinned to the bundle)
+  src/evidence.rs         bundle_dir() (collision-safe), write_bundle() (never overwrites), verify_bundle() (no-follow, budgets, grammar)
+  src/history.rs          what the evidence folder remembers: quiet_dir() (one quiet bundle per program+library), repeats() (N in 7 days)
   src/report.rs           esc(), render(); CSP default-src 'none'; Contact struct; explicit TEST flag
   src/zip.rs              store-only ZIP writer for `witness export`: six bundle files, fixed timestamps, no dependency
   tests/shipped_files.rs  golden tests: shipped rules × realistic events × every captured fixture
