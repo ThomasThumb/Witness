@@ -54,7 +54,7 @@ The report, top to bottom:
 | What it might mean | from the rule |
 | What to do | from the rule, numbered |
 | Who can help | *"These organisations help people for free and will not judge you for asking. Type the address yourself rather than clicking anything."* Then the list in section 4. |
-| For a technical helper | *"Evidence folder: `%LOCALAPPDATA%\Witness\evidence\…`. Zip that whole folder and send it; do not edit anything in it."*<br>*"Witness signing key fingerprint: `xxxx-xxxx-…`. If you wrote this down when Witness was installed, check it matches."*<br>Then a table of everything Windows recorded about the event. |
+| For a technical helper | *"Evidence folder: `%LOCALAPPDATA%\Witness\evidence\…`. Send that whole folder as one file: `witness export` with that folder makes a ZIP on the Desktop. Do not edit anything in it."*<br>*"Witness signing key fingerprint: `xxxx-xxxx-…`. If you wrote this down when Witness was installed, check it matches."*<br>Then a table of everything Windows recorded about the event. |
 | What Witness is not | *"Witness cannot prevent attacks and cannot tell you for certain whether one happened. It notices when Windows' own protections fire and explains it in plain language. If your computer is already compromised, this report could be wrong. When in doubt, ask a human above."* |
 
 ## 3. What we are asking

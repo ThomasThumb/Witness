@@ -47,6 +47,7 @@ crates/witness-core/      all security-relevant logic; #![forbid(unsafe_code)]; 
   src/signing.rs          ML-DSA-87 deterministic, seed-derived; ALGORITHM const; fingerprint
   src/evidence.rs         bundle_dir() (collision-safe), write_bundle(), verify_bundle() (manifest names pinned to the bundle)
   src/report.rs           esc(), render(); CSP default-src 'none'; Contact struct; explicit TEST flag
+  src/zip.rs              store-only ZIP writer for `witness export`: six bundle files, fixed timestamps, no dependency
   tests/shipped_files.rs  golden tests: shipped rules × realistic events × every captured fixture
   tests/fixtures/         6 raw XML captures from Windows 11 26200 (events 1000, 2, 4, 6, 8, 12), identifiers replaced
 crates/witness-win/       the binary; unsafe ONLY in eventlog.rs, keys.rs, harden.rs, notify.rs, processes.rs
@@ -57,7 +58,8 @@ crates/witness-win/       the binary; unsafe ONLY in eventlog.rs, keys.rs, harde
   src/processes.rs        Toolhelp snapshot: which high-risk apps are running
   src/protect.rs          safe glue: check's per-app protection table; protect prints the opt-in commands
   src/notify.rs           toast (tauri-winrt-notification, PowerShell AppUserModelID) + ShellExecuteW
-  src/paths.rs            %LOCALAPPDATA%\Witness
+  src/paths.rs            %LOCALAPPDATA%\Witness; the `alive` heartbeat
+  src/cli.rs              safe glue: verify, export, fingerprint, install (split from main.rs for the size budget)
 .cargo/config.toml        CFG + /CETCOMPAT /DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG /Brepro
 rules/default.toml        14 rules, the product
 rules/contacts.toml       5 helplines with checked = "YYYY-MM"

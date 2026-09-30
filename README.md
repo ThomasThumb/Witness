@@ -87,6 +87,7 @@ witness check         # are the three log channels readable? what is my key fing
 witness selftest      # push a built-in sample event through the whole pipeline
 witness fingerprint   # print the signing-key fingerprint; write it on paper
 witness protect       # prints the admin commands that switch on the safe protections for the apps you run
+witness export <dir>  # one ZIP of an evidence folder on your Desktop, ready to send to a helpline
 witness install       # prints the one-line Scheduled Task command; you run it
 ```
 

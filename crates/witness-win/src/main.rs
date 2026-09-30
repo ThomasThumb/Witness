@@ -7,6 +7,7 @@
 //!   verify DIR [FINGERPRINT]
 //!                verify an evidence bundle's signature and hashes; with the
 //!                fingerprint the user wrote down, also that this install made it
+//!   export DIR   the bundle as one ZIP on the Desktop, ready to send
 //!   fingerprint  print the signing-key fingerprint to write down
 //!   protect      print the admin commands that switch on the safe protections
 //!                for the high-risk apps running now (we change nothing ourselves)
@@ -22,6 +23,7 @@
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic)]
 #![warn(clippy::pedantic)]
 
+mod cli;
 mod eventlog;
 mod harden;
 mod keys;
@@ -109,14 +111,17 @@ fn main() -> ExitCode {
         "selftest" => selftest(),
         "verify" => args.get(2).map_or_else(
             || Err("usage: witness verify <bundle-dir> [expected-fingerprint]".into()),
-            |d| verify(Path::new(d), args.get(3).map(String::as_str)),
+            |d| cli::verify(Path::new(d), args.get(3).map(String::as_str)),
         ),
-        "fingerprint" => fingerprint(),
+        "export" => {
+            args.get(2).map_or_else(|| Err("usage: witness export <bundle-dir>".into()), |d| cli::export(Path::new(d)))
+        }
+        "fingerprint" => cli::fingerprint(),
         "protect" => App::load(false).and_then(|app| protect::commands(&app.rules)),
-        "install" => install(),
+        "install" => cli::install(),
         _ => {
             println!(
-                "witness {} — see README.md\n  run | check | selftest | verify <dir> [fingerprint] | fingerprint | protect | install",
+                "witness {} — see README.md\n  run | check | selftest | verify <dir> [fingerprint] | export <dir> | fingerprint | protect | install",
                 witness_core::VERSION
             );
             Ok(())
@@ -323,56 +328,6 @@ fn selftest() -> Result<(), String> {
         }
         None => Err("sample event matched no rule; rules.toml override may be wrong".into()),
     }
-}
-
-/// Everything printed here came from the bundle, or from a folder name someone
-/// else chose, so it goes through `visible`: nothing in it may carry a line
-/// break or an escape sequence that could forge or hide the key line a helper
-/// is about to compare. The manifest fields have already passed their grammar
-/// checks; `visible` is the second line of defence.
-fn verify(dir: &Path, expected: Option<&str>) -> Result<(), String> {
-    let m = evidence::verify_bundle(dir, expected)?;
-    println!(
-        "OK: bundle {} rule={} severity={} witness={} created={}",
-        evidence::visible(&paths::shown(dir)),
-        evidence::visible(&m.rule_id),
-        evidence::visible(&m.severity),
-        evidence::visible(&m.witness_version),
-        evidence::visible(&m.created)
-    );
-    println!("key: {}", evidence::visible(&m.key_fingerprint));
-    if expected.is_some() {
-        println!("The key matches the fingerprint you gave: this bundle was made by that install.");
-    } else {
-        println!("The key must match the fingerprint written down when Witness was installed; if it differs, another install made this bundle.");
-        println!("To have Witness check instead:  witness verify <bundle-dir> <fingerprint>");
-    }
-    let extra = evidence::unsigned_entries(dir).map_err(|e| e.to_string())?;
-    if !extra.is_empty() {
-        let names: Vec<String> = extra.iter().map(|n| evidence::visible(n)).collect();
-        println!("NOT covered by the signature, do not trust: {}", names.join(", "));
-    }
-    Ok(())
-}
-
-fn fingerprint() -> Result<(), String> {
-    let seed = keys::load_or_create_seed()?;
-    let id = Identity::from_seed(&seed).map_err(|e| e.to_string())?;
-    println!("{}", id.fingerprint());
-    println!("Write this down on paper. If a report ever shows a different fingerprint, the evidence was not made by this install.");
-    Ok(())
-}
-
-fn install() -> Result<(), String> {
-    let exe = std::env::current_exe().map_err(|e| e.to_string())?;
-    println!("Witness does not install itself. To start it at logon, run in PowerShell:");
-    println!();
-    println!("  schtasks /Create /TN Witness /SC ONLOGON /RL LIMITED /TR \"\\\"{}\\\" run\"", exe.display());
-    println!();
-    println!("To remove:  schtasks /Delete /TN Witness /F");
-    println!("Then run:   witness fingerprint   and write the result down.");
-    println!("Optional:   witness selftest     to see what a real alert looks like.");
-    Ok(())
 }
 
 fn log(line: &str) {

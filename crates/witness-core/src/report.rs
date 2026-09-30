@@ -108,7 +108,7 @@ h1{{font-size:1.4em}}h2{{font-size:1.1em;margin-top:1.6em}}code{{overflow-wrap:a
     let _ = write!(
         h,
         "<h2>For a technical helper</h2>\
-<p>Evidence folder: <code>{dir}</code>. Zip that whole folder and send it; do not edit anything in it.</p>\
+<p>Evidence folder: <code>{dir}</code>. Send that whole folder as one file: <code>witness export</code> with that folder makes a ZIP on the Desktop. Do not edit anything in it.</p>\
 <p>Witness signing key fingerprint: <code>{fp}</code>. If you wrote this down when Witness was installed, check it matches.</p>\
 <table><tr><td>Time</td><td>{time}</td></tr><tr><td>Channel</td><td>{chan}</td></tr>\
 <tr><td>Provider</td><td>{prov}</td></tr><tr><td>Event ID</td><td>{eid}</td></tr><tr><td>Record ID</td><td>{rid}</td></tr>\

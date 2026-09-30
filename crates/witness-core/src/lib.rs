@@ -17,6 +17,7 @@ pub mod report;
 pub mod rules;
 pub mod signing;
 pub mod winevt;
+pub mod zip;
 
 /// Tool version, embedded in every manifest so a reviewer knows what produced it.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

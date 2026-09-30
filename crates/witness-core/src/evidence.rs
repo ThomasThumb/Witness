@@ -34,7 +34,7 @@ use std::{
 pub const BUNDLE_FILES: [&str; 3] = ["event.json", "event.raw.xml", "report.html"];
 
 /// Written beside the listed files; the signature itself covers them.
-const SIGNATURE_FILES: [&str; 3] = ["manifest.json", "manifest.sig", "pubkey.bin"];
+pub const SIGNATURE_FILES: [&str; 3] = ["manifest.json", "manifest.sig", "pubkey.bin"];
 
 /// A real manifest, signature or public key is a few KB. Refuse to read more.
 const MAX_META_BYTES: u64 = 1024 * 1024;
