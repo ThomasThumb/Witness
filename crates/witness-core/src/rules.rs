@@ -150,6 +150,17 @@ impl RuleSet {
     pub fn first_match(&self, ev: &Event) -> Option<&Rule> {
         self.rules.iter().find(|r| r.matcher.matches(ev))
     }
+
+    /// Every process name any rule singles out, sorted and deduplicated: the
+    /// programs the rules consider high-risk, which is what `witness check`
+    /// inspects and `witness protect` offers to protect.
+    #[must_use]
+    pub fn high_risk_processes(&self) -> Vec<String> {
+        let mut names: Vec<String> = self.rules.iter().flat_map(|r| r.matcher.process_any.iter().cloned()).collect();
+        names.sort_unstable();
+        names.dedup();
+        names
+    }
 }
 
 impl Match {
@@ -253,6 +264,12 @@ what_to_do = ["z"]
         assert!(RuleSet::parse(&dup).is_err());
         let upper = RULES.replace("\"signal.exe\"", "\"Signal.exe\"");
         assert!(RuleSet::parse(&upper).is_err());
+    }
+
+    #[test]
+    fn high_risk_processes_are_the_union_of_every_rule() {
+        let set = RuleSet::parse(RULES).expect("fixture rules parse");
+        assert_eq!(set.high_risk_processes(), ["signal.exe", "whatsapp.exe"]);
     }
 
     #[test]

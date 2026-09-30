@@ -28,4 +28,4 @@ Microsoft), and "Witness didn't stop my exploit" — it never claimed to.
 * No telemetry, analytics, crash reporting or update pings.
 * Every release is reproducible from a tagged commit and signed by Sigstore
   with GitHub-issued provenance. Instructions are on every release page.
-* `unsafe` lives in four named files and nowhere else; CI enforces this.
+* `unsafe` lives in five named files and nowhere else; CI enforces this.

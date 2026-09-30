@@ -86,8 +86,17 @@ verify it (commands are on every release page), put it somewhere sensible, and:
 witness check         # are the three log channels readable? what is my key fingerprint?
 witness selftest      # push a built-in sample event through the whole pipeline
 witness fingerprint   # print the signing-key fingerprint; write it on paper
+witness protect       # prints the admin commands that switch on the safe protections for the apps you run
 witness install       # prints the one-line Scheduled Task command; you run it
 ```
+
+Most of what Witness watches only fires for programs that have been opted
+in to Windows' Exploit Protection, and on a fresh machine none of them
+are: an alarm wired to nothing. `check` lists the high-risk apps running
+now and which protections are on for each; `protect` prints the admin
+commands that switch on the two that never break an app (no code from
+network shares, no code from untrusted download locations). Witness
+changes nothing itself; a person runs the commands.
 
 `selftest` shows you what a real alert looks like: a toast and a report in
 your browser. It writes under `evidence\selftest\` so it can never be mistaken

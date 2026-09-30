@@ -41,7 +41,7 @@ list of people who can help.
 | Malicious contributor | Sneak a "rule" that hides a real pattern or a "contact" that is a honeypot | Rules and contacts are TOML, diffed in every PR, reviewed by two people once we have two. Contacts are shown as text to type, not links to click. |
 | Impostor fork | Ship a lookalike that phones home | We can't stop forks. We can make verification trivial and print the fingerprint of the *real* signing identity in every release note. |
 | Nosy household member / employer | Reads files on disk | Evidence folders are under the user's own profile. That is all; local-privacy against someone with your password is not a promise we can keep. |
-| Witness itself | Bugs in our own code become attack surface | No network. No parsers of untrusted input except the OS's own event XML (via `roxmltree`, bounded at 8 MB). `unsafe` confined to four files. Runs unprivileged. Runs with ACG/CIG/CET/CFG/no-remote-images on itself. `panic = "abort"`. |
+| Witness itself | Bugs in our own code become attack surface | No network. No parsers of untrusted input except the OS's own event XML (via `roxmltree`, bounded at 8 MB). `unsafe` confined to five files. Runs unprivileged. Runs with ACG/CIG/CET/CFG/no-remote-images on itself. `panic = "abort"`. |
 
 ## Trust assumptions
 

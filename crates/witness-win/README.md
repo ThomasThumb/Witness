@@ -5,8 +5,8 @@ The Windows binary. See the workspace README.
 Build: `cargo build --release -p witness-win` on Windows with the MSVC
 toolchain. The hardening flags in `.cargo/config.toml` require MSVC's `link.exe`.
 
-The four files containing `unsafe` (`eventlog.rs`, `keys.rs`, `harden.rs`,
-`notify.rs`) each wrap one OS facility. Every call site has a SAFETY comment
+The five files containing `unsafe` (`eventlog.rs`, `keys.rs`, `harden.rs`,
+`notify.rs`, `processes.rs`) each wrap one OS facility. Every call site has a SAFETY comment
 and every signature was checked against the generated bindings in `windows`
 0.61.3 (the whole crate type-checks against those bindings; only the final
 link and the live-machine tests in BUILD_PLAN.md phase 2 remain).

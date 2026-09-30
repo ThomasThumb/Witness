@@ -8,7 +8,7 @@ Thank you. Three kinds of help are especially valuable, and none require Rust:
    person can act on; that is a hard requirement, not a style preference.
 2. **Contacts.** `rules/contacts.toml`. Country-specific helplines that
    actually answer. Verify they exist before adding; check again before release.
-3. **Review.** Read the code. Especially `crates/witness-win/src/{eventlog,keys,harden,notify}.rs`,
+3. **Review.** Read the code. Especially `crates/witness-win/src/{eventlog,keys,harden,notify,processes}.rs`,
    the only files allowed to contain `unsafe`. Tell us what we got wrong.
 
 ## Rules for code
@@ -16,7 +16,7 @@ Thank you. Three kinds of help are especially valuable, and none require Rust:
 * KISS. If a change adds a dependency, the PR explains why the standard
   library or an existing dependency cannot do it. `deny.toml` bans anything
   that opens a socket.
-* No `unsafe` outside the four FFI files. CI enforces it.
+* No `unsafe` outside the five FFI files. CI enforces it.
 * No `unwrap`/`expect`/`panic` in library or main code. CI enforces it.
 * Everything in `witness-core` must be testable on Linux and have tests.
 * No god files: 400 non-test lines per source file, 4,000 for the crates,

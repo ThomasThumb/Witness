@@ -49,11 +49,13 @@ crates/witness-core/      all security-relevant logic; #![forbid(unsafe_code)]; 
   src/report.rs           esc(), render(); CSP default-src 'none'; Contact struct; explicit TEST flag
   tests/shipped_files.rs  golden tests: shipped rules × realistic events × every captured fixture
   tests/fixtures/         6 raw XML captures from Windows 11 26200 (events 1000, 2, 4, 6, 8, 12), identifiers replaced
-crates/witness-win/       the binary; unsafe ONLY in eventlog.rs, keys.rs, harden.rs, notify.rs
+crates/witness-win/       the binary; unsafe ONLY in eventlog.rs, keys.rs, harden.rs, notify.rs, processes.rs
   src/main.rs             subcommands, App{rules,contacts,id,evidence_root,last_notified}, handle()
   src/eventlog.rs         EvtSubscribe push delivery → mpsc; EvtRender with size cap; EvtOpenChannelConfig for `check`
   src/keys.rs             DPAPI-wrapped 32-byte seed; Zeroizing; write-then-rename
-  src/harden.rs           SetProcessMitigationPolicy: ExtensionPoints, ImageLoad, CIG, ACG
+  src/harden.rs           SetProcessMitigationPolicy on ourselves; GetProcessMitigationPolicy on high-risk apps (protection_of)
+  src/processes.rs        Toolhelp snapshot: which high-risk apps are running
+  src/protect.rs          safe glue: check's per-app protection table; protect prints the opt-in commands
   src/notify.rs           toast (tauri-winrt-notification, PowerShell AppUserModelID) + ShellExecuteW
   src/paths.rs            %LOCALAPPDATA%\Witness
 .cargo/config.toml        CFG + /CETCOMPAT /DYNAMICBASE /HIGHENTROPYVA /NXCOMPAT /DEPENDENTLOADFLAG /Brepro
@@ -84,7 +86,7 @@ in the tree, none with network capability. Tests: 26 unit/property in
 
 - **KISS.** Two crates, one dependency direction. No god files. A new
   dependency needs a justifying comment and must pass `cargo deny check`.
-- **`unsafe` stays in the four named files**, one OS facility each, a
+- **`unsafe` stays in the five named files**, one OS facility each, a
   SAFETY comment per call. CI greps for this and fails otherwise.
 - **No `unwrap`/`expect`/`panic`** outside tests. `panic = "abort"` in release.
 - **ML-DSA-87, deterministic variant, seed-derived.** The maintainer chose

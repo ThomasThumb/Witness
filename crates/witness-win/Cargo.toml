@@ -27,6 +27,7 @@ features = [
   "Win32_System_EventLog",          # EvtSubscribe / EvtRender
   "Win32_System_Threading",         # SetProcessMitigationPolicy (self-hardening)
   "Win32_System_SystemServices",    # PROCESS_MITIGATION_*_POLICY structs
+  "Win32_System_Diagnostics_ToolHelp", # process list, to read high-risk apps' protections
   "Win32_Security_Cryptography",    # CryptProtectData / CryptUnprotectData
   "Win32_UI_Shell",                 # ShellExecuteW to open the report
   "Win32_UI_WindowsAndMessaging",   # SW_SHOWNORMAL

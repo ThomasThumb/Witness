@@ -65,10 +65,12 @@ Two crates, one direction of dependency:
 * **witness-core** — `#![forbid(unsafe_code)]`, no OS calls, builds and tests
   on Linux. Holds every security-relevant decision: parsing, matching,
   rendering, hashing, signing. This is what a reviewer reads first.
-* **witness-win** — the binary. Five modules. Four contain `unsafe`, each
+* **witness-win** — the binary. Eight modules. Five contain `unsafe`, each
   wrapping one OS facility with a SAFETY comment per call site:
-  `eventlog.rs` (read), `keys.rs` (DPAPI), `harden.rs` (self-mitigations),
-  `notify.rs` (toast + ShellExecute). `main.rs` and `paths.rs` are safe glue.
+  `eventlog.rs` (read), `keys.rs` (DPAPI), `harden.rs` (process mitigation
+  policy: set on ourselves, read from high-risk apps), `notify.rs` (toast +
+  ShellExecute), `processes.rs` (process list). `main.rs`, `paths.rs` and
+  `protect.rs` are safe glue.
 
 ## Data flow and trust boundaries
 
@@ -166,8 +168,10 @@ evidence is no longer needed.
   throttles *notifications* to one per rule+process per 60 s, in memory,
   because Chromium trips the same mitigation several times per second; every
   event still gets its own bundle.)
-* Baseline snapshot of `Get-ProcessMitigation` at first run so "look" can say
-  "and by the way, ACG is not enabled for your browser". v0.2.
+* Done differently (2026-09-30): `check` reads each running high-risk
+  app's protections from the live process, and `protect` prints the opt-in
+  commands. Still open: saying it *in the report* ("and this protection
+  was off for that app"), which needs the snapshot at event time.
 * Windows Defender Exploit Guard operational events (channel
   `Microsoft-Windows-Windows Defender/Operational`) once we have confirmed
   IDs on a live machine.

@@ -1,6 +1,6 @@
 //! Event Log subscription. This is the only place Witness reads anything from
-//! the OS, and one of only four modules with `unsafe` (see keys.rs, harden.rs,
-//! notify.rs).
+//! the OS, and one of only five modules with `unsafe` (see keys.rs, harden.rs,
+//! notify.rs, processes.rs).
 //!
 //! SAFETY model: each subscription owns a leaked `Box<SyncSender<String>>`
 //! passed to the OS as an opaque context pointer. The OS calls `callback` on

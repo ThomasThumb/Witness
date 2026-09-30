@@ -8,6 +8,8 @@
 //!                verify an evidence bundle's signature and hashes; with the
 //!                fingerprint the user wrote down, also that this install made it
 //!   fingerprint  print the signing-key fingerprint to write down
+//!   protect      print the admin commands that switch on the safe protections
+//!                for the high-risk apps running now (we change nothing ourselves)
 //!   install      print the one-line Scheduled Task command (we do not silently persist)
 //!
 //! Layout on disk (%LOCALAPPDATA%\Witness):
@@ -25,6 +27,8 @@ mod harden;
 mod keys;
 mod notify;
 mod paths;
+mod processes;
+mod protect;
 
 use std::{
     collections::HashMap,
@@ -108,10 +112,11 @@ fn main() -> ExitCode {
             |d| verify(Path::new(d), args.get(3).map(String::as_str)),
         ),
         "fingerprint" => fingerprint(),
+        "protect" => App::load(false).and_then(|app| protect::commands(&app.rules)),
         "install" => install(),
         _ => {
             println!(
-                "witness {} — see README.md\n  run | check | selftest | verify <dir> [fingerprint] | fingerprint | install",
+                "witness {} — see README.md\n  run | check | selftest | verify <dir> [fingerprint] | fingerprint | protect | install",
                 witness_core::VERSION
             );
             Ok(())
@@ -275,6 +280,9 @@ fn check() -> Result<(), String> {
         }
     }
     println!("self:     {}", harden::status());
+    if let Err(e) = protect::report(&app.rules) {
+        println!("apps:     could not list running programs ({e})");
+    }
     if unavailable == CHANNELS.len() {
         return Err("no channel is readable; Witness would see nothing".into());
     }

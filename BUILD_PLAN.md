@@ -72,8 +72,14 @@ clippy pedantic has no new warnings.
    say so in `check` (baseline snapshot is v0.2, but a one-line warning is v0.1).
    [~] `check` now reports a channel that is subscribable but *disabled*
    (Windows writes nothing to it) as DISABLED with the `wevtutil` fix, and
-   `run` logs it; before, it said "ok". Still to do: the per-program
-   Exploit Protection side.
+   `run` logs it; before, it said "ok". [x] 2026-09-30: `check` lists the
+   high-risk apps running and which protections each has on (read from the
+   live process with GetProcessMitigationPolicy, no admin); `protect` prints
+   the admin commands for the two image-load blocks, the only guards that
+   never break a browser or messaging app. Proven on the maintainer's
+   machine against Brave (24 processes: image-load blocks on for `some`, the
+   sandboxed helpers, not the main process). [ ] Run the printed command for
+   brave.exe, restart Brave, confirm `check` shows `all`.
 
 Exit: every rule has been fired on real hardware; `witness verify` passes on
 every generated bundle; an edited bundle fails; a fresh install prints a

@@ -20,7 +20,7 @@ THREAT_MODEL.md before proposing a feature.
   (`deny.toml` bans them; `cargo deny check` must stay green).
 - `witness-core` is `#![forbid(unsafe_code)]`, clippy pedantic clean, and
   everything in it is tested on Linux. `unsafe` lives only in
-  `crates/witness-win/src/{eventlog,keys,harden,notify}.rs`, one OS facility
+  `crates/witness-win/src/{eventlog,keys,harden,notify,processes}.rs`, one OS facility
   each, a SAFETY comment per call. CI greps for this.
 - No `unwrap`/`expect`/`panic` outside tests. `panic = "abort"` in release.
 - The strongest PQC available: ML-DSA-87 (FIPS 204 category 5), deterministic
@@ -90,6 +90,8 @@ cargo clippy --all-targets -- -D warnings
 cargo deny check
 cargo build --release -p witness-win        # Windows + MSVC only; day-to-day
 powershell -ExecutionPolicy Bypass -File scripts\build-release.ps1      # the release build: reproducible, writes build-info.txt
+target\release\witness.exe check            # channels, self-hardening, and each running high-risk app's protections
+target\release\witness.exe protect          # the admin commands that switch on the safe ones; Witness runs nothing
 powershell -ExecutionPolicy Bypass -File scripts\phase2.ps1          # full local proof, no admin
 powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1    # elevated: the opt-in cases
 powershell -ExecutionPolicy Bypass -File scripts\phase2-admin.ps1 -CleanupOnly

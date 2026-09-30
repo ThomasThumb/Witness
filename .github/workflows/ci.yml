@@ -110,10 +110,10 @@ jobs:
         with: { persist-credentials: false }
       - name: core must contain no unsafe
         run: "! grep -rn 'unsafe' crates/witness-core/src --include='*.rs' | grep -v -E 'forbid|unsafe-inline'"
-      - name: windows unsafe is confined to four files
+      - name: windows unsafe is confined to five files
         run: |
           set -e
-          bad=$(grep -rln 'unsafe' crates/witness-win/src --include='*.rs' | grep -v -E 'eventlog.rs|keys.rs|harden.rs|notify.rs' || true)
+          bad=$(grep -rln 'unsafe' crates/witness-win/src --include='*.rs' | grep -v -E 'eventlog.rs|keys.rs|harden.rs|notify.rs|processes.rs' || true)
           if [ -n "$bad" ]; then echo "unsafe in unexpected file(s): $bad"; exit 1; fi
 
   fuzz-smoke:
