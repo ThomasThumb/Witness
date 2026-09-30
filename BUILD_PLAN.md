@@ -124,8 +124,14 @@ Exit: written sign-off from one outside reviewer on the triage text.
    This machine was then updated to 17.14.41 (September 2026) and, built
    clean, carries 35229: one step past the runner. The code section is the
    same size on both (691,783 B); only 256 B of .rdata differ, where the
-   CRT/C-compiler objects sit. [ ] When GitHub's windows-2022 image reaches
-   17.14.41 (its readme lists the version), re-run the dry run and compare.
+   CRT/C-compiler objects sit. [x] 2026-09-30: the image reached 17.14.41
+   and the dry run of `ebf6586` was still 512 bytes off with every
+   toolchain detail identical: the runner's checkout had converted the
+   embedded `rules/*.toml` to CRLF. `.gitattributes` now forces LF
+   everywhere and `build-release.ps1` refuses CRLF in those files. The next
+   dry run (`afa151a`) was **byte-identical** to the local build:
+   `9ec3d8c3…` on both machines. Two independent machines, same bytes:
+   this item's exit test is met.
    Lesson: build-release.ps1 now starts each release build clean, because
    cargo kept objects compiled by the old cl.exe after the update.
    The container route needs the Windows "Containers" and "Hyper-V"

@@ -334,6 +334,17 @@ and why: `docs/reviews/2026-09-24-codex-deep-scan.md`.
   reverted). Claude Code on the Windows box has no such limit, and should
   be the one making commits from now on.
 
+- Line endings are part of the binary. `include_str!` embeds
+  `rules/*.toml` byte for byte; a Windows checkout with `core.autocrlf=true`
+  (git's default there, and GitHub's runner) turns LF into CRLF and the
+  release hash moves by one alignment unit. `.gitattributes` (`* text=auto
+  eol=lf`) fixes every checkout; `build-release.ps1` refuses CRLF. Found
+  2026-09-30 as the last difference between two otherwise identical builds.
+- `cargo fuzz` on Windows: `-s none` fails to link (`__stop___sancov_pcs`);
+  ASan links but the target dies with STATUS_DLL_NOT_FOUND until
+  `clang_rt.asan_dynamic-x86_64.dll`'s folder (VS Build Tools,
+  `VC\Tools\MSVC\<ver>\bin\Hostx64\x64`) is on PATH. Then ~8,000 exec/s.
+
 ## 9. Open questions for the maintainer
 
 1. **EAF/IAF/ROP rules ship untested.** Options: write triggers behind an

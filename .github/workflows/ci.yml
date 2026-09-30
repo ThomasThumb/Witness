@@ -128,6 +128,14 @@ jobs:
       - run: cargo +nightly fuzz run winevt_parse -- -max_total_time=60
       - run: cargo +nightly fuzz run rules_parse -- -max_total_time=60
 
+  size-budget:
+    name: no god files, no debt markers, dependency cap
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with: { persist-credentials: false }
+      - run: python3 scripts/check_size.py
+
   contacts-fresh:
     name: contacts checked within 6 months
     runs-on: ubuntu-latest

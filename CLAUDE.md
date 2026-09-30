@@ -31,6 +31,15 @@ THREAT_MODEL.md before proposing a feature.
   (`image_in_process_dir`) over a vendor allowlist.
 - Every fix a live machine forced is recorded in `tests/triggers/README.md`
   with the raw XML checked in under `crates/witness-core/tests/fixtures/`.
+- No god files, no quiet debt, no waste. CI (`scripts/check_size.py`)
+  fails on a source file over 400 non-test lines, the crates over 4,000,
+  more than 15 direct dependencies, or a TODO/FIXME/XXX/HACK in code: debt
+  goes in `docs/HANDOFF.md` §9 where the maintainer sees it. A file nearing
+  the cap gets split along a responsibility, not renamed around. Clippy's
+  perf and pedantic lints (functions over 100 lines, needless clones and
+  allocations) already fail the build; do not silence one to pass, fix it.
+  Untrusted input is parsed and hashed through fixed budgets, never
+  buffered whole on trust.
 - Nothing public may identify the maintainer or any user: no names,
   emails, machine names, SIDs, key fingerprints or expanded user paths in
   files, fixtures, commit messages, commit authors or Witness's own output.
@@ -99,12 +108,10 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 
 ## What is next (in order)
 
-1. Phase 4, second machine: MSVC is pinned (14.44, release job on
-   windows-2022). The hashes differ only by Visual Studio servicing level:
-   this machine is on 17.14.41 (CRT objects 35229), the runner image on
-   17.14.37628.2 (35228). When the image reaches 17.14.41 (see
-   actions/runner-images, Windows2022-Readme.md), re-run the release dry run
-   and compare `build-info.txt` and the hash.
+1. Done 2026-09-30: GitHub's runner and this machine build byte-identical
+   `witness.exe` (`9ec3d8c3…` at `afa151a`). Keep it so: MSVC pinned to
+   14.44 on windows-2022, LF forced by `.gitattributes`, `build-release.ps1`
+   checks both. Re-verify with a dry run whenever the toolchain moves.
 2. Phase 3 words: outside reviewer sign-off on the triage text. Not optional.
    The packet is `docs/reviews/phase3-wording.md`; the maintainer sends it.
 3. SignPath application, winget manifest (Phase 4/6). `SUPPORT.md` is

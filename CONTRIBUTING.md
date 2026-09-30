@@ -19,6 +19,10 @@ Thank you. Three kinds of help are especially valuable, and none require Rust:
 * No `unsafe` outside the four FFI files. CI enforces it.
 * No `unwrap`/`expect`/`panic` in library or main code. CI enforces it.
 * Everything in `witness-core` must be testable on Linux and have tests.
+* No god files: 400 non-test lines per source file, 4,000 for the crates,
+  15 direct dependencies, no TODO/FIXME left in code (CI checks all four,
+  `scripts/check_size.py`). Clippy pedantic and perf lints are errors;
+  fix the code rather than allowing the lint.
 * Plain-language text is reviewed for tone, not just accuracy. If it would
   make a frightened person more frightened without telling them what to do,
   it is wrong.
