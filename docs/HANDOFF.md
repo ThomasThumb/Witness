@@ -347,9 +347,9 @@ and why: `docs/reviews/2026-09-24-codex-deep-scan.md`.
 
 ## 9. Open questions for the maintainer
 
-1. **EAF/IAF/ROP rules ship untested.** Options: write triggers behind an
-   opt-in build flag, or cap those rules at `severity = "look"` until
-   confirmed, so an unverified rule can never produce an "urgent".
+1. **EAF/IAF/ROP rules ship untested.** Decided 2026-09-30: capped at
+   `look`, and their text says the check has not been seen on a real
+   machine. Raise to `urgent` only with a captured event and a golden test.
 2. **`cig-self-bundled` trusts "the DLL is in the program's own folder".**
    For Program Files that folder needs admin to write, so the line holds.
    But Signal, Discord, Slack, new Teams and per-user Chrome install under
@@ -360,8 +360,17 @@ and why: `docs/reviews/2026-09-24-codex-deep-scan.md`.
    browser start. That trade-off is the maintainer's; flagged, not changed.
    Since the Codex scan (2026-09-24, `docs/reviews/`): the comparison keeps
    volume identity, so the same folder on another drive no longer counts,
-   and `witness.log` names the refused library on every match, so a quiet
-   one can be judged from the log.
+   and `witness.log` names the refused library on every match.
+   Decided 2026-09-30: stay quiet (no toast), but keep signed evidence
+   under `evidence\quiet\` the first time each program is refused each
+   library (`evidence::quiet_dir`, the folder is the memory, no state
+   file). Brave's own library costs one bundle ever; a planted one is
+   captured. No malware scanning: Defender already scans on write and
+   load, unknown spyware would come back "clean", and event data must
+   never become a path Witness acts on. v0.2 candidate: compare the
+   library's Authenticode signer with the program's (`WinVerifyTrust`);
+   structural, needs no list, but it opens the file, which touches the
+   same rule. Not yet seen live: needs a CIG event while `witness run` is up.
 3. **The toast says "Tap to read what it means"**, but the report already
    opens by itself, and the toast is attributed to PowerShell's
    AppUserModelID, so tapping it may just open PowerShell. Untested; worth

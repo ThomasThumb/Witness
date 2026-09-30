@@ -16,7 +16,7 @@ Every quoted line below is copied verbatim from
 [`rules/default.toml`](../../rules/default.toml),
 [`rules/contacts.toml`](../../rules/contacts.toml) and
 [`crates/witness-core/src/report.rs`](../../crates/witness-core/src/report.rs)
-as of 2026-09-24. If those files have changed since, they are what counts.
+as of 2026-09-30. If those files have changed since, they are what counts.
 
 ## 1. What Witness is
 
@@ -297,9 +297,9 @@ the rule rests on Microsoft's documentation alone.
 
 ### 8. `cig-self-bundled`
 
-*`bug`: logged only, never shown. Fired on real hardware (Brave, event 12).*
+*`bug`: never shown; evidence kept quietly, once per program-and-library pair. Fired on real hardware (Brave, event 12).*
 
-**Behind it:** **Never shown to the person**: severity `bug` means it is only written to the log. It covers a program refused one of its *own* libraries (from its own install folder), which browsers such as Brave do several times at every start. Without this rule, every Chromium user would get a "worth a look" alert daily.
+**Behind it:** **Never shown to the person**: severity `bug` means no alert; the first time each program is refused each library, signed evidence is kept quietly under the evidence folder for a helper to find. It covers a program refused one of its *own* libraries (from its own install folder), which browsers such as Brave do several times at every start. Without this rule, every Chromium user would get a "worth a look" alert daily.
 
 **What the person sees:**
 
@@ -310,7 +310,7 @@ the rule rests on Microsoft's documentation alone.
 > *What it might mean:* The program's own settings tripped its own protection. Browsers do this routinely and carry on working.
 >
 > *What to do:*
-> 1. Nothing. This is recorded in witness.log in case a technical helper wants to see it.
+> 1. Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log.
 
 **Questions for you:**
 
@@ -348,7 +348,7 @@ the rule rests on Microsoft's documentation alone.
 
 ### 10. `eaf-block`
 
-*`urgent`: shown as "sometimes seen when someone tries to break in". **Not seen on real hardware** (no test program, by the maintainer's decision). Based on Microsoft's documentation.*
+*`look`: shown as "worth a look". **Not seen on real hardware** (no test program, by the maintainer's decision). Based on Microsoft's documentation.*
 
 **Behind it:** Export Address Filtering stopped a program reading Windows' table of system functions in the way exploit code does. Only active for programs someone has explicitly opted in.
 
@@ -358,16 +358,16 @@ the rule rests on Microsoft's documentation alone.
 >
 > *What happened:* Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs do not, and stopped it.
 >
-> *What it might mean:* This is a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does.
+> *What it might mean:* This is a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
-> 1. Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.
-> 2. Keep the evidence folder. Contact a helpline below today.
+> 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
+> 2. Contact one of the helplines below and say which program it was.
 
 **Questions for you:**
 
 - The title ("reading its own address book") is a metaphor. Does it help or confuse? It is shared with the rule below.
-- Should these unconfirmed rules be shown as "worth a look" instead of **urgent** until they have been seen for real?
+- These five unconfirmed rules are shown as "worth a look", not **urgent**, and say so, until one is seen for real. Right call, or should an unconfirmed check still be urgent?
 
 **Your verdict:** approve / approve with changes / rewrite / remove
 
@@ -375,7 +375,7 @@ the rule rests on Microsoft's documentation alone.
 
 ### 11. `iaf-block`
 
-*`urgent`: shown as "sometimes seen when someone tries to break in". **Not seen on real hardware.***
+*`look`: shown as "worth a look". **Not seen on real hardware.***
 
 **Behind it:** Import Address Filtering: the same idea as the rule above, for the functions a program imports.
 
@@ -385,11 +385,11 @@ the rule rests on Microsoft's documentation alone.
 >
 > *What happened:* Windows' Import Address Filtering caught a program reading the table of functions it imports in a way normal programs do not, and stopped it.
 >
-> *What it might mean:* Like Export Address Filtering above: a classic exploit step with few innocent causes.
+> *What it might mean:* Like Export Address Filtering above: a classic exploit step with few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
-> 1. Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.
-> 2. Keep the evidence folder. Contact a helpline below today.
+> 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
+> 2. Contact one of the helplines below and say which program it was.
 
 **Questions for you:**
 
@@ -401,7 +401,7 @@ the rule rests on Microsoft's documentation alone.
 
 ### 12. `rop-stackpivot-block`
 
-*`urgent`: shown as "sometimes seen when someone tries to break in". **Not seen on real hardware.***
+*`look`: shown as "worth a look". **Not seen on real hardware.***
 
 **Behind it:** A return-oriented-programming check: the program's stack was swapped in a way ordinary programs never do. Only active for programs someone opted in.
 
@@ -411,11 +411,11 @@ the rule rests on Microsoft's documentation alone.
 >
 > *What happened:* Windows' exploit protection detected a program's control flow being hijacked in a way that has no ordinary explanation, and stopped it.
 >
-> *What it might mean:* This specific check (stack pivot detection) has very few innocent causes. It is not proof of an attack, but it is the closest thing on this list.
+> *What it might mean:* This specific check (stack pivot detection) has very few innocent causes. It is not proof of an attack, but it is the closest thing on this list. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
-> 1. Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.
-> 2. Keep the evidence folder. Contact a helpline below today.
+> 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
+> 2. Contact one of the helplines below and say which program it was.
 > 3. If you are a journalist, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.
 
 **Questions for you:**
@@ -429,7 +429,7 @@ the rule rests on Microsoft's documentation alone.
 
 ### 13. `rop-callercheck-block`
 
-*`urgent`: shown as "sometimes seen when someone tries to break in". **Not seen on real hardware.***
+*`look`: shown as "worth a look". **Not seen on real hardware.***
 
 **Behind it:** A return-oriented-programming check: a sensitive system function was reached by a `return` instead of a `call`.
 
@@ -439,11 +439,11 @@ the rule rests on Microsoft's documentation alone.
 >
 > *What happened:* Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it.
 >
-> *What it might mean:* This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in.
+> *What it might mean:* This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
-> 1. Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.
-> 2. Keep the evidence folder. Contact a helpline below today.
+> 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
+> 2. Contact one of the helplines below and say which program it was.
 
 **Questions for you:**
 
@@ -455,7 +455,7 @@ the rule rests on Microsoft's documentation alone.
 
 ### 14. `rop-simexec-block`
 
-*`urgent`: shown as "sometimes seen when someone tries to break in". **Not seen on real hardware.***
+*`look`: shown as "worth a look". **Not seen on real hardware.***
 
 **Behind it:** A return-oriented-programming check that simulates what the program was about to do.
 
@@ -465,11 +465,11 @@ the rule rests on Microsoft's documentation alone.
 >
 > *What happened:* Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it.
 >
-> *What it might mean:* Same family as the two rules above. Rarely innocent.
+> *What it might mean:* Same family as the two rules above. Rarely innocent. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
-> 1. Disconnect from the network. Do not turn the computer off; that can destroy evidence in memory.
-> 2. Keep the evidence folder. Contact a helpline below today.
+> 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
+> 2. Contact one of the helplines below and say which program it was.
 
 **Questions for you:**
 

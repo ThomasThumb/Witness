@@ -98,7 +98,7 @@ fn shipped_rules_classify_realistic_events() {
         ),
         (
             mitigation("Microsoft-Windows-Security-Mitigations/UserMode", 20, r"C:\x\a.exe"),
-            Some(("rop-stackpivot-block", Severity::Urgent)),
+            Some(("rop-stackpivot-block", Severity::Look)), // look until fired on real hardware
         ),
         (mitigation("Microsoft-Windows-Security-Mitigations/KernelMode", 1, r"C:\x\a.exe"), None), // audit event: noise
         // Captured on Windows 11 build 26200 from tests/triggers/trigger.exe fastfail (named fields).

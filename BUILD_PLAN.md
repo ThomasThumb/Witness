@@ -17,8 +17,11 @@ reproducibility check, and all of Phase 3.
 - [x] Full Apache-2.0 text in `LICENSE-APACHE`.
 - [x] Pin `rust-toolchain.toml` to an exact version (1.95.0).
 - [x] `Cargo.lock` committed; CI runs `--locked`.
-- [ ] Enable branch protection: CI required, no force-push, signed commits.
-- [ ] Enable GitHub Security Advisories and Dependabot (security updates only).
+- [x] Branch protection (2026-09-30): no force-push, no deletion, linear
+  history, enforced for admins. Not "CI required": that only gates pull
+  requests and the maintainer pushes to `main` directly; CI runs on every
+  push and is watched. Not signed commits: no signing key is set up.
+- [x] Dependabot alerts and security updates (2026-09-30); no version-bump PRs.
 - [ ] `cargo vet init` and record the initial audit set; add `cargo vet` to CI.
 
 Exit: CI green on an empty commit; `cargo deny check` and `cargo audit` pass.

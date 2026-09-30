@@ -121,9 +121,11 @@ parameter `$args`; capture native stderr via `cmd /c ... 2>&1`, not `*>`.
 Protection settings and opens a share; Claude Code does not). Re-run it
 after every Windows feature update; all four cases passed on 2026-09-24.
 
-Open decisions for the maintainer (HANDOFF.md, "Things I would still argue
-about"): the untested UserMode rules at `urgent`; `cig-self-bundled` for
-programs installed in user-writable folders.
+Decided 2026-09-30 (HANDOFF.md §9): untested UserMode rules capped at
+`look`; `bug`-severity events keep quiet evidence once per program-and-
+library pair; branch protection (no force-push/deletion, linear history)
+and Dependabot security updates are on. Open: the toast's "Tap to read"
+(needs one click to test); `cargo vet`.
 
 ## Style the maintainer expects
 
