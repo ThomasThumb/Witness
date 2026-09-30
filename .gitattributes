@@ -1,0 +1,8 @@
+# Line endings are part of the binary: rules/default.toml and
+# rules/contacts.toml are compiled into witness.exe with include_str!.
+# A checkout that converts them to CRLF (git's default on Windows) builds a
+# binary 300 bytes larger than one that keeps LF, and the release hash no
+# longer reproduces. Observed 2026-09-30: GitHub's runner vs the maintainer's
+# machine, identical toolchains, 512 bytes apart, CRLF the only difference.
+# So every text file is LF in every checkout, whatever core.autocrlf says.
+* text=auto eol=lf

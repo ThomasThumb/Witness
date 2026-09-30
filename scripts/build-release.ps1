@@ -59,6 +59,14 @@ if ($Msvc) {
         if ($i -gt 0) { [Environment]::SetEnvironmentVariable($line.Substring(0, $i), $line.Substring($i + 1)) }
     }
 }
+# The rules files are compiled into the binary byte for byte, so their line
+# endings are part of the hash. .gitattributes keeps them LF in every
+# checkout; this catches a checkout that did not honour it.
+foreach ($embedded in 'rules\default.toml', 'rules\contacts.toml') {
+    if ([IO.File]::ReadAllText((Join-Path $root $embedded)).Contains("`r`n")) {
+        throw "$embedded has CRLF line endings; the build would not reproduce. Check out with .gitattributes honoured (git checkout -- . after git config core.autocrlf false), then retry."
+    }
+}
 if (-not $TargetDir) { $TargetDir = Join-Path $root 'target' }
 $cargoHome = if ($env:CARGO_HOME) { $env:CARGO_HOME } else { Join-Path $env:USERPROFILE '.cargo' }
 foreach ($p in $cargoHome, $root, $TargetDir) {
