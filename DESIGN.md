@@ -45,7 +45,9 @@ BUILD_PLAN.md phase 6).
    │ witness-core :: winevt::parse  → Event (normalized, raw kept)    │
    │ witness-core :: RuleSet::first_match → Option<&Rule>             │
    └──────────────┬───────────────────────────────────────────────────┘
-                  │ Bug → log only        Look / Urgent ↓
+                  │ Bug → quiet bundle,   Look / Urgent ↓
+                  │   once per pair,      (bundle + toast + report)
+                  │   no toast
                   ▼
    ┌──────────────────────────────────────────────────────────────────┐
    │ witness-core :: report::render  → self-contained HTML (CSP none) │
@@ -128,6 +130,9 @@ witness.log       append-only plain text, epoch seconds + line
 evidence\
   20260922-040000-fastfail-messaging-browser\
     event.json  event.raw.xml  report.html  manifest.json  manifest.sig  pubkey.bin
+  quiet\
+    cig-self-bundled-3f9a1c…\            (bug severity: first time this program was
+                                          refused this library; never shown, kept for a helper)
   selftest\
     20000101-000000-fastfail-any\        (only from `witness selftest`)
 ```

@@ -139,7 +139,7 @@ impl App {
         if test {
             evidence_root.push("selftest");
         }
-        fs::create_dir_all(&evidence_root).map_err(|e| e.to_string())?;
+        fs::create_dir_all(evidence_root.join("quiet")).map_err(|e| e.to_string())?;
         Ok(App { rules, contacts: contacts.contact, id, evidence_root, last_notified: HashMap::new(), test })
     }
 
@@ -166,7 +166,19 @@ impl App {
         let image = ["ImageName", "ImagePath"].iter().find_map(|k| ev.data.get(*k));
         log(&format!("match {} ({}) process={:?} image={:?}", rule.id, rule.severity, ev.process, image));
         if rule.severity == Severity::Bug {
-            return Ok(None); // logged, not shown; the Event Log keeps the record
+            // Never shown, but not lost: the first time this program is refused
+            // this library, the evidence is written under evidence\quiet\, signed
+            // like any other. Repeats (Brave, four per start) cost nothing.
+            let dir = evidence::quiet_dir(&self.evidence_root, &ev, rule);
+            if dir.exists() {
+                return Ok(None);
+            }
+            let html =
+                report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);
+            evidence::write_bundle(&dir, &ev, rule, &html, &self.id)
+                .map_err(|e| format!("quiet bundle {}: {e}", paths::shown(&dir)))?;
+            log(&format!("quiet bundle written (first time for this program and library): {}", paths::shown(&dir)));
+            return Ok(None);
         }
         let dir = evidence::bundle_dir(&self.evidence_root, &ev, rule);
         let html = report::render(&ev, rule, &self.contacts, &self.id.fingerprint(), &paths::shown(&dir), self.test);

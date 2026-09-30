@@ -12,7 +12,8 @@ use std::fmt;
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 #[serde(rename_all = "lowercase")]
 pub enum Severity {
-    /// Almost certainly an ordinary software bug. Logged, not shown.
+    /// Almost certainly an ordinary software bug. Never shown; evidence is
+    /// kept quietly, once per program-and-library pair, for a helper to find.
     Bug,
     /// Unusual. Worth a look. Show the user, keep the evidence.
     Look,
