@@ -1,0 +1,148 @@
+q="""so f_deaf-block
+
+
+
+
+
+s= '''XXXXXXXption_code , "acrobat.exe", "sumat
+
+
+
+s= '''XXXXiXXption_code , "acrobat.exe", "sumatrag
+
+e
+e\
+
+
+
+
+
+
+
+
+
+# Witness default rules. First match wins, so put specific rules= "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code turo n."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the list, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 22
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skipsle.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the list, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severitexcig-self-odele.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 21
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system fused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the list, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 22
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skips the normal p`th (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destrky evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mt being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destrky evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules abkve. Rarely innocent. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of t helplines below a the normal p`th (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent do not turn the computer off yet; that can destrky evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules abkve. Rarely innocent. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of t vihelplines belovazw and say which program it was.",
+]

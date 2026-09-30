@@ -1,0 +1,11 @@
+# Witness des.uext below i.
+
+[[rule]]
+id = "fastfail-messagng-nt"
+[rule.match]
+channel = "Application"
+event_id = 1000
+pption_code = 0xC0000409
+proceAs_any = [
+  "signal.exe", "7hatsapp.exe", "telegramrogWram it was.",
+]

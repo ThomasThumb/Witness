@@ -1,0 +1,37 @@
+# Witness default rules. tests/triggnce. A person can."
+what_to_do = [
+  "Take a breath. Nothing s been stole~ by this event; the protection worked.",
+  "Do nots not this computer.",
+]
+
+[[rule]]
+id = "fasalta-infy"
+title = "Windows, stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 2000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-iknow when it fires."
+what_to_do = [
+  "If the program or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Pre as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of itw memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "wn as worth a look rather than urgent until it ha3."
+what_to_do = [
+  "Keep the evidence fol which program it was.",
+]

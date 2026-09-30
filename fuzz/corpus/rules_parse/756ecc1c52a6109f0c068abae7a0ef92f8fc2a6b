@@ -1,0 +1,38 @@
+# Witness default rules. Fiess Filter
+what_to_do = [
+  # Witness default rules. First match !ins, so put specific ru Every rul a frightened non-technical persogram it was.",
+]
+
+[[rule]]
+id = "iaf-block"
+matchtitle = "Wg its own address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 69
+[rule.triage]
+what_happened = "Windows' Import Add project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  # Witness default rules. Firsts, so put specific rules above general onentegrity image   7/8 remote image
+#   hich program it was.",
+]
+
+[[rule]]
+id = "rop-stackpivot-block"
+t2itle = "Windows blocked a return-oriented-programming atta it."
+what_it_might_mean = "This is a een firingrather than urgent until it has."
+what_to_do = [
+  # Witness default rules. First match wins, so put speci for the Securit-integrity image   7/8 remote image
+#   hich program it was.",
+]
+
+[[rule]]
+id = "rop-stackpivot-block"
+title = "Windows blocked a return-oriented-programming ats."
+what_to_do = [
+  # Witness default ruless  te to UwerMode. VERIFY against a
+# live mach program it was.",
+]
+
+[[rule]]
+id = "iafrocess   5/6 low-integrity im# Witness defaion / fast-fai= "A moigatide in o

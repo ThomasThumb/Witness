@@ -1,0 +1,19 @@
+# Witnerules. First ma
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+proption_code = 0xC0000409
+process_any = [
+  "signaloperaAe))))))))))))))))))))())))))))))))))))))))))))))))))e", "discord.exe", "slack.teams.exe", "ms)teams.exe",
+  "chroxe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Winhat ths app's memory was being corruptedruption could do anxthing."
+what_it_might_mean = "Moordinary bugt a blocked break-in attemp lon can."
+what_to_do = [
+  "Take a bputer off ye*the helpl which program it was.",
+]

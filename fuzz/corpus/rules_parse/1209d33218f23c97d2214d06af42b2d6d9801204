@@ -1,0 +1,23 @@
+# Witness default rules. First matconest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signa", "ms-teams.exe",
+  "chrome.exe", "msedge.e\\.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobate",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted anefore the corruption could do anything."
+what_it_might_mean = "Most of the tims."
+what_to_do = [
+  "Keep the evidence folderw and say which program it was.",
+]

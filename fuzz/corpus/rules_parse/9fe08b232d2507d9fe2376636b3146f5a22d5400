@@ -1,0 +1,21 @@
+# Witness ee mean "memory
+# safety violt says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windowsopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+excon_code = 0xC4000409
+process_any = [
+  "signal.exexe", "oprord31.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Winpg corruptn and Windows refused."
+what_it_might_mean = "Legitimate software almo personal comps."
+what_to_do = [
+  "Keep thram it was.",
+]

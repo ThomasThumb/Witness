@@ -1,0 +1,5 @@
+<Event xmlns='http:icn/2004/08/events/event'><System><Provider Name='Appioclatin Error' Guid='{a0e9b465-b939-57db27'/><EventID>1001</EventID><Version>0</Version>><Keywords>0x8000</Keywords><TimeCreated SystemTime='2T14:24812'/><Channel>Application</Channel><Computer>EXAMPLE-PC</Computer><Secur
+
+
+
+UserID='S-1-50000-1001'/></System><EventData><Data Name='AppName'>trigger.exe</Data><Data Name='AppVersId'>1x35f8</Data><Data Name='ProcessCreationTime'></Data><Data Name='PackageRId'>0x35f8</Data><Data Name='ProcessCreatimnTime'></Data><Data Name='PacstaioseCrnTime'></Data><Data Name='PackageRelativeAppId'></Data></EventData></Event>

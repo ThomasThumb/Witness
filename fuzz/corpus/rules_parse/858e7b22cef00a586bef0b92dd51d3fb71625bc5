@@ -1,0 +1,49 @@
+# Witness drulzefato load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settin not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signgs tripped its own protection. Browsers do e of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each prt under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attackar to get their own code running. If this coms tripped its own pron. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first tim ritness.log."]
+
+[[rule]]
+id = "cig-block"
+t_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each prt under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attackar to get their own code running. If this coms tripped its own pron. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first tim ritness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows b[lo# [cked an unsigt match wieve"
+e_id = 6
+[rula.triage]
+wh = "evprcause."
+wha = [
+  "Disconnect from  trustned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Win

@@ -1,0 +1,22 @@
+# Witness default rext says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Erronotepad.exer"
+exception_code = 0xC0000409
+process_any = [
+  "signa/.exe", "whatsapp.exe", "telegram.exe", "element.ex))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.exe", "slack.exe", "teams.exe", "ms)teams.exe",
+  "chrome.exe", "msedgss default rules., so First match.exe", "firefox.eewolf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detebbbbbbbhing."
+what_it_might_mean = "Most ofike from the outside. Witness cannot telle difference. A person can."
+what_to_do = [
+  "Take memory.",
+  "Contact one of the helplines below and say which program it was.",
+]

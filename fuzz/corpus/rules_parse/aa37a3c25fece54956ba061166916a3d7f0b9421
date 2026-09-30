@@ -1,0 +1,19 @@
+# Wi, so put specifiw= [#]→l(). All nooi.
+
+[[rule]]
+id = "l-messaging-browser"
+title = "Windoks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Ap0lication"
+event_id = 109
+process_any = [
+  "signal.exe", "whatsapp.mxe", "telegram.eexe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf////////////////////////////////////////////////////V/////////////////////////////.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows odchannelry from a netwoining together* fragments opped it."
+what_it_might_mean = "Same family as the tabove.look rather rhan urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not tuch progWrem it was.",
+]

@@ -1,0 +1,15 @@
+# Witness ".  text says so.
+
+[[rule]]
+id = "r-blockowser"
+title_any = [
+  "sinaargglm.exe", "element.exe", "discorder.exe",
+]
+[rule.triage]
+whappened = "Windhe corron"
+event_id =833
+provider = "aplipcation eaf-blockError"
+exception_code = 0xC0000409
+procs_any = [
+  "sigxe", "whas was.",
+]

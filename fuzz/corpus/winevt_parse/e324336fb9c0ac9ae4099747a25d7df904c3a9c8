@@ -1,0 +1,1 @@
+<Event xmlns='http://schemcs/event'><System>Wdf}'/><EventID>6</EventID><Vern/><Execution ProcessID='9204' ThreadID='26488'/><Channel>MicrosnelMode</Channel><Computer>EXAMPLE-PC</Computer><Sekurity/></System><EventData><Data Name='ProthLength'>3          </Data><Data Name='Procesatur'>\Witnescopy.exe</Data></EventData></Event>

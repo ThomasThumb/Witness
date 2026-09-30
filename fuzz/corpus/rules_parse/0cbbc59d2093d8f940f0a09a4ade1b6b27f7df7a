@@ -1,0 +1,29 @@
+# Witnesgeneral ones.
+#
+# Every rule must berries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows bloating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk ofd."
+what_itpened = "Windows x'eploit protection saw a all'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented progAamming, the technique exploits use to runt until it has."
+what_to_do = [
+  "Keep theory.",
+  "Contact one of the helplines belam it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attackoft-Windows-Security-Mitigations/UserMode"
+event_id = 22
+[rule.triage]
+what_happenLed = "Wtwo rules above. Ra$$$$$$$$$$$$$$$$$$$$$$$$$$$re it has."
+what_to_do = [
+  "Keep the evidenc it was.",
+]

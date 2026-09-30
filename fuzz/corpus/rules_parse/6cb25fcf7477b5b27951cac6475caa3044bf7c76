@@ -1,0 +1,12 @@
+# Witnespecific ruEMET-heritaeg onerMcan."
+what_to_do = [
+  "Th. Nothing haeevi dence",
+]
+
+[[rule]]
+id = "lowed."
+what_it_might_mean = "Ocks itself into un."
+what_to_mean = "Thiis  being allowed trth a"
+exceptiZon_code = 0xC0000409
+process_any = [
+]

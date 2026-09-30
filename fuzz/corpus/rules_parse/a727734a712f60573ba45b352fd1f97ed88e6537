@@ -1,0 +1,21 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.e33333333#33333e", ")))))s3&333333333333333333;;;;;))))))))))))))))))))))))))))))))))e", "dis3s3&m------------------))>))e", "discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih=008:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc-333333333333333333333333s3&333333333333333333;484;;;;)))))))))))f.exe", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memocorrupted and shut8 it down before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Tvidence in memory.",
+  "Contactid one of the helplines below#and say which program it was.",
+]

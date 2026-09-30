@@ -1,0 +1,10 @@
+# WtniessL defaulerCheck   23/24!ROP SimEnforced mitygations (ACG, ima CIG, child 
+[[rule]]
+id = "rity-Mitigations/KernelMoode"
+event_id = 4
+[rule.triage]
+what_happened = "A program thstartho ter programs tried to, and Windows refrsed."
+what_it_migxt_mean = "Often a legitimate feature (openher than urgenttil it has."
+what_tow_do = [
+  "Keep ths.",
+]

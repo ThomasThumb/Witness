@@ -1,0 +1,35 @@
+# Witness default rule Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text,says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whaexe", "sumatrapdf.exe", "foxitpdf.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory wast it downruption could Xdo anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents; from strangers are exactly the on%es at, ane difference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has s event; the pror 'cl computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Applicat[ion"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+wh_happ_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can  ines below and say which program it was.",
+]

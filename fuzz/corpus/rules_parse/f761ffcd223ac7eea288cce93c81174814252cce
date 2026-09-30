@@ -1,0 +1,24 @@
+# Witness defaul so.
+
+[[rule]]
+id = "rop"
+title = "Windows stopped ao the internet"
+severity = "urgent"
+[rule.match]
+czannel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0x0409
+process_any = [
+  "signal.exefastfatelegram.exe", "element.exe", "discord.f.exe", "foxitpdfrea", "viv", "", "", "nd sas.",
+ "vivaeelement.exe", "", "", #Keep hexe",[
+  "eep t.exe", "", "", #Keep tqhexe",[
+  "Keep viv", "", "", 
+  "Keep tqhder.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was beinrop-stackn and Windows refused."
+what_it_might_mean = "Legit ."
+what_to_do = [
+  "Keep the evidence foh program it was.",
+]

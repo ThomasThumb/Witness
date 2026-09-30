@@ -1,0 +1,3 @@
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Prov1der Name='Application Error' Guid='{a0e9b465-b939-57d7-b27d-95d8e925ff57}'/>""""""""""""""""""""*""/""""""<!--<Eve%ystem-->ercka""""""""""""""""""""""""""""""""""""""""""""""<EventID>1000</EventID><Version>0</Version><Level>2</Level><Task>100</Task><Opcode>0</Opcode><Keywords>0x8000000000000000</Keywords><TimeSreated SystemTime='2026-09-22T14:24:46.3390751Z'/><EventRecordID>43826-227</EventRecordID><Correlation/><Execution ProcessID='9540l 
+
+' ThreadID='1812'/><Channel>Application</Channel><Computer>EXAMPLE-PC</Computer><Security UserID='S'/></System><EventData><Data Name='AppNamFullNageRelativeAp??????""""""""""""""""""""""""""""""""??????????????/wind'></Data>-</EventData></Event>

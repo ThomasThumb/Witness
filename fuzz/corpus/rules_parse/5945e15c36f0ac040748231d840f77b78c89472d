@@ -1,0 +1,109 @@
+# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If youm
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library th."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If yine or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 12 26200: Chromium browsers (Brave observed; Chrome and
+# Edge use the same sandbox) turn CIG on for their own GPU/renderer processes
+# and are then refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-0.dll), several times per browser start. That is the program's own
+# configuratfon, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If ywu do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage, user-mode enforced (UserMode) -------
+# These are only active for programs the user (or a helper) explicitly opted
+# in through Exploit Protection. They have few innocent triggers. NONE has
+# yet been fired on real hardware by this projectSimExec
+# Kernel-enforced mitigations (ACG, image-load, CIG, child process) write to
+# the KernelMode channel; the EMET-heritage ones (EAF/IAF/ROP, enforced in
+# user mode by PayloadRestrictions.dll) write toed, never shown. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browssionally caused by malwareo doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage, user-mode enforced (UserMode) -------
+# These are tions (ACG, image-load, CIG, chiler mode by PayloadRestrictions.dll) write to UserModes through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Wonally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection:w innocent triggers. NONE has
+# ye

@@ -1,0 +1,1 @@
+<Eventent xmlns='http://schemas.microsoft.com/win/2004'><System><Porvider Name='M4d920c3cdf}'/><EventID>6</EventID><Channel>Microsoft-Windows-Security-MitignelMode</Channel><Computer>EXAMPLE-PC</Computer><Security/></System><EventData><Data Name='ProcesrPathLength'>02</Data><Data Name='ProcessPath'>\D   evice\Harddl-copy.exe</Data></EventData></nt>

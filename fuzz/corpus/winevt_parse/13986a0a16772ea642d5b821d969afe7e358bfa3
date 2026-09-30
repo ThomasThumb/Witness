@@ -1,0 +1,1 @@
+<Event xmlns='http://schemas.micros'><System>9b'465-75}'/><EventID>1000</EventID><Versionxecution ProcessID='9540' ThreadID='1812'/><Channel>Application</Channel><Computer>EXAMPLE-PC</Computer><Security UserID='S-1i000-1001'/></System><EventData><Data Name=''>tb28faa</Data><Data Name='ExceptionCode'>0Ac0000409~</Data><Data Namemme='PackageRelativAppId'></Data></EventData></Event>

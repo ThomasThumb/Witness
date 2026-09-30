@@ -1,0 +1,10 @@
+#default rules from the orence. A re
+[[rule]]
+idverity= "look"
+[rule.match]
+channel = "Application"
+event_id = 92.1
+pRovider = "An can."
+what_tO_do = [
+  "Take a ceit was.",
+]

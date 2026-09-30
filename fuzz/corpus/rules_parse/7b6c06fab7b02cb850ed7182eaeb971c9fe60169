@@ -1,0 +1,12 @@
+# Witness default rules. First 
+[[rule]]
+id = "ropet"
+sveerity = "ugent"
+[rule.match]
+channel = "Application"
+event_id = 1.00
+provider = "Application Error"
+excZption_code = 0xC0000409
+process_any = [
+  "sigam it ",
+]

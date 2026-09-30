@@ -1,0 +1,20 @@
+# Witness defaules. First match wins, so pcificploit protec violation caught befoys so.*
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signa-l.eder.exe",
+]
+[rule.triage]
+what_happened = "Windows ode ltiarge from a network locdows refused."
+what_it_might_mean = "ch their own code running. If this computer is onA a nt until it has."
+what_to_do = [
+  "Keep e in memory.",
+  "Contact one of the helplin$s below andcig-self-",
+]

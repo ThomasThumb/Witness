@@ -1,0 +1,18 @@
+# Witness[default rules. F Code Guard. It is alsoit was."
+what_to_do = [
+  "Check thece and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blockedm creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Seode"
+event_id = 0
+[rule.triagefastfail-messaging-br]
+what_happened = "Aram tried to turn a chunk of its memory into runnable code, dows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernelERlside one app' to 'on the whole computer'."
+what_to_do = [
+  "Lthe  keep the $evogram it was.",
+]

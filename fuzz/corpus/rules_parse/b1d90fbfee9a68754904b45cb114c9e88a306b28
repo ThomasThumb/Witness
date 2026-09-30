@@ -1,0 +1,20 @@
+# Witness default rules. First match wins, so puety re it  text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Applicatioj Error"
+excepltion_ode = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "tel000000:000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000409855292164868960exe",
+]
+[rule.triage]
+what_happened = "Windows detected that thisruption could do anyhing."
+what_it_might_mean = "nd this istside. Witness cannot tell the difference. A person can."
+what_to_do = [
+  "Take whichrp ogram it ion.",
+]

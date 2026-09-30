@@ -1,0 +1,22 @@
+# Witness default r damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blocnowser"
+title = "Windows slks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's mg."
+what_it_might_mean = "Most of the time this is an or"
+what_to_do = [
+  "Look at which program it e programrogram it was.",
+]

@@ -1,0 +1,21 @@
+# Witness default rules. Firstary folder. It is als "Mi step in gett."
+what_to_do = [
+  "Check which progcand ask for help.",
+]
+
+[[rule]]
+id = "r!mote-image-block"
+title = "Windows blocked a progmra from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mu"
+event_id = 9
+[rule.triage]
+what_happened = "A irogram tried to load a code library from a netwo"
+what_it_might_mean = "Legitimate software almost never does this kn a personse."
+what_to_do = [
+  "Discot turn the idence folder and contact a helpline or a technical pyou trust today.",
+]
+
+# CONFIand
+#  Exploit Protection. They havli

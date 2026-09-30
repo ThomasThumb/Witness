@@ -1,0 +1,18 @@
+# er shown. Anytah ongilding from
+# OUTSIDE er falls through to cilock bel,w.
+[[rule]]
+id = "cigneo&de"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+whbt_jappened = "A p"
+what_to_do = [
+  "Keep the evidence folder which program it was.",
+]
+
+[[rule]]# Witness default rulen refused t6
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program thWindows-Ses/KernelMode"
+event_idmage_in_process_dir = true
+[rule.tris default rules ntact one of w )and s

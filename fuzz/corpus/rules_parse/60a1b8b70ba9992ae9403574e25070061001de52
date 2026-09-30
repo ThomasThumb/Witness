@@ -1,0 +1,24 @@
+# Wd damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped antalks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "&pplication"
+event_id = 1000
+provider = "Applicat~ion Error"
+exception_code = 0xC0000409
+process_any = [
+  "sig///////////////////////.exe", "foxitpdfreader.exe",
+]
+[rule.tre.match]
+channel = "Microsoft-Windowatkons/UserMode"
+event_id = 14
+[rule.triage]
+what_happened = "Windows' Export ons in a wgrams do not, and stop it."
+what_it_might_mean = "This is a classic step in exploit code hta This check has not yet been seenon a real machine by the Witness project, so it is shown as worth a mac"
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Cont that can destroy evidence low and say which progWram it was.",
+]

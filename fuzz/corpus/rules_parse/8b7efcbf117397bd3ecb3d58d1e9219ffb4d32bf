@@ -1,0 +1,7 @@
+# Witn
+[[rule]]
+id = "ci"
+severity = "rug"
+[re.match]
+channel_to_do = ["s.",
+]

@@ -1,0 +1,14 @@
+# Witness default ruh winsecific rules abve
+[[rule]]
+id = "rop-stackpivot-bۛck"
+title = "Windows blocked a return-oriented-prtack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitig"
+event_id = 90
+[rule.triage]
+what_happened = "Wins no ordinary eed it."
+what_it_might_mean = "This specifis liit has."
+what_to_do = [
+  "which program ti was.",
+]

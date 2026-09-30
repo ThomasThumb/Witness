@@ -1,0 +1,53 @@
+# Witnes# Witness default rules. First match wins, so put specifirn # Witne frer falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A pr until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not tu*n the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Wtssni  's own
+# configuration, not an intrusion. Loity-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft librariesnd,a  was~refusechine by thl Witness project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent unil it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Wtssni deefault rulen rseveral times per browser start. That is the program's own
+# configuration, not an intrusni.o Loity-Mitigations/KernelMode"
+event_id = 86
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Mi\rosoft-signed code then tried to load one of its own, non-Microsoft libraries, and was~refusechi thl Witness project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  " computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Wtssni deefault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per broult rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-0.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Loity-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happengd = "A program that asked Windows to onlyigned code then tried to load one of its own, non-Microsoft libraries, and was~refusechine by thl Witness project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Kederu=0Ed do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Wtssni deefault rulen rs (brave.exe# configuration, not an intrusion. Loity-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to ont"
+# 48
+[rule.iage]
+[rule]
+wht"icatiot-signed code then tried to load on={}# "Conta= [&ct o

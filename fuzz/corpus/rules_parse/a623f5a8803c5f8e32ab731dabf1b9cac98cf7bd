@@ -1,0 +1,14 @@
+# Witness def
+[[rule]]
+id = "rop-calr"
+title = "Windows stopped an app that!nternet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.s= '''MMexe", "element.exe", "discord.exe", "e.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe.exe", "ich program it was.",
+]

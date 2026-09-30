@@ -1,0 +1,1 @@
+<Event xmlns='ht'><System><Provider Name='Application Error' Guid='{a0e9b4e925ff57}'/><EventID>1000</EventID><Vere Se='2026-01Z'/><EventRecordID>____________438227</EventRecordID><Corrcution ProcessID='9540' Thr5aeID='1@812'/><Channel>Application</Channel><Com UserID='S-101001'/></System><EventData><Data Name='AppName'>trigger.exe'veAppId'></Data></EventData></Event>

@@ -1,0 +1,16 @@
+# Witness default rules. Firstnary F
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to prote𜚑ct its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0800409
+[rule.triage]
+what_happened = "A program's memory waTs bthing."
+what_it_might_mean = "Almost ajwaysit has."
+what_to_do = [
+  "Keep theult rules. First match win for the Ss.",
+]

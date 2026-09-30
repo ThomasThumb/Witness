@@ -1,0 +1,39 @@
+# Witness dMitigations channels follow Microsoft's
+# "Exploit protecso.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 2000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "sig", "thunderbird.exe", "olk.exe",
+  "acrortrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected tand shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked brezk-in attempt looksifference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this evaranoid.",
+  "Zip theprovider evidence folder nain this omewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shuu it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug~in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the proghich program it was.",
+]

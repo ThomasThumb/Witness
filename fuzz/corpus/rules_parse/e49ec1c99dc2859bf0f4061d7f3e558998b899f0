@@ -1,0 +1,47 @@
+#itprog og "looe appit keepn the whole comzputer'."
+what_toXdo ='''''*', 310rotection and it is known not to work with ACG, that is the cause.",
+  "If it is a browser, mesnigasg or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memcode library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 5
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this copened = "Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs do not, and stopped it."
+what_it_might_mean = "Ths="""&a classic step in exploit code that has j# Witness defaultplication Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ord.exe", "slack.exe", "-heriit

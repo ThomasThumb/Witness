@@ -1,0 +1,1 @@
+<Event xmlns='ittp://event'><System><Provide Name='Application Error' Gudi='{a0e9b4%7}'/><EventID>1001</EventID> Thr1812'/><Channel>Applin</Channel><Computer>EXAMPLE-PC</Computer>4S00000-1001</System><EventData><Data Name2='AppName'>trigger.e~e</Data><Data Namd='AppVersin'>0.0a NBBBBBBBBBBBBBBB·</Data><Data NAppTimame='aPRelativeAppId'></Data></EventData></Event>

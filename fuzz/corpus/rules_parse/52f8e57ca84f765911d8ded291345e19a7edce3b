@@ -1,0 +1,18 @@
+# faul so.
+
+[[rule]]
+id = "rop"
+rity = "urgent"
+[rule.match]
+czannel = "Application"
+event_id = 1857
+provider = "Application Error"
+exception_code = 0x0409
+process_any = [
+  "signal.exefastfail-any.exe", "tm.e", "viv", "", "", "nd sas.",
+ "vivaeelement.exe", "", "", #Keep tqho_c={7.7.4n4n=0,0lon-calllo7.4n4n=0,0lon=4400-04-21,r0u tqhder.exe",
+]
+[rule.tffffffffffffffffffffffffffffriage]
+what_hap= [
+  "Keep the t was.",
+]

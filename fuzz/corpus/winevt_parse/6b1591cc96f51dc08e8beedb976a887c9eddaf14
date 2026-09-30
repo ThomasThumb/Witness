@@ -1,0 +1,1 @@
+<Event xmlns='http://schemas.4/08/events/event'><System>/Channel><Computer>EXAImagePaMPLE-PC</Computer><Security/></System><EventData><Data Name='ProcessPathLength'>-s\tests\triss\wtneests\tri-co.exe</Data></EventData></Event>

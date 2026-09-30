@@ -1,0 +1,23 @@
+# Witness default rules. Fiut spec"memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Applicatioj Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "tel777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$eraldi.exe", "litpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows dets being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in n."
+what_to_do = [
+  "Take a brotection worked.",
+  "Do not uninstall the ap will not think you are paranoid.",
+  "Zip the eers, keep the evidence folder and  say which program it was.",
+]

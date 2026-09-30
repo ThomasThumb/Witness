@@ -1,0 +1,24 @@
+# Witness default ionsdifference. A person can."ht
+wa_to_do = [
+  "Take e taht is not this computer.",
+]
+
+[[rule]]
+id = "fastfwail-any"
+title = "Windows stopped a program to proory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A"
+what_it_might_mean = "A+lmost always an ordinary bug in that program. It is on o stops> break-in aould know when it fires."
+what_to_do = [
+  "Itok.",
+]
+
+# -e tuns.
+#
+# Ei

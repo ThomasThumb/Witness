@@ -32,10 +32,13 @@ Exit: CI green on an empty commit; `cargo deny check` and `cargo audit` pass.
    (`SigningKey::from_seed`, deterministic `Signer::sign`, `zeroize` on).
 2. [x] Property tests (`proptest`) for `winevt::parse` and `report::esc`:
    arbitrary input never panics, escaped output never contains `<`, `>`, `"`, `'`.
-3. [~] `fuzz/` has targets for `winevt::parse` and `RuleSet::parse`, corpus
+3. [x] `fuzz/` has targets for `winevt::parse` and `RuleSet::parse`, corpus
    seeded from the captured fixtures; CI runs each for 60 s on nightly.
-   [ ] Run each for an hour locally (`cargo +nightly fuzz run winevt_parse --
-   -max_total_time=3600`) and commit the grown corpus.
+   [x] 2026-09-30: one hour each on Windows 11 with ASan (VS's runtime DLL on
+   PATH; see HANDOFF §8): `winevt_parse` 30.8 million runs, `rules_parse`
+   16.7 million, no crashes, no hangs. Corpora minimised with `cargo fuzz
+   cmin` (2,629 and 2,030 inputs, ~2.2 MB) and committed; git treats them
+   as binary so nothing normalises a found input.
 4. [x] Golden tests over the shipped `rules/default.toml` and `contacts.toml`
    (`crates/witness-core/tests/shipped_files.rs`): synthetic XML plus every
    *captured* sample, events 1000, 2, 4, 6, 8 and 12 from build 26200,

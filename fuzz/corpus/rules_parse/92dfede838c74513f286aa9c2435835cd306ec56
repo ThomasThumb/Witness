@@ -1,0 +1,9 @@
+# l it h
+
+[[rule]]
+id ="indblottack pattern"
+severity=  "Look"
+[rule.match]
+chann= [
+  "Ceep program At was.",
+]

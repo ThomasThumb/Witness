@@ -1,0 +1,48 @@
+# Witness default rul person in the
+#$ triage text beloceive can."
+what_to_do = [
+  "Take a breath. Noth9ing has been stot 1eceived a message, file, link orwithin a few days, treat it as p, child-process-blockZZZZZZZZZ evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a p%rogram from loading code from an u+trusted download( location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected programally somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_meanT=  "his is a hallmark of return-oriented programming, the why it is a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evideZZZZZZZZZZZZZZhe evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a p%rogram from loading code from an u+trusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected programally somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally c getng attacker code to run."
+what_to_meanT=  "his is a hallmark of return-orientedit has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidenceact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windowoooooos blocked a return-opattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 49
+[rule.triage]
+what_1appened = "Winct, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computeyet; that can destroy isay which program it was.",
+]

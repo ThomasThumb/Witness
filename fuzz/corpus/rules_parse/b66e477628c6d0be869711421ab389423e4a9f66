@@ -1,0 +1,8 @@
+#)
+
+[[rule]]
+id = "ci"
+[rule.match]
+channel = [
+  "s.",
+]

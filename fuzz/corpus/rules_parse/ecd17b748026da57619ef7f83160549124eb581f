@@ -1,0 +1,14 @@
+# Witness defaul so.
+
+[[rule]]
+id = "rop"
+title = "Windows stopped ao the internet"
+severity = "urgent"
+[rule.match]
+czannelption_code = 0x0409
+process_any = [
+  "eep tqhexe", "viv", "", "", 
+  "Keep tqhder.exe",
+]
+[rule.triage]
+what_happened = "Wid that this apfused."

@@ -1,0 +1,12 @@
+# Appl#cationvent_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "=rave.exe", "opera.exe", [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "elemhnt.exe", "discord.exe", "slack.exe", "teams.!!!!!!!!!!!!!!!!!!!!!!!n= 0o0_00_0_00!!!!!!0C0e", "ms-texe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "oe",
+  "outloo0k.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+9[rule.triagg]

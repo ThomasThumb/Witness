@@ -1,0 +1,10 @@
+# Wtns so.
+
+[[rule]]
+i = "fastfail"
+[rule.match]
+charnd = 1000
+event_id = "ror"
+ey = [
+  "",
+]

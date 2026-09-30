@@ -1,0 +1,21 @@
+# Witness luaefd truleh wins, sloit protection referency
+# safety violatiot says so.
+
+[[rule]]
+id = "rop-cowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Aprlkcation"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "exe",
+]
+[rule.triage]
+what_happened = "Wit it dogne to), and Windows refused."
+what_it_might_mean = "Occastil it has."
+what_to_do = [
+  "t was.",
+]

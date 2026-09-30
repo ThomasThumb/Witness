@@ -1,0 +1,8 @@
+# Witness d
+[[rule]]
+id = "ltmage-trusted (usualag"
+event_id = 8356
+provider = "Applisaion Error"
+telagerm.eny = [
+  "es it was.",
+]

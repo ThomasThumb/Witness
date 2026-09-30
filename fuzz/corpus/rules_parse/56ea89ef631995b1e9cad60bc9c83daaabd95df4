@@ -1,0 +1,12 @@
+# Witness default rules. First matcodeok"
+[rule.match]
+channel = "Miows-itigations/Kee"
+event_id = 1
+[rule.tri]
+what_aahped = "A progt was."
+what_to_do = [
+  "Check the proces{ in thispp.",
+]
+
+[[rule]]
+ivess dendfaullito

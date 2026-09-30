@@ -1,0 +1,7 @@
+#CETaf
+[[rule]]
+id = "faswsent"
+[rule.match]
+ohrcess_any = [
+  "signote s."
+]

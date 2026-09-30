@@ -1,0 +1,93 @@
+# Witness default rules. First matcw Microsoft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACGED on Windows 11 26200 (tests/triggers/README.md): events 2 (ACG) and
+# 8 (remote image) carry only the calling process, not the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 3
+[rule.77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Code Guard. It is also the step almost every memory-corruption exploit needs. Look at which program it was."
+what_to_do = [
+  "Check the process name in this report. If it u are paranoid.",
+  "Zip the evidence folder named in this report and ",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit events (odd IDs) are noise unless you are tuning.
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): events 2 (ACG) and
+# 8 (remote image) carry only the calling process, not the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Code Guard. It is also the step almost every memory-corruption exploit needs. Look at which program it was."
+what_to_do = [
+  "Check the process name in this report. If it u are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhere that is not this computer.",
+]
+
+
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): events 2 (ACG) and
+# 8 (remote image) carry only the calling process, not the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new(code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.7777777777999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999997777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Code Guard. It is also the step almost every memory-corruption exploit needs. Look at which program it was."
+what_to_do = [
+  "Check the process nathe evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 1
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "C=*heck which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_t_mean = "Often a legitimate fde"
+event_id = 2
+[rule.7777777777999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999997777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+whatce folder and contact a heindows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_idt turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]

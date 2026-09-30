@@ -1,0 +1,21 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.ex333333333333333333", "element.ex)))))))));;;;;;9;;;;;;;;)))))333333s3&3333333discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))-------------.-.c---------.-.--e", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m-----------------------.----.--------------.-.c---------.-.--------------.-.-----.--.-m------------------))))e", "discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333333333333333333333s3&m-----------))))e", "discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;---.-.-----.--.-m-----------------------.----.--------------.-.c---------.-.--e", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc------333333333333333s3&m------------------))))e", "discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m-----------------------.----.--------------.-.c---------.-.--e", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;))))))))))))))))))))))))))))1))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m-----------s3&m------------------))))e", "discord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih9540654000.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))xe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut8 it down before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take a bputer off yet; that can destroy evidence in memory.",
+  "Contactid one of  and say which program it was.",
+]

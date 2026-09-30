@@ -1,0 +1,7 @@
+#
+[[rule]]
+id = ""
+[rule.match]
+cha_a = [
+  "si",
+]

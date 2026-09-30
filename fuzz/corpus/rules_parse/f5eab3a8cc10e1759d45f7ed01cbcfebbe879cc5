@@ -1,0 +1,9 @@
+# Witne.
+
+[[rule]]
+id = "rop-caurgent"
+[rule.match]
+channel = ""
+what_ = [
+  "t was.",
+]

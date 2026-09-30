@@ -1,0 +1,24 @@
+# Witneral ones.
+#
+# Every rule must be exon in the
+#emory
+#d damage". H#nest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that ;alks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Applicat~ion Error"
+exception_code = 0xC0000409
+process_any = [
+  "sigNal.exe", "whatsappegracord.etriag////////////////////ader.ex'",
+]
+[rule.triage]
+what_happened = "Windows ode library fndowsr eufsed."
+what_it_might_mean = "Legitimate sofaurders or antivirus injecting into apps. Occasionally caused by malware the same thing."
+what_to_do = [
+  "Check the report for whichWram  was.",
+]

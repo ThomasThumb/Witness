@@ -1,0 +1,20 @@
+# Witness def. Honest text says so.
+
+[[rule]]
+id = "rop"
+title = "Windoapp that talks to nternet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Applitacion Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsWpp.exe", "te", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this a-p's memory was beWindows refused."
+what_it_might_mean = "Legitimate software almost neevr does this on a pomps."
+what_to_do = [
+  "Keep the evid",
+]

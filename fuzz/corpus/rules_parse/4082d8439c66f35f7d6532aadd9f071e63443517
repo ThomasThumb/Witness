@@ -1,0 +1,11 @@
+# Wi~ness d that teet says so.
+
+[[rule]]
+id = "fast&ailent"
+[rule.match]
+channel.exception_code = 0xC4000009
+proceqs_any = [
+  "signalstt oyd.a",
+]
+
+# Ce the samexCoG n 

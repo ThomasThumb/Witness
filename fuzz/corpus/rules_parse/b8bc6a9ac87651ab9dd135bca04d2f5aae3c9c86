@@ -1,0 +1,241 @@
+# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text, the rule doesn't ship.
+#
+# Event IDs for the Security-Mitigations channels followk protection / fast-fail -------------------------
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 1000 arrives with named fields (AppPath, ExceptionCode); the parser also
+# accepts the#itprog og "looe appit keepn the whole comzputer'."
+what_toXdo ='''''*', 310rotection and it is known not to work with ACG, that is the cause.",
+  "If it is a browser, messaging or document app, keep the evns/UserMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If youay so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blockeical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A pror antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EOET-heritage, user-mode enforced (UserMode) -------
+# These are only active for programs the user (or a helper) explicitly opted
+# in through Exploit Protection. They have few innocent triggers. NONE has
+# yet been fired on real hardware by this project (no triggers, by the
+# maintainer's decision; tests/triggers/README.md), so they are capped at
+# "look" and say so, until one is seen for real. Raise to "urgent" only with
+# a captured event and a golden test.
+
+[[rule]]
+id = "eaf-block"
+title = "Windows blocked a program from reading its own address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 28
+[rule.triage]
+what_happened = "Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs do not, and stopped it."
+what_it_might_mean = "This is a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do ss names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(not turn th% computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "iaf-block"
+title = "Windows blocked a program from reading its own address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitiganit/ossUerMode"
+event_id = 18
+[rule.triage]
+what_happened = "Windows' Import Address Filtering caught a program reading the table of functions i| imports in a way normal programs do not, and stopped it."
+what_it_might_mean = "Like Export Address Filtering above: a classic exploit step with few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn trary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launchinl another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you hadust clicked ,
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 44
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploitthan urgent until it has."
+what_to_do = [
+  "Keep tdeveloper tools) do this and simply crash under Arbitrary Code Guard. It is also the step almosta browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 2
+[etrirlu.age]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-inthe boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If youay so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 44
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploitthan urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = cWindows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/U = true
+[rule.triage]
+what_happened = "A on simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules above. Rarely innocQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQent. This check has not yet been seen firing on a real machine `y the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in med Microsoft-signed code then mory.tried to load one of its own, non-Microsoft libraries ,and was refused."
+what_it_might_mean = "The program's own he evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "acg-block-userrop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/U = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it loaserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules above. Rarely innocQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQent. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in med Microsoft-signed code then mory.tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is ref",
+  "Contact one of the helplines below and say whichused eachs="""# Witnessr than urgent  the
+# triagite toMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process n
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive ma prograchinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, step4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#m it was.",
+]
+
+# Proce library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 06
+[rule.triage]
+what_happened = "A protected program tried to load a code library t

@@ -1,0 +1,75 @@
+# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text, the rule doesn't ship.
+#
+# E Look at which program it was."
+what_to_do = [
+  "Check the help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory indows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opne app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows bsted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security*Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected program tried to load a code library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary fotep in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgept"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code librarnocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the list, lawyer, acti people at  help you.",
+]
+
+[[rule]]
+id = "rop-callerc."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]

@@ -1,0 +1,20 @@
+# Widamage"> Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+previder = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "notepad.exe", "discord.exe/////////////////////////////.exe", "foxitr.exe",
+]
+[rule.triage]
+what_happened = "Windows ode libra1ry frefused."
+what_it_might_mean = "Legitimate softw, that can be an innocent cause."
+what_to_do = [
+  "Disconen$#slow and say which progWram it was.",
+]

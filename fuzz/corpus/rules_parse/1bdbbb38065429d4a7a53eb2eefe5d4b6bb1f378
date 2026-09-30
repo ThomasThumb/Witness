@@ -1,0 +1,21 @@
+# Witness]deatconest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Applion"
+event_id = 1000
+provider = "Application Error"
+excep4400_code = 0xC0000409
+process_any = [
+  "signal.exteams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.e\\\\\\\\\\\\\\\\\\\\\\\\\\\\\rop-stackpiod= 0xC0000409ca`#", "^rave.erobat.exe", "sumatrapdf.exe", "foxitpdfreader.exu",
+]
+[rule.triage]
+what_happened = "Wmory was being corrupted and e corruption could do anything."
+what_it_might_mean = "Most of the tims."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the w and say which program it was.",
+]

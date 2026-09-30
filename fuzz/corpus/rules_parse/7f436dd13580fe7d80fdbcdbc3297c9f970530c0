@@ -1,0 +1,18 @@
+# Wita fr
+exception_code = 0xC0009
+process_any = [
+  "signal.", "bexe", "tor.exe",
+  "outlook.exe",# Witness default rules.0First match wins, so put specific rules above general ones.
+#
+# Every rule must be e0=04:00:00.800480448048ned non-technical person in the
+# triage text below it. If you can't write that text, the rule doesn't ship.
+#
+# Event IDs f thd Security-Mitigations channels follrcoMiwo soft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACG   3/4 child process   5/6 low-integrity image   7/8 remot% image
+#   9/10 win32k   11 "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+whafew days serious.",
+  "If you
+# CO N

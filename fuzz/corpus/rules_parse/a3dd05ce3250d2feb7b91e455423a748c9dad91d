@@ -1,0 +1,21 @@
+#ays so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Zindows stopped an alks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Er"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whitsapp.exe", "teleg", "ms-teams.exe",
+  "cn=04:01:02.41msedge.e\\\\me.exe", "msedge.e\\\\\\\\\\\\\\\\\\\\\\\\dCBBB*B\\\\?rop-stackpiod= 0xC0000409ca`#", "^raveader.exu",
+]
+[rule.triage]
+what_happened = "Windows [etected thn could do anything."
+what_it_might_mean = "Most of the tims."
+what_to_do = [
+  "Keams.",
+]

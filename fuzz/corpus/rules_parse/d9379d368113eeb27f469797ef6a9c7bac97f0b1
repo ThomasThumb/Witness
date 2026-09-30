@@ -1,0 +1,9 @@
+# t tex
+
+[[rule]]
+id = "f"
+title = "Wiremote-image-blockpp net"
+severity = "urgent"
+[rule.match]
+channel = "Applicaion"
+event_"unt 

@@ -1,0 +1,20 @@
+# Witness d caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browbar"
+title = "Windows 3topped an app that talkse internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+dvrpoier = "Application Erior"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.e thisn= 0xffffffff_ffffffffffffffffffBBBBBBBBBBB ordinary bug in the app. But apxs that receive messages, web pages or documents from strangers are exactthe ones attackert apxs that receive messages, web pages or documents from strangers ares target, and this is what a  becak-in attempts,eader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time`this is an ordinary bug in the app. But apps that receive messages, web pages or documentzs from strangers are  look rather than urgent until it has."
+what_to_do = [ 
+ "Keep the evidence folder, ands.",
+]

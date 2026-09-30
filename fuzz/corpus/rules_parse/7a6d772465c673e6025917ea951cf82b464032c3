@@ -1,0 +1,244 @@
+# Witness drulzefato load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing.case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Brow not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and(do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is is refused each l`brary, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, acone of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing.case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Brow not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is is refused each l`brary, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, ndbox) turny let it load Microsoft-signed code then tried to 3oad one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, acces an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-parqy plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the sameil one is seen ces an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program trieicrosoft, so it isprogram's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing.case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Brow not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is is refused each l`brary, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, acone of its own, non-Microsoft libraries, and was refused."
+whai_tt_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing.case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code the."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do kept under dhe quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is is refused each l`brary, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent causame sandbox) turny let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and caror yn working."
+what_to_dbo = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, acces an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-blockwd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the sameil one is seen ces an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivik il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders or antivirus injecting into apps.  shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidens are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recorders orieve"
+e_id = 6
+[rula.triage]
+wh = "evprcause."
+wha = [
+  "Disconnect from  trustned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Win

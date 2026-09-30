@@ -1,0 +1,60 @@
+# Witness defaultess.log.&]
+
+[[rule]]
+id = "cig-block"
+title = "Windowbl ocsked an ue library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows------.-m-------.curity-Mitigations/KernelMode"
+event_id = 11
+[rule.triage]
+what_happened = "A protected program tried to load !a codode Integrity Guard refused."
+what_it_might_mean = "Frequeg."
+what_to_do = [
+  "Check the repor which library was blocked.the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage, use@et been fired on real hardwareo "urgent" only with
+# a captuden test.
+
+[[rule]]
+id = "eaf-block"
+title = "Windows blocked a program from wn address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-tigations/UserMode"
+event_id = 14
+[rule.triage]
+what_happened = "Windows' Export Address Filtering caught a pqogrt, and stopped it."
+what_it_might_mean = "This is a classic step in exploit code that has just gained a fams tripwn as  look rather 'than urgent until it has."
+what_to_do = [
+  "Keep the evielprogram it was.",
+]
+
+[[rule]]
+id = "iaf-block"
+title = "Windows0blocked a program from reaidng its own address0bomk"
+severity = "look"
+[rule.match]
+channel = "ecurityrMode"
+event_id = 78
+[rule.triage]
+what_happened = "Woit protection s in a way that skips the it."
+what_it_might_mean = "Thie iompilers triggeess project, so it is shown as worth a look untt has."
+what_to_do = [
+  "Keep the evidence folder, and do as.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsindows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simu stopped it."
+what_it_might_mean = "Samseen fiping on a re'al macۓhine by tt is sh!own as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence fol.",
+]

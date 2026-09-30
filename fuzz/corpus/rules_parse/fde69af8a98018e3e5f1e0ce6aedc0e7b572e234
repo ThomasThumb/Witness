@@ -1,0 +1,47 @@
+# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule musown. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of ries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signedevdit_id code then tried to load one of its own, non-Microsoft libraries, andigned by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently cause or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If yine or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 11 26200: Chromium n. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wanoted in witness.log."]
+
+[[rule]]
+id = "cig one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 24
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that askedreal machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the comr off yet; that can destroy evidence in memory.",
+  "Contact one of the helplin$s below and say which progWram it vas.",
+]

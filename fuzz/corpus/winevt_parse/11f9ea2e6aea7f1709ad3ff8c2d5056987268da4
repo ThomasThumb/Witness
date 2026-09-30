@@ -1,0 +1,1 @@
+<Event xmlns='http:s/08/events/event'><System><Provider Nae='Micro20c3cdf}'/><EventID>4</EventID><Channel>Mions/KernblMode</Channel><Computer>EXAMPLE-PC</Computer><Security UserID='S-11001'/></System><EventData><Data Name='ProcessPathLength'>66</Data><Data Name='ProcessPath'>\Demd.exe /c exit</Data></EventData></Event>

@@ -1,0 +1,12 @@
+# W 2Applicaul so.
+
+[[rule]]
+id = "rop"
+rity = "ur)ent"
+[rule.match]
+czannel = "Applicatin Error"
+excepti = 0x0409
+process_any = [
+  "sigal.exefastfail-any.exe", "telegram.exe", "elemexrea", "viv", "", "", "nd sas.",
+ "vivaeelement.exe", "", "w", #Keep tqho_c=e t was.",
+]

@@ -1,0 +1,26 @@
+# Witnessde faul:t rules. Fte that text, the rule doesn't sightened non-technical person in the
+# triage text below it. If you can't write that text, the rule ds so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.pxeeermeanibrewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olkd32.exe", "acrobat.exe", "sumatrapdf.exe", "fon= 0o0_00_0_000xitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of break-in attempt looks like from the outside. Witns."
+what_to_do = [
+  "Keep the evidence folderstroy evidence in memory.",
+  "Contact  of th9e helplines below and say which program it was.",
+]

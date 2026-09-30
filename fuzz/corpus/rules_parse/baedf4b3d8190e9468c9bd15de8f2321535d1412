@@ -1,0 +1,9 @@
+# Witnesles. First ma
+[[rule]]
+id = "rop-callercheck-blockha-t"
+[rule.match]
+choption_code = 0xC0000409
+process_any =  "Wiry  do anxthing."
+w= [
+  "Tak off ye*tm it was.",
+]

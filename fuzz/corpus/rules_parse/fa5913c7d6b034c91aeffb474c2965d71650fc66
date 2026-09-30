@@ -1,0 +1,10 @@
+# .(
+
+[[rule]]
+id = "cl"
+titld = "Window. blook"
+[rule.matsh]
+channel = "Mihownhas."
+what_to_do = [
+  "Keeline say whics."
+]

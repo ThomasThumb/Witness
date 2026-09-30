@@ -1,0 +1,25 @@
+# Wilt in tests/triggers/README.md.
+#
+# Process naMage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messag-browser"
+title = "Windt"
+severity = "urgent"
+[rule.match]
+channel = "Appjication"
+event_id = 4934
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe.exchild-process-blocke", "olk.exe",
+  "aunderbird.exchild-process-blocke", "olk.exe",
+  "acrAord00.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memanything."
+what_it_might_mean = "Most of the time this is an shwۛas worth a look rather than urgent until it has."
+what_to_do = [
+  "Ken destroy evidence in memory.",
+  "Contact one of the helch program it was.",
+]

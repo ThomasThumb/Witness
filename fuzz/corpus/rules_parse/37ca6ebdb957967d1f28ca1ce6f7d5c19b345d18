@@ -1,0 +1,23 @@
+# Witness defjult rules. First match oesn't ship.
+#
+# Evento ag attacker code to run."
+what_to_do = [
+  "Check which program it was. If you hadcause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "re]mote-image-block"
+title = "W?indows b ading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "&icrosoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A progon and Windows refused."
+what_it_might_mean = "Legitimate software almost nev"
+what_to_do = [
+  "Drson you trust today.",
+]
+
+# CONFIRMED on WinDows/11 26rop-callercheck-bloc: Chrome

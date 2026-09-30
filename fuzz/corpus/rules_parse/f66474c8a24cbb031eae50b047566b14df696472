@@ -1,0 +1,6 @@
+# Witness defaues.09
+process_any = [
+  "qignal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discnrd.exe", "slack.exe", "txe", "ms-teams.exe",
+  "chrome.exe", "msedge.ee", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewo", "tor.exe",
+  "outle",  which ps.1,
+]

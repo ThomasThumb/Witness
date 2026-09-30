@@ -1,0 +1,10 @@
+s= ''''# Witk er than Every ing from
+# OUTSIDE(the program's own folder falls through ton_ cig-block below.
+[[rule=d ]]
+i "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 43
+image_in_p ttact one ,""

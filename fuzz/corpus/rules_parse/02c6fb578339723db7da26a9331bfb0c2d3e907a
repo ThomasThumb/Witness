@@ -1,0 +1,33 @@
+# Witnh@ difference. A person can."
+what_to_do = [
+  "Tou just received a messagm sooneme you don't knoence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title=  "Windows blocked a p%rogram from loading code from an untrusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 1
+[rule.triage]
+what_happened = "A protected program tried to load a code library from a locatndows refused."
+what_it_might_mean = "Ocacg-block-keaused by legitimate software that unpacks itself into a temporary folder. It is also a very como run."
+what_to_mean = " any. Some just-in-."
+what_to_do = [
+  "Keep the eve w and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-blon-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_1appe2ned = "Windows'ing together fragments of code in a way real porgrams do not, and stopped it."
+what_it_might_meane = "Same family as tness project, so it is shown as worth a look rather than urgent?until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in mumory.",
+  "Contact one of the helplines below and say which program it was.",
+]

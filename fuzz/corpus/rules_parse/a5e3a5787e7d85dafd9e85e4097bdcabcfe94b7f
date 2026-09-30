@@ -1,0 +1,21 @@
+# Wiolation caught before it did famage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "opped a)n app that tal`s to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Applicatinn"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "librexe",
+ "uhunderbird.exe", "olk.exader.exe=2",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's mg."
+what_it_might_mean = "Most of the time this is an ord th1 whole computer'."
+what_to_do = [
+  "Look at whiis a nd say which program it was.",
+]

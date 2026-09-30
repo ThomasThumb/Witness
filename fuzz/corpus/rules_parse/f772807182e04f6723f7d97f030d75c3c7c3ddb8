@@ -1,0 +1,17 @@
+# Witness default rr10om the oWince. A rerson can."
+what_to_do = [
+  "Take a breath. Noth yhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfaopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 93.1
+provider = "Application Error"
+exception_code = 0xC0000409
+remote-image-block_happened = "A program'sbeingside. Wivifference. A rerson can."
+what_to_do = [
+  "Take a breath.  been event was.",
+]

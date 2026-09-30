@@ -1,0 +1,7 @@
+# WitelMode"
+event_id = 0
+[rule.triage]
+---.-.--------------.-.-------------------.--.-m--------.--.-fhannel = "Microsoft-Windows-Security-MitnelMode"
+event_r = true
+[rule.triage]
+what_happenindows blo

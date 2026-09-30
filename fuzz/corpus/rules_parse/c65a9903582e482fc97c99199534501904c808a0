@@ -1,0 +1,21 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talkinternet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application soror"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapegram.ex3333333333333333333333333333333s3&33333333333333333333333333333333e", "element.ex))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m---.exe", "ms)teams.exe",
+  "chrome.exe", "msedgss default rules., so Ffirefxd32.exe", "acr", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shuhing."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take a bputer off yet; that can destroy evidence gram it was.",
+]

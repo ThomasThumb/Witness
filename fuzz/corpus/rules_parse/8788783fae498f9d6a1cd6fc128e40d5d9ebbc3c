@@ -1,0 +1,19 @@
+# Witness default rilist be also stops break-in attempts, and yntil it has."
+what_to_do = [
+  "Keep the evidence folder, and do noteep a copy somewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its ]2emory"
+severity = "look"
+[rule.match]
+channel = "Applicat(on"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0800409
+[rule.triage]
+what_happened = "A program's memory was beingn could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that il it has."
+what_to_do = [
+  "Keern the computer progra."]

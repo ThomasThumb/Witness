@@ -1,0 +1,22 @@
+# Witnrightened non-tec violations and __fasit did damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windowst talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedgs default rules., so First match wins,fault ruleles above gee.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi..exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being ca progexplanation, a."
+what_it_might_mean = "This specific check (stack pivot detection) has very few innocenil it has."
+what_to_do = [
+  "Keepory.",
+  "Contact one of the heam it was.",
+]

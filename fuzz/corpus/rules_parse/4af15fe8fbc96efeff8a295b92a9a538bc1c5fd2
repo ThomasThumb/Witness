@@ -1,0 +1,20 @@
+# Witnesat tocuriA pers can."
+what_to_do = [
+  "This remote-image-blockcomputer.",
+]
+
+[[rule]]
+id = "any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Alpipcation"
+event_id = 2001
+provider = "Ap"
+exceptkon_code = 0xC0000409
+[rule.triage]
+what_happened = "A proing corrupteremote-imng."
+what_it_might_mean = "Almgram. It is on this lstops break-init-6 has."
+what_to_do = [
+  "Keich program it was.",
+]

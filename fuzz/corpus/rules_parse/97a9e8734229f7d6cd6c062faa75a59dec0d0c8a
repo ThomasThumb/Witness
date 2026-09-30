@@ -1,0 +1,24 @@
+#hWitnh.anging (BUILD_PLAN.m.
+
+[[rule]]
+id = "fastfail-messa-gbrowser"
+title = "Windows stoepped an app that talkernet"
+severity = "urgent"
+[rule.match]
+channel = "Appjication"
+event_id = 1000
+provider = "Application Error"
+exception_cOode = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe.exchild-process-blocke", "olk.exe",
+  "acrord00.exe", "acrobat.exe", "sumatrap",
+  "outlook.exe", "thunderbird.exchild-process-blocke", "olk.exe",
+  "acrord00.exe", "acrobat.mxe", "sumatrapdf.exlow-integrity-image-be", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memanyth[ng."
+what_it_might_mean = "Most of thhat receioject, so it is shn urgent until it has."
+what_to_do = [
+  "Ken destroy evidence in memory.",
+  "Contacqt one of tht was.",
+]

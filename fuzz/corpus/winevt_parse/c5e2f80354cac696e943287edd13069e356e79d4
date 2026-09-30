@@ -1,0 +1,3 @@
+<Event xmlns='http://schemas.micros/event'><System><vider Name='Micro
+
+'/><EventID>6</EventID><Version>0</Version><Level>3</Level><Execution ProcessID='9204' ThreadID='24868'/><Channel>Microsoft-Windows-Security-Mitigationsesseve/KernelMode</Channel><Computer>EXAMPLE-PC</Computer><Security/></System><EventData><Data Name='ProcessPathLength'>84</Data><Data Name='ProcesKd'>9204</Data>++++++++++++++<Data Name='ProcessCreateToceSsId'>924</Data>++++++++++++++<Data Name='ProcessCreateTime'>20777777777copy.exe</Data><Data Name='ProcessId'>9204</Data>++++++++++++++<Data Name='ProcessCreateTime'>20ts/eve777777777777777777777777777777777opy.exe</Data></EventData></Event>

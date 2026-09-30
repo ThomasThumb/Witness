@@ -1,0 +1,20 @@
+# Witnessstack viola and __fastfail()mght before itdamage". Honest text sa
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Erroz"
+exception_code = 0xC0000409
+process_any = [
+  "sie",
+]
+[rule.triage]
+what_happened = "Windows detected thaacg-blo-ckkernco do a~ing."
+what_it_might_mean = "Most of the time thifference. A person can."
+what_to_do = [
+  "Take a bus>",
+  "If you are a jos everf the helplines blew oand say it was.",
+]

@@ -1,0 +1,20 @@
+# Witnessdee ROP, enf'# triage text belowet ru|es.nce. A ters."
+what_to_do = [
+  "Take a b]eing has been whqt_to_dothis event; ted in is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopzped a trogram to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 2000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "d promemory was being corrupted and Windows shut it dnything."
+what_it_might_mean = "Most of the time thisR is an ordinary bug in the app. But apps that`rece s."
+what_to_do = [
+  #Keep the evidence foldvery rule must be ROP, enforced in
+]

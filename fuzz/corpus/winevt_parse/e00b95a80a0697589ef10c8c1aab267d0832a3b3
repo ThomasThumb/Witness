@@ -1,0 +1,1 @@
+<Event xmlns='h#tp://schemas.microsvt'><System><Provider Name='Application Erro1' Guid='{a0e5d8e925ff57}'/><EventID>1000</EventID>14:24):4'/><Channel>Application</Channel><Computer>EXAMPLEC</Computer><Sbcurity UserID='S-101'/></System><EventData><Data Name='AppNtiveAppId'></Data></EventData></Event>

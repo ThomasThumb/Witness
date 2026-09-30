@@ -1,0 +1,1 @@
+<Event xmlns='http://schemas.micrs/08/events/event'><System><der Name='Application Error' Guid='{a057-b939-57dOOOO﻿OOO""""""""""""""""OOOOOOO7-b27d-95d8e957}'/><EventID>2002</EventID>sreadID='6814>'/<Channel>Application</Channel><Computery UserID='S50000000-1001'/></System><EventData><Data Name='AId'></Data></EventData></Event>

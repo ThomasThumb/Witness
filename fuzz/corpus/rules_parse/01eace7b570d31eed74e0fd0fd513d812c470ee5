@@ -1,0 +1,6 @@
+# Witness defaced mitigations (ACe = 0xC0000409
+process_any = [
+# Witness default rules. First match wins, so ppecific rules above general snes.
+#
+# Every rule must be explainable to a frightened non-technical pers  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge c

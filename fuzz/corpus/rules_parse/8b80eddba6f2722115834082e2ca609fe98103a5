@@ -1,0 +1,24 @@
+# Witness ific rules on a per folder falls through to cig-block bel
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused on  efoits own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let itnon-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protec on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidencetness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code libraryions/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected prograe Witness woan urgent u has."
+what_to_do = [
+  "Keep the evience folder, and do not turn the computer off yean destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]

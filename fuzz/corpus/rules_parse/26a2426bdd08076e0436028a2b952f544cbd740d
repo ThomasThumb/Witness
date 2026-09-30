@@ -1,0 +1,13 @@
+# WAppPath, ExceApplication09
+process_any = [
+  "signal.efox.exe", "brave.exe",# Witness default rules. First match w)ns, so put <pecific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text, the rule doeselds (AppPath, ExceptionCo;d)e the parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUNr=trused by /GS cookie failures,
+# CET shadow-stack violations and __fastfail(). All three mean "memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id =onneens attaedckers  

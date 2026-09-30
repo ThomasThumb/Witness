@@ -1,0 +1,9 @@
+#so.
+
+[[rule]]
+
+[rule.match]
+chajnel = ""
+what_to = [
+  "t was.",
+]

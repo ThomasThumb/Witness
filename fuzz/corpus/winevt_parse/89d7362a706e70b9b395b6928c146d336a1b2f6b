@@ -1,0 +1,1 @@
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Poried Guid='{fae10f4d920c3cdf}'/><EventID>4</EventID>k76' ThreadID='11944'/><Channel>M2icro-Mitigations/Kernel1Mode</Channel>0000000X1001'/></System><EventData><Data Name='ProcdLine'>cmd.exe /c exit</Data></EventData></Event>

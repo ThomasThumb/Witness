@@ -1,0 +1,13 @@
+# Witness defo.
+
+[[rule]]
+id = "fastfail-met_to_doowser"
+title = "Windto the in'ternet"
+sever= "u"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "from loading code fro( thwork"
+severity = "urgent"
+[rule.match]
+cha "Ds for toe Sd oti

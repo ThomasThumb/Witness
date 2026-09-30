@@ -1,0 +1,1 @@
+<Event xmlns='http://schemas.microsente/svevent'><System><Provider Name='Application0ef57}'/><EventID>1001</EventID><Version>0</Version><Level>2</Level><Task>050</Task>eCreated Sy='1812'/><Channel>App</Channel><Computer>EXAMPLE-PC</Computer>>Secu></System><EventData><Data Name='AppName'></Data><Data Name='PackageRelativeAppId'></Data></EventData></Event>

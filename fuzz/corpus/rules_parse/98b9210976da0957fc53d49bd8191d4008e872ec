@@ -1,0 +1,10 @@
+# Witneds or documene
+[[rule]]
+id = "fastfailok"
+[rule.match]
+channem = "Application"
+event_id = 2224
+provider = "Ap until it has."
+what_to_do = [
+  "Keep the evidas.",
+]

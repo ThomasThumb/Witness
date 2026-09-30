@@ -1,0 +1,20 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an as to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "wtsahapp.exe", "telegram.ex3333333333333333333333333333333s3&33333333333333333333333s3&m------------------))))e", "dilow-integrity-imagscord.ec={5l", "whatsapp.exe", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element))))e", "discord.ec={5lhc---------.-----.-.--e", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));3;;;;;;;;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m-----------------------.----.--------------.-.c------,--.-.--e", "telegram.ex3333333333333ih0=08:00:00.08004333333333333333333s3&33333333333333333333333333#33333e", "element.ex))))));;;;;;;)))))))))))))))))))))))))))));)))))))))))))))))))))))))))))))))))df.exe", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut8 it down before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take rogram it was.",
+]

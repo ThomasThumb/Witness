@@ -1,0 +1,21 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "te---.-.-333333333333333333;;;;;))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-mhc---------.-.-----.--.-m-----------------------.----/--------------.-.c---------.-.------------el))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhch peovivae", "\rave.exe", "opera.exe", "vivaldruptionist, or work with peopn m", "\rave.exe", "e", "opera.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption and do child-process-blnot turn the computer off yexe", "\rave.exe", "opera.ex computer off yexe", "\rave.exa.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption coul+d oist, or work with peovivae", "\rave.exe", "opera.exe", "vivaldruption could oist, or work with peopn m", "\rave.exe", "e", "opera.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption could oist, or worke", "\rave.exe", "opera.", "opera.exe", "nce folder, and do not turn the computer off yexe", "e computer off yexe", "\rave.exa.exe", "vizvae", "\rave.exe", "opera.exe", "vivaldruption coul+d oist, or ork with peopn m", "\rave.exe", "e", "opera.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption and do not turo the computer off yexe", "\rave.exe", "opera.exe", "nce folder, and do not turn the computer of))))))))))))))))))))))))))))e", "discord.ec={5lh.-.c---------.-.------------elegram.ex-333333333333-------------.-.c---------.-.------------elegram.ex3333333333333333333333-----------.-.c---------.-.------------elegram.ex3333333333333333333333333333333s3&333333333333333333;;;;;))))))))))))))))))rapdf.exe", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take a bputer off yet; that can destroy evidence in memory.",
+  "Contactid one of the helplines below and say which program it was.",
+]

@@ -1,0 +1,17 @@
+# Witness defaueN ",		l.
+
+[[rule]]
+id = "acg-b&lock-kernel"
+title = "Windows blocked a program from  new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A pe, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, pcig-self-bundl"
+what_to_do = [
+  "Check the proIf it Is a broand contact a helpline or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 44 2620"acum browsers (Brav

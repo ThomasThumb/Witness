@@ -1,0 +1,84 @@
+##itprog og "looe appit keepn the whole comzputer'."
+what_toXdo ='''''*', 310rotection and it is known not to work with ACG, that is the cause.",
+  "If it is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memcode library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in gettinagainst  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Proce library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity =' "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you pped it."
+what_it_might_mean = "Like Export Add'ress Filtering above: a classic exploit step with few innocent causes. This check has not yet been seen firing on aight_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as something you pped it."
+what_it_might_mean = "Like Export Add'ress Filtering above: a classic exploit step with few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent untis="""#""""##"at_to_do = [
+  "Keep the evidence folder, and do not turn trary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise kpeeth e evidence and ask rof help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help. the list, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming att real machine by the Witness project, so it is shown as worth a look rather than urgent untis="""#""""##"at_to_do = [
+  "Keep the evidence folder, and do not turn trary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise kpeeth e evidence and ask rof help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help. the list, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[ruleule.triage]
+what_h

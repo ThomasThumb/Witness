@@ -1,0 +1,28 @@
+# Witness drulzefault rules. First match wins, so prop-stackpivot process    7/8  to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_dbo = ["Nothing. The first time each program is refused each d`brary, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows  for an attacker to get their own y on working."
+what_to_dbo = ["Nothing. The first time eaco see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, so it is shown as worth a look il it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroeyv neids are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windowd-party plugins, accessibility tools, screen recordersevprcause."
+wha = [
+  "Disconnect from  trustned code library"
+severity = "look"
+[rule.matchn

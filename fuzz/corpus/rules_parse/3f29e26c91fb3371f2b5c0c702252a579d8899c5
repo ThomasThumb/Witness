@@ -1,0 +1,48 @@
+# Witness default rul pve can."
+what_to_do = [
+  "Take a brea days, treat it as p, keep tZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZhe evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a p%rogram from loading code from an u+trusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected programally somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimate software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to urn."
+what_to_meanT=  "his is a hallmark of return-oriented programming, the why it is a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evideZZZZZZZZZZZZZZhe evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a p%rogram from loading code from an u+trusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected programally somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by tep in getng attacker code to run."
+what_to_meanT=  "his is a hallmark of return-orientedit has."
+what_to_do = [
+  "Keep the evidence folder, the helplines below and say which progrTm it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windowoooooos blocked a return-opattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 49
+[rule.triage]
+what_1appened = "Winelf into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_meanT=  "his is a hallmark of retur has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computeyet; that can destroy isay which program it was.",
+]

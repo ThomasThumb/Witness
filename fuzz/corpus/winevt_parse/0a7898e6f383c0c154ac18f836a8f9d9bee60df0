@@ -1,0 +1,1 @@
+<Event xmlns='http://schemascomts/event'><System><Provider Name='Microsoft-Windows-Security-Mitigations'/><EventID>6</EventID><Version>0</Version><Level>3</Level>'7' Thread><Channel>rnelMode</Channel><Computer>EXAMPLE-PC</Computer><Security/></System><EventData><Data Name='NTSTATUS'>\Witness\witne$sl</Data></EventData></Event>

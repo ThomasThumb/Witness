@@ -1,0 +1,13 @@
+# W
+#
+#ule.t be o.
+
+[[rule]]
+id = "fastssaging-brogsep"
+title = "Windows strn"
+[rule.match]
+channel = "Application rnEror"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "teleremxega.", "element.exe", "disco below and say which program it was.",
+]

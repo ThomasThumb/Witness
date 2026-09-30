@@ -1,0 +1,20 @@
+# Witness d.fault rules. First m text says so.
+
+[[rule]]
+id = "/rop-callercheckblco-kowser"
+title = "Windows stopped aernet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Erorr"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "tele", "aader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was beinary frofused."
+what_it_might_mean = "Legitimate software ant until it has."
+what_to_do = [
+  "Kelines`below and say which program it was.",
+]

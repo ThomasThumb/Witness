@@ -1,0 +1,26 @@
+# Witnessde faul:t rules. Fte that t, the rule do-in attemptswhat_happened,  dyanou should know worced (KernelModeaught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-anyrop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+pr0vider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.ex)e", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbie.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.ems-teams.exe",
+  "chrome.exe", "msedge.ex)e", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.dge.eye", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corruptedown beforo anything."
+what_it_might_mean = "Most of the time  target, and this is what a blocked break-ther than urgent until it has."
+what_to_do = [
+  "Keep below and ",
+]

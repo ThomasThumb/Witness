@@ -1,0 +1,19 @@
+# Witness default rules. First match text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+er = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "brewolf.exe", "tor. the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "oading code from the network"
+severity = "urgent												''''. t me																																																				"
+[rule.match]
+channel = "Micron could do anything."
+what_itity = "urgent																																																																"
+[rule.matced = "A e, file, link or call from someone you don't know?",
+  "Ifusion. Logg

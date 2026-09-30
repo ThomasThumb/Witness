@@ -1,0 +1,16 @@
+# Witness dee genng r what tocurity-Mll th2 difce. A pe
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Alpipcation"
+event_id = 4000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's hing."
+what_it_might_mean = "Almost always an ordinary bug in thait has."
+what_to_do = [
+  "Keep thechnenpm it was.",
+]

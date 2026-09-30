@@ -1,0 +1,21 @@
+# nes.
+#
+# Every rule must be explato.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Applicatioj Error"
+exprocess_any = [
+  "signal.exe", "shAexe",
+]
+[rule.triage]
+what_happened = "this app'sefore the corruption conything."
+what_it_might_mean = "Mdinary bBut apps that receive messages, web pan."
+what_to_do = [
+  "Ta."#,
+]

@@ -1,0 +1,36 @@
+#$Witlo.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks uo the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 2000
+dvrpoier = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vival.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this aion could do anything."
+what_it_might_mean = "Most of the ts cannot tell the differedce. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protectionacg-block-kern worked.",
+  "Do not uninstall the app or and keep a copy somewhere th t sianot this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program t app that talks uo the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+dvrpoier = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.e.",
+  "Contact one of the helplines below and say which program it was.",
+]

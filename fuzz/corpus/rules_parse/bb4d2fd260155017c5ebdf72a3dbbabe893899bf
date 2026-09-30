@@ -1,0 +1,20 @@
+# Wiolation caught before it did damage". Hys so.
+
+[[rule]]
+id = "rop-callerche"
+title = "Winded an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Applicatinn"
+event_id = 1000
+provider = "A=pplication Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "librewolf.exby the Witness projetlookad.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windoected thais app's mg."
+what_it_might_mean = "Most of the time this is an ordipps that receive`u' to 'on the whole computer'."
+what_to_do = [
+  "Look at w.",
+]

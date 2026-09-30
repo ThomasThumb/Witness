@@ -1,0 +1,13 @@
+# Witnr text says so.
+
+[[rule]]
+di=  "fastfail-messaging-browser"
+title = "Winn"
+sevety = "look"
+[rule.match]
+channel = "h (a 'retuof a 'call'),topped it."
+what_it_might_mean = "This wser"
+title = "Wtly,ness "
+what_to_do = [
+  "Keep 					 !et;--the ee fam it was.",
+]

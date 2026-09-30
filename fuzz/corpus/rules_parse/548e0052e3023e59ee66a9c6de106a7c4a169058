@@ -1,0 +1,19 @@
+# Witneswins, so put spefail().t lA lhree Mean "memage". Honeext says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windtws sto internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provide_code = 0xC0000409
+process_any = [
+  "signal.exe", "whder.exe",
+]
+[rule.triage]
+what_happened = "Wiore the corruption could do anything."
+what_it_might_mean = "l ."
+what_to_do = [
+  "Take a bputer off yet; that can destroyne ofneit was.",
+]

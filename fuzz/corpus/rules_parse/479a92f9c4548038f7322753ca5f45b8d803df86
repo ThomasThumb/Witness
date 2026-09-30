@@ -1,0 +1,9 @@
+# Witness d
+[[rule]]
+idrity = "urgent"
+[rule.match]
+cannel = "Aplication"
+eprovi = 0xC0000409
+process_any = [
+  "signal.", "telegram.exe", "", "&outlggggggggggggggggggWram it was.",
+]

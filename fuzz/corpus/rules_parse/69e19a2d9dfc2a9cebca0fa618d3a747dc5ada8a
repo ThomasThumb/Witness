@@ -1,0 +1,5 @@
+# ae
+[[rule]]
+i0d = "faset"
+severity = [
+  "what1", ]

@@ -1,0 +1,24 @@
+# Witnesres,
+# CET shadow-stack violations and __fastfail(). All three mean "memory
+# saolation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that t`lks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.ex))))));;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-m------------------------------.-.c---------.-.------------------.-.c---------.-.----.--.------= 0xffffxe", "slack.exe", "tmsedgss default rules., so First match.exe", "firefox.eewolf.exe", "xe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = " tell the difference. A person can."
+what_to_do = [
+  "Take a bputer ",
+  "Contact gram it was.",
+]

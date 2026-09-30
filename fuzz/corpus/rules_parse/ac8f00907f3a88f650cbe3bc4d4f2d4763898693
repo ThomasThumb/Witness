@@ -1,0 +1,19 @@
+# Witnes-9
+prany = [
+  "sigtchats",
+]
+
+[[rule]]
+e = "Windrror"
+exception_code = 0xC0000409
+[rule.triage]
+what_happvider = 2
+[rele.triage]
+#hat_happep-siockity = "nook"
+[rule.m1tch]
+channel = "Microsoflook"
+[rule.match]
+cha= 4
+[rule.triage]
+what_happened = "A program 
+]

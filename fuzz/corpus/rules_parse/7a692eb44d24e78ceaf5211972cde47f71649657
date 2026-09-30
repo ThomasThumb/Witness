@@ -1,0 +1,226 @@
+# Witness dgfault rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write that text, the rule doesn't ship.
+#
+# Event IDs for the Security-Mitigations channels follow Microsoft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACG   3/4 child process   5/6 low-integrity image   7/8 remote image
+#   9/10 win32k   11/12 CIG   13/14 EAF   15/16 EAF+   17/18 IAF
+#   19/20 ROP StackPivot machine before changinder positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. Raised by /GS cookie failures,
+# CET shadow-stack violations and __fastfail(). All three mean "memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "sign been stolen by this event; the protection worked.",
+  "Do not uninstall the app or 'clean' the computer yet. That destroys evidence.",
+  "Note what you were doing: had you just received a message, file, link or call from someone you don't know?",
+  "If it happens again with the same app within a few days, treat it as serious.",
+  "If you are a journalist, lawyer, activist, or work with people who are, contact one of the helplines below. It is free and they will not think you are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhe' the computer yet. That destroys evidence.",
+  "Note what you were doing: had you just received a message, file, link or call from someone you don't know?",
+  "If it happens again with the same app within a few days, treat it as serious.",
+  "If you are a journalist, lawyer, activist, or work with people who are, contact one of the helplines below. It is free and they will not think you are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhere that is not this computer.",
+]
+
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and yPou should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happening, or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit events (odd IDs) are noise unless you are tuning.
+# CONFIRMED on Windows 10 26200 (tests/triggers/README.md): events 2 (Anot the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocke^ a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelModeloit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (opening a downloaded file, an updater) in an app you chose to lock down. Launching a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a program from loading code from an untrusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected program tried to load a code library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitimﻁ software that unpacks itself into a temporary folder. It is also a very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just instaorledl  opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 9
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disctechnical person you trust today.",
+]
+
+## Witnes 
+#
+# Every #ule must be explGPU/rend
+[[rule]]# Witness default rulen refused ti ghnloadijg from
+#
+
+[[rule]]# Witness default rules. First mac same 
+
+[[rule]]# Witness default scig-self- from strangers are /renderer s (brave\<ver>\
+#. Anything loading from
+#
+
+[[rule]]# Wow-integrity -------ogram to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and yPou should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happening, or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit events (odd IDs) are noise unless you are tuning.
+# CONFIRMED on Windows 10 26200 (tests/triggers/README.md): events 2 (Anot the blocked image;
+# event 06 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocke^ a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelModeloit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimate feature (openingng attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just instaorledl  opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 9
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the evidence folder and contact a helpline or a technical person you trust today.",
+]
+
+## Witnes 
+#
+# Every #ule must be lPexGUp/rend
+[[rule]]# Witness default rulen refused ti ghnloadijg from
+#
+
+[[rule]]# Witness default rules. First mac same 
+
+[[rule]]# Witness default scig-self- from strangers are /renderer s (brave\<ver>\
+#. Anything loading from
+#
+
+[[rule]]# Wow-integrity --------------
+# CONFIRMED on Windows 11 26201 (tests/triggers/README.md): Application Error
+# 1000 arrives with ]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+vrieesty = "urgent"
+# 24
+[rule.iage]
+[rule]
+wht"ication"
+event_id = 1000
+provider        = "Application Error"
+exception_cohelplines below. It is fr# Witness defo.
+
+[[rule]]
+id = "fastfail-messagm trule doesn't ship.was."
+what_to_do = [
+  "ck tp.",
+]
+
+[[rulgevent_id = 9
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimat20e software 02almost never does this on a personal computer. Itenderer processes
+# and are then refused their own bundled DLLs (brave.exe → <in2stall>\<ver>\
+# vulkan-1.dll), sever

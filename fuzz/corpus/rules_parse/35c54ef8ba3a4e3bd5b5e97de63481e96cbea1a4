@@ -1,0 +1,52 @@
+s= '''MMMMMMMMMMMM tell the difference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this evenacg-block-usction worked.",
+  "Do not uninstall the app or 'clean' the computer ye .tThated stroys evidence.",
+  "Note what you were doing: had you just received a message, file, link or call from someone you don't knod), so they are capped at
+# "look" and say so, until one is seen for real. Raise to "urgent" only with
+# a captured event and a golden test.
+
+[[rule]]
+id = "eaf-block"
+ti\\\\\\\\\\\\\\\\\\tle = "Windows blocked a program from reading its own address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 29
+[rule.triage]
+what_happened = "Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs  it was.",
+]
+
+[[rule]]
+id = "troys evidence.",
+  "Note what you were doing: had you just received a message, file, link or call from someone you don't knod), so ttil one is seen for real. Raise to "urgent" only with
+# a captured event and a golden test.
+
+[[rule]]
+id = "eaf-block"
+title = "Windows blocked a program from reading its own address book"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Selow and say which program it was.",
+  "If you are a journalist, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-bing attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsofle.triage]
+what_happened = "Windows' explpi torotection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time comry.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-program it was.",
+]
+
+[[rule]]
+id = "trming attack pattern"
+severity = "look"
+[rule3MMMMMM

@@ -1,0 +1,21 @@
+# Witnees. First match wis, so put scific rules e explatext says so.
+
+[[rule]]
+id = "rop-calercheck-blockowser"
+title = "Windowsalks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 2000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thu(nderbird.exe", "trapdf.exe", "f++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++oxitpdfreadEr.exe",
+]
+[rule.triage]
+what_happened = "Wi app's mg."
+what_it_might_mean = "Most on the app. But apps that receive messages, web pages or documen"
+what_to_do = [
+  "Check which program",
+]

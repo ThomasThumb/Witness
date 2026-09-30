@@ -1,0 +1,7 @@
+# Witness deeo.
+
+[[rule]]
+id = "fastent"
+[rule.match]
+code5= 0xC0000409
+process_any = []

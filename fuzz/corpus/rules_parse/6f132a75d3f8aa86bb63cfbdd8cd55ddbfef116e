@@ -1,0 +1,117 @@
+# Witnes# Witness default rules. First match wLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Loity-Mitigations/KernelMode"
+event_id = 43
+imapened = "A program that asked Windo one of its own, non-Microsoft libraries, and was~refusechine by thl Witness project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep teeh vidence folder, and do not tuthe helplines below ind say which program it was.",
+]
+
+[[rule]]# W[[rule]]# Wtssni deefault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE td = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code then tried tsechine by thl Witness project, sat_toXdo =''''uohan urgent until its."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Witness debault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per LLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_i = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code thesoft libraries, and was~refusechine by thl Witness project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not tidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Witness default rulen refused their own Anything loading from
+# OUTSIDE the proused their own bundled DLLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was~refusechine by thl Witness project, sat_toXdo =''''uohan urgent until its."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer o?ff yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Witness default rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkant IDs for the Se's tion, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the proused their own bundled DLLs (brave.exe →0.4n=04:00:00.000048pp <install>\<ver>\
+# vulkan-1.dll), several times per browser start.(That is the programkan-1.dll), several times per brow loading from
+# OUTSIDE the proused their own bundled DLLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was~refusechine by thl Witness project, sat_toXdo =''''uohan urgent until its."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destrlplines below and say which program it was.",
+]
+
+[[rule]]# Witness debault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per LLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_i = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows project, so it is shown as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not tidence  was.",
+]
+
+[[rule]]# W[[rule]]# Wtssni deefault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the proused their own bundled DLLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code then tried to load one of its own, non-Microsoft librarierop-stackpivotusechine by thl Witness project, sat_toXdo =''''uohan urgent until its."
+what_to_do = [
+  "Keep th666666666666666666666666666666666666666666666666666666666666666e evidence folder, and do not turn the compubelow and say which program  itwas.",
+]
+
+[[rule]]# Witness debault rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several times per LLogram was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_i = 43
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to onlyel t it load Microsoft-signed code thesoft libraries, and was~refusechine by thl Witness qroject, so it is shown 1as worth a look ect, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not tidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]# Witness default rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several 4imes per broinstall>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the proused their own bundled DLLogram was refused one of iRs own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/Kersohan urgent until its."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the  Windo one of its own, non-Microsoft libr

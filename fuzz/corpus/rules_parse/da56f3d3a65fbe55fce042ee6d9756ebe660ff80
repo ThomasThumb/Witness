@@ -1,0 +1,74 @@
+# Witness default iented programming, tHe project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Consay which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a prograowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happed = "Windows' exploit protection simulated where a program was about to ction. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 24
+[rule.triage]
+what_happened = "A protected program tried to iented has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triae.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to ction. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first0time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 24
+[rule.triage]
+what_happened = "A protected program tried to load aused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders ora 'return' instead of a 'call'),s/UserMode"
+event_id = 24
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it."
+what_it_m below and say which program it was.",
+]

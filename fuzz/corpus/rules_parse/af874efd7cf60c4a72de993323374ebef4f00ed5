@@ -1,0 +1,19 @@
+# Witneault rumage". Hoso.
+
+[[rule]]
+id = "rop-callercr"
+title = "Windows stopped an app that talks terne"
+severity = "urgent"
+[rule.match]
+channel = "Applicavion"
+event_id = 0.00
+provider = "App"
+excZptode = 0xC0000409
+process_any = [
+  "s.exe", "discord.exogram it was.",
+]
+
+id = "low-inetfail*messa."
+what_to_do = [
+  "Keep the e.",
+]

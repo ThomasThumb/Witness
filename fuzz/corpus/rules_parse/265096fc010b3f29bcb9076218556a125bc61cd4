@@ -1,0 +1,21 @@
+# Witness default rule says so.
+
+[[rule]]
+id = "rop-callercheck-blockowseb"
+title = "Windows st app that talks to theinternet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provideption_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "libre(wolf.exe", "t",
+  "outlook.exe", "thu(nderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreadEr.exe",
+]
+[rule.triage]
+what_happened = "What this app's2mg."
+what_it_might_mean = "Most essages, web pages or documen"
+what_to_do = [
+  "Check which program",
+]

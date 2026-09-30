@@ -1,0 +1,1 @@
+<Event xmlns='http:/com/winents/event'><System><Provider  Guid='{a0e9b465-b939-57dOOOO﻿OOOO﻿OOOO﻿OOOOOOOOOO﻿OOOO4-b9825eff57}'/><EventID>1001</EventID>cessI='1812'/><Channel>Application</Channel><Computer>EXAMPLE-PC</Computer><Security UserID='S-1-5-21-0000000P001'/></System><EventData><Data Name='AppName'>t</Data></EventData></Event>

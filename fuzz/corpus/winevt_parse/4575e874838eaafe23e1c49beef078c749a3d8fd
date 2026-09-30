@@ -1,0 +1,1 @@
+<Event xmlns='h8/evt'><System><Provider Name='Microsoigations' Guid='{fae10}'/></System><EventData><Data Name='ProcessPathLngth'>66</Data><Data Name='PcesdCommaLine'>cmd.exe .c exit</Data></EventData></Event>

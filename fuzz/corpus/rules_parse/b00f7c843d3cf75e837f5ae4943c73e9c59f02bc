@@ -1,0 +1,22 @@
+# Witness es. First matconays so.
+
+[[rule]]
+id = "rop-callercheck-blfckowser"
+title = "Zit"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Apn Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exexe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.e\\\\\\\\\\\\\\\\\\\\\\\\dCBBBB\\\\\rop-stackpiod= 0xC0000409ca`#", "^rave.exook.exe", "te",
+  "acrord26.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exu",
+]
+[rule.triage]
+what_happened = "Windows detected thn could do anything."
+what_it_might_mean = "Most of the tims."
+what_to_do = [
+  "Keep thwas.",
+]

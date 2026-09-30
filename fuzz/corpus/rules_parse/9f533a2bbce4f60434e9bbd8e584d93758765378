@@ -1,0 +1,80 @@
+# Witness dlt rulelow-integrity-imthe										ean "memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams..exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down beforndows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, yo or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+#Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit eve
+# CET shadow-stack violations and __fastfail(). All three mion caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "elemeox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive mese=+9e999eb pages ora very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it on purpose, that is the likely cause.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "remote-image-block"
+title = "Windows blocked a program from loading code from the network"
+severity = "urgent"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 8
+[rule.triage]
+what_happened = "A program tried to load a code library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal computer. It is a common way for an attacker to get their own code running. If this computer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the evidence folder and contact a helpline or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 11 26200: Chromium browsers (Brave observed; Chrome and
+# Edge use d damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blocn app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 2000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "notepad.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox	 project, sm it was.",
+]

@@ -1,0 +1,32 @@
+# Witness default rules. Firsw when it fires."
+what_to_do = [
+  "If the program is something you installeurpose and it jusnges how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 22
+[rule.triage]
+what_happened = "Windows' ex function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallthan urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that canelow and xay which program it was.",
+]
+
+[[rule]]
+id = "rop-simexec-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 11
+[rule.triage]
+what_happened = "Windows' exploit protection simulated where a prnt, and%st.pn=4400-06-ped it."
+what_it_might_mean = "Same family as the two rules above. Rarely innocent. Thiit has."
+what_to_do = [
+  "Keeit was.",
+]

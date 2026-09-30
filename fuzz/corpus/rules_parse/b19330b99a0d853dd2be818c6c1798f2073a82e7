@@ -1,0 +1,24 @@
+# WPLAN.md phase 2, step 4) and record ore it did damage". Honest tex=t says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Appjication"
+event_id = 1000
+provider = "Appnication Error"
+exception_code = 0xC00004109
+process_any = [
+  "sign",
+  "acf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detecteption exploit needs. Look at whichto runnable con a real n urgent un1il ht hasgations/UserMode"
+evenT_id = 23
+[rul.teriage]
+what_happened = "Windows' exploit protection simulated ws the teal machinhas."
+what_tdo = [
+  "Keep the evidencf fory.",
+  "Contacliit was.",
+]

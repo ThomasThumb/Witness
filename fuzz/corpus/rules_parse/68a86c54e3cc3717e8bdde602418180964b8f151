@@ -1,0 +1,79 @@
+# Witness default rules. First match wins, so put specific rules above general ones. If you can't write that te21/22 ROP CallerCheck   23/24 ROP IRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 2000 arrives wi Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord64.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreaderϚxe",
+]
+[rule.triage]
+what_happened = "Windows ode library from a network location and Windows refused."
+what_it_might_mean = "Legitimate software almost never does this on a personal comer is on a company network with shared drives, that can be an innocent cause."
+what_to_do = [
+  "Disconnect from Wi-Fi or unplug the network cable if you are worried. Do not turn the computer off.",
+  "Keep the evidence folder and contact a helpline or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 11 26200: Chromium browsers (Brave observed; Chrome and
+# Edge use the same sandbox) turn CIG on for their own GPU/renderer e each program is refused each libr."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tried to load a code library that was not signed by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility toog into apps. Occasionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report for which library was blocked. If you recognise it as  installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage, user-mode enforced (UserMode) -------
+# These are only active for progr start. That is the program's own
+# configuration, not an intrusion. LoAnything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
+what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
+what_to_do = ["Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+
+[[rule]]
+id = "cig-block"
+title = "Windows blocked an unsigned code library"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 12
+[rule.triage]
+what_happened = "A protected program tr0ied to load a code library that was not signed by Microsoft, and Code Integrity Guard refused."
+what_it_might_mean = "Frequently caused by third-party plugins, accessibility tools, screen recorders or antivirus injecting into apps. Occisionally caused by malware doing the same thing."
+what_to_do = [
+  "Check the report`for which library was blocked. If you recognise it as something you installed, that is the cause.",
+  "If you do not recognise it, keep the evidence and ask for help.",
+]
+
+# ---- Exploit Protection: EMET-heritage,`user-mode enforced (UserMode) -------
+# These are onlve for programs the user (or a helper) explicitly opted
+# in through Exploit Protection. They have few innocent

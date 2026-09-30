@@ -1,0 +1,33 @@
+s= ''''# Witk er than urge has."
+what_to_do = [
+  # Witness 'defaul ones.
+#
+# Everl lt rules. First match wins, specific rules above general ones.
+#
+k below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Sec@@@@@@@urity-Mitigations/KernelMode"
+event_id = 43
+image_in_process_dir = true
+[rule.triage# 0we
+on_code = 0x000C0409
+prode = ]
+what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was~refusechine by thl Witness project, so it is showestroy evidence in memory.",
+  
+e]ntact one of the helplines below and fastfail-messaging-csay which program it was.",
+]
+
+[[rule]]# Witness default rulen refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-e1.dll), several times per browser start. That is the program's own
+# configuration, not an intrusion. Logged, never shown. Anything loading from
+# OUTS1x000C0409
+proccoIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-buccndled"
+title = "A program was refused one of libraries"
+severity = "bfg"
+[r

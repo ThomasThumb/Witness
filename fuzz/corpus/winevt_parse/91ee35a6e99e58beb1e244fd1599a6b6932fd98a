@@ -1,0 +1,1 @@
+<Event xmlns='http://event'><System>9b465-b9-/><EventID>1000</EventID><Version>0</Version>='1812'/><Channel>Application</Channel><Comput UserID='S-1-5-21-0000000000-0400000000-00000/0000-1001'/></System><EventData><Data Name='uimeStamp'>6ab28faea</Data><Data Name='ExceptionCode'>0Xc0000 09</Data><Data Name='FaultingOffset'>000000000000</Data></EventData></Event>

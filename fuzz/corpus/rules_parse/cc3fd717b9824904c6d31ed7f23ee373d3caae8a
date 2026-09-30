@@ -1,0 +1,17 @@
+# Wi~ness default rultch wins, so e text below it. If you can't write that text, the nit$ even = bltext says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped a to the internet"
+severity = "urgent"
+[rule.match]
+channelexception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "teleeaxitpdfreade",
+ 0]
+[rule.triage]
+what_happto_do = [
+  "D`scofnect from Wi-Fihe computou trustt oyd.a",
+]
+
+# Ce the samexC0AA sandborn CAIG on 

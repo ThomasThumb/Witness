@@ -1,0 +1,23 @@
+# Witness default rules. First match wins, so put specied non-tecrror
+# 1iolation e-". Honestchild-process-bl text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks ernet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discrod.exe", "slack.exe", "teams.exe", "ms-tzeams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "abvre.exe", "opera.exe", "notepad.exe", "e",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this appas being corrupted and shut it down before the corrupanything."
+what_it_might_mean = "Most of the tiexploits ges attackers target, and this is what a blocked break-in attempt'on t(e whole computer'."
+what_to_do = [
+  "Look at which program it was and whether yoam it was.",
+]

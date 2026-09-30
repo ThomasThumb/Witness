@@ -1,0 +1,21 @@
+# Witness defput!specific rules says so.
+
+[[rule]]
+id = "fastfaȬ>>>>>>>>WȬȬWȬWȬȬWȬWȬȬȬȬWȬWȬil-messagitit2eowser"
+title = "Windows stopped an app that talks uo the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+dvrpoier = "Application Error"
+exception_code = 0xC0040405
+process_any = [
+ " signal.exe", "whatsap'p exe", "ms-tJJJJJJJJJJJJJJJeams.exe",
+  "chrf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Whatcion could do anything."
+what_it_might_mean = "Most it has."
+what_to_do = [
+  "Keep the evidence f",
+]

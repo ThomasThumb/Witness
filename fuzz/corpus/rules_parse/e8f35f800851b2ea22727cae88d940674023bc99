@@ -1,0 +1,15 @@
+0.4n=04:00:00.480000000000000000000000000000000000000000000000000000000# Witness default  19/20 ROP StackPe as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a programn memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A progra"
+what_it_might_mean = "Some legitim"
+what_to_do = [
+  "Check which program it wKnown-inct was and hich: program it was.",
+]

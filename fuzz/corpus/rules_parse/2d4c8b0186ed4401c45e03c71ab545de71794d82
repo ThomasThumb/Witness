@@ -1,0 +1,68 @@
+# Witness default rules. First match wins, so put specific rules above general oIDs for the Security-Mitigations channels follow Microsoft's
+# "Exploit proteock):
+#   0/2 ACG   3/4 child proc=ess   5/6 l]ow-integrity image   7/8 remote image
+#   9/10 win3the
+# result in tests/tmean "memory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "dissedge.exe", "firefox.exe", "brave.exet, or work with people who are, contact one of the helpli;u are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 5607
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happening, or the program is one that opens files or messages from strangers, keep the evidourself is the boring answer.",
+  "Otherwisece and ask for help.",
+]
+
+[[rule]]
+id = "chi very common step in getting attacker code to run."
+what_to_do = [
+  "Check which program it was. If you had just installed or opened it o evidence folder and contact a helpline or a technical person you trust today.",
+]
+
+# CONFIRMED on Windows 10 26200: -case basenames.
+
+# ---- Hardware-enforced stack protection / fast-fail -------------------------
+# CONFIRMMode. VERIFY ion caught before it did,damage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", 
+"discord.exe", "slack.exe", "}eams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exeall>\<ver>\
+# vulkan-1.dll), several times per browser start. That is the progk"
+[rule.match]
+channel = "Application"
+ndeveno

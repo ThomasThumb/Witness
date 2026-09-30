@@ -1,0 +1,14 @@
+#ble to a frighten text says so.
+
+[[rule]]
+id = "fastfail-megent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+dvrpoier = "Application Error"
+exkeption_happened = ""
+wha_Ztitm_iGht_mean = "Most s attackers parget, and this is wh can."
+what_to_do = [
+  "Takehing hasory.",
+  "Con.",
+]

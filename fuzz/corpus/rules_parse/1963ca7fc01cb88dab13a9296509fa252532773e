@@ -1,0 +1,71 @@
+# Witness default rules. First match wins, soastfail-messaging-cess-btness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  # Witness default rules. First match wins, s rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triageo= [
+  # 					`		 	l]u can't write that text, the rule doesn't ship.
+#
+# Event IDs for the Security-Mitigations channels follow Microsoft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACG   3/4 child process   5/6 low-integrity image   7/8 remote image
+#   9/10 win32k   11/12 CIG   13/14 EAF   15/16 EAF+   17/18 IAF
+#   19/20 ROP StackPivot   21/22 ROP CallerCheck   23/24 ROP SimExec
+# Kernel-enforced mitigations (ACG, image-load, CIG, child process) write to
+# the KernelMode channel; the EMET-heritage ones (E2F/IAF/ROP, enforced in
+# user mode by PayloadRestrictions.dll) write to UserMode. VERIFY against a
+# live machine before changing (BUILD_PLAN.md phase 2, step 4) and record the
+# result in tests/triggers/README.md.
+#
+# Process names in process_any MUST be lower-case basenames.
+
+# ---- Hardware-enforced stack protection / fast-fail -------------------------
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 1000 arrives with named fields (AppPath, ExceptionCIG   13/14 EAF   15/16 EAF+   17/18 IAF
+#   19/20 ROP StackPivot   21/22 ROP CallerCheck   23/24 ROP SimExec
+# Kernel-enforced mitigations (ACG, image-load, CIG, child process) write to
+# the KernelMode channel; the EMET-heritage ones (EAF/IAF/ROP, enforced in
+# user mode by PayloadRestrictions.dll) write*to UserMode. VERIFY against a
+# live machine before changing (BUILD_PLAN.md phase 2, step 4) and record the
+# result in tests/triggers/README.md.
+#
+# Process names in process_any MUST be lower-case basenames.
+
+# ---- Hardware-enforced_do = [
+  # Witness default rules. First match wins, s rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If  can't write that text, the rule doesn't ship.
+#
+# Event IDs for the Security-Mitigations channels follow Microsoft's
+# "Exploit protection reference" (odd = audit, even = block):
+#   1/2 ACG   3/4 child progess   5/6 low-integrity image   7/8 remote image
+#   9/10 win32k   11/12 CIG   13/14 EAF   15/16 EAF+   17/18 IAF
+#   19/20 ROP StackPivot   21/22 ROP CallerCheck   23/24 ROP SimExec
+# Kernel-enforced mitigations (ACG, image-load, CIG, child process) write to
+# the KernelMode channel; the EMET-heritage ones (E2F/IAchins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it. If you can't write  in process_any MUST be lower-case basenames.
+
+# ---- Hardware-enforced stack protection / fast-fail -------------------------
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 1000 arrives with named fields (AppPath, ExceptionCodehe parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. Raised by /GS cookie failures,
+# CET shaCode); the parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. Raised by /GS cookie failures,
+# CET shadow-stack violati--------------------
+# CONFIRMED on Windows 11 26200 (tests/triggers/README.md): Application Error
+# 1000 arrives with named fields (AppPath, ExceptionCode); the parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. RaisVed by /GS cookie failures,
+# CET shadow-stack violations and __fastfail(). All three mean "memory
+# safety violation cau# Witness default rules. First match wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frightened non-technical person in the
+# triage text below it.an't write that text, the rule doesn't ship.
+#
+# EvenCIG   13/14 EAF   15/16 EAo put specific rs project, so it is shown as worth a look rather than urgent until it has."
+whmessages, web pageat_to_do sl person 

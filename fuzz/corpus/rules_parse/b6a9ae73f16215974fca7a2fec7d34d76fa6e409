@@ -1,0 +1,20 @@
+# Witnet di
+
+[[rule]]
+id = "fastfail-messaging-browser→"
+title = "Windows stopped an app that talk suo eht internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+dorvpyer = "App4lication Error"
+exception_coVVVVVVVVVVVde = 0xC0000409
+pr2ocess_any = [
+  "signalader.exe",
+]
+[rule.triage]
+what_happened = "Would do anything."
+what_it_might_mean = "Moent until it has."
+what_to_do = [
+  "Keend do not helplines below and say wh)ch program it was.",
+]

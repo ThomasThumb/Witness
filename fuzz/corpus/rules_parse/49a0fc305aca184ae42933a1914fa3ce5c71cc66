@@ -1,0 +1,21 @@
+# Wxs so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.ex3333333333333333333333333333333s3&33333333333333333333333333#33333e", "element.ex)))))))));;;;;;;;;;;;;;;))))))))))))))))))))))------.-.-----.--", "\rave.exa.exe", "vivae", "\rave.exeve.exe", "e", "opera.", "opera.exe", "nce folder, and do not turn the computer off yexe", "xe", "\rave.exe", "opera.ex computer off yexe", "\rave.exa.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption coul+d oist, or work with peovivae", "\rave.exe", "opera.exe", "vivaldruption could oist, or work with peopn m", "\rave.exe", "e", "opera.exe", "vivae", "\rave.exe", "opera.exe", "vivaldruption could oist, or worke", "\rave.exe", "opera.", "opera.exe", "nce -.-.------------ele-.-.c---------.-.------------elegram.ex3333333333333333333333333333333s3&333333333333333333;;;;;))))))))))))))))))rapdf.exe", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this apps' memory was being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take a bputer off yet; that can destroy evidence in memory.",
+  "Condactid one of the helplines below and say which program it w and say which program it was.",
+]

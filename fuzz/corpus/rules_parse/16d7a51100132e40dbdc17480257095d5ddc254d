@@ -1,0 +1,21 @@
+# Witneswiage". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "sign.lexae", "whatsapp.exe", "telegram.ex3333333333333333333333333333333s3&3333333333333))))))))))))e", "discord.ec={5lhc------.--.-m-----------------------.----.--------------.-.c---------.-.------------elegram.ex3333333333333333333333333333333s3&333333333333333333;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-mhc---------.-.-----.--.-m-----------------------.----/--------------.-.c---------.-.)))))))))))))e", "discord.ec={5lhc------.--.-m-----------------------.----.--------------.-.c---------.-.------------elegram.ex3333333333333333333333333333333s3&333333333333333333;;;;;)))))))))))))))))))))))))))))))))))))))))))))))))))))))))e", "discord.ec={5lhc---------.-.-----.--.-mhc---------.-.-----.--.-m-----------------------.----/--------------.-.c-----------------.----/--------------.-.c---------.-.------------elegram.ex3333333333333333333333333333333s3&333333333333333333;;;;;))))))))))))))--------.-.-----.--.-m-----------------------.----.--------------.-.c---------.-.------------elegram.ex0000000000015399551061658872490s3&33333333333333333-----------.-.c---------.-.------------elegram.ex0000000000016923147567684212052s3&333333333333333333;;;;;))))))))))))))))))rapdf.exe", "foxitpdfreadeh.exe",
+]
+[rule.triage]
+what_happened = "Wi--ows detected that this awn before the corruption could do anything."
+what_it_might_mean = "Most of tnnot tell the difference. A person can."
+what_to_do = [
+  "Take a bputer off yet; that can destroy evidence in memory.",
+  "Contactid one of the helplines below and say which program it was.",
+]

@@ -1,0 +1,20 @@
+# Witness default rules. Find __fastfail(). Allt text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "eqement.ex",
+]
+[rule.triage]
+what_happened = "Windows detected that theing corrdown before the corruptied."
+what_it_might_mean = "Legitimate software almost never does torrupteduse."
+what_to_do = [
+  "Discoas.",
+]

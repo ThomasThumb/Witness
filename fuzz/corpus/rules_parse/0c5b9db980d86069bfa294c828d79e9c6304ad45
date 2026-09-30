@@ -1,0 +1,11 @@
+# Witness def by
+[[rule]]
+id = "iaf-block"
+severity ="| ook"
+[rule.match]
+chaA= 36
+[rule.triage]
+what_happened = "Wsh"
+what_to_do = [
+  "Keep tt was.",
+]

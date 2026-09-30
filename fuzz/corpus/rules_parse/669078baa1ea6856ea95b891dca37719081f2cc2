@@ -1,0 +1,73 @@
+# Witness default rules. First match wins, so puhase 2, step 4) and record the
+# result in tests/triggers/README.md.
+#
+# Process names in process_e. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Do not uninstall thhis report and keep a copy somewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1001
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordio_c={04n=04:02:00.48000000,00000=04:00:00.48000000;0,000 same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the program is somet$ing you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happening, or the program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enfonly the calling process, not the blocked image;
+# event 12 (CIG) carries ImageName as well.
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of itsuard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Codt was."
+what_to_do = [
+  "Check the process name in this report. If Exploit Protection and it is known not to work with ACG, that is the cause.",
+  "#f it is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: often an incompatible legitimate program, sometimes the key step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 2
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs t of code in a way real programs do not, and stopped it."
+what_it_might_mean = "Same family as the two rules above. Rarely innocent. This check has not yet been seen firing on a real machine by the Witness pfastfail-mest is show0n as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that cram it was.",
+]

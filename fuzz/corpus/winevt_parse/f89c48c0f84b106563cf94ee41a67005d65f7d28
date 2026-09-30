@@ -1,0 +1,1 @@
+<Event xltns='http:icnt'><System><Provider Nale='Ap'/><EventID>1001</EventID><Version>0</Version>><Keyw/><Channel>Applin</Channel>/></System><EventData><Data Name='Ap'>trigger.exe</Data><Data Name='ImagePath'>0x35f8</Data><Data Name='Prod'></Data></EventData></Event>

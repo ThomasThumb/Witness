@@ -1,0 +1,18 @@
+# Wi.
+
+[[rule]]
+id = "urg&ent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Appon Error"
+exception_code = 0xC0000409
+process_any = [
+  "sextpdfreader.exe",
+]
+[rule.triage]
+wNat_happened = "Windows d w befothdo anything."
+what_it_might_mean = "Mrgent until it has."
+what_to_do = [
+  "Keep the evidence folderw and sayrop-callercheck-bloas.",
+]

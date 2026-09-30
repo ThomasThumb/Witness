@@ -1,0 +1,98 @@
+s= '''MMMMMMMMMMMM tell the difference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Do not uninstall thDME.md.
+#
+# Proc 22s/triggers/README.md.
+#
+# Process names idwos 22 26e app or 'clean' the computer yet. That destrs a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]
+
+[[rule]]
+id = "iaf-block"
+title = "Windows blocked a program from reading its own address book"
+severitymd.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enforcea =1[da
+#l ive machinoames idows 22s/triggers/README.md.
+#
+# Process names ioswd 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggers/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, rocess names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# resulriagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/trignames idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY agiinst  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Proc 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enforcea =1[da
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3,he o08
+pr-----.---kkkkkkk_an =3#to			foxiME.md.
+#
+# Process names idows 44 26, 'ma = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 18
+[rule.triage]
+what_happened = "Windows' Import Address Filtering caught a program reading the table of functions it imports in a way normal programs do not, and stopped it."
+what_it_might_mean = "Like Export Address Filtering above: a classic exploit step with few innocent causes. This check has not yet ba look rather than urgent until it has."
+what_to_do = [
+  "Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+  "If you are a journalist, lawyer, activist or work with people at risk, say so when you call; it changes how they help you.",
+]
+
+[[rule]]
+id = "rop-callercheck-block"
+title = "Windows blocked a return-oriented-programming attack pattern"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 23
+[rule.triage]
+what_happened = "Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return""=' instead of a 'call'), and stopped it."
+what_it_might_mean = "This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write 2any. Some just-

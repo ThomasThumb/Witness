@@ -1,0 +1,2 @@
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Wcdf}'/><EventID>8</EventID><Version>00</Version><Level>3</Level><Task>3</Task>64872'/><Channel>Microsons/KernelMode</Channel><Computer>EXAMPLE-PC</Computer><Security/></System><EventData><Data Name='ProcesiggerocessCommandLine'>"C:\Witnese </Data><Data Name='Calloc!-----?
+-"4b-EessId'>997Z</Data></EventData></Event>

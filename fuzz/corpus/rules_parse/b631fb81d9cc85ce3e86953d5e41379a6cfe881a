@@ -1,0 +1,87 @@
+# Witness default rules. First match` wins, so put specific rules above general ones.
+#
+# Every rule must be explainable to a frmean = "Most of the~time this is an ordinary bug in the app. But appsike from the outside. Witness cannot tell the difference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Do not uninstall the app or 'clean' the re a journalist, lawyer, activist, or work with people who are, contact one of the helplines below. It is free and they will not think you are paranoid.",
+  "Zip the evidence folder named in this report and keep a copy somewhere that is not this computer.",
+]
+
+[[rule]]
+id = "fastfail-any"
+title = "Windows stopped a program to protect its memory"
+severity = "look"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule.triage]
+what_happened = "A program's memory was being corrupted and Windows shut it down before the corruption could do anything."
+what_it_might_mean = "Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires."
+what_to_do = [
+  "If the program is something you installed on purpose and it just crashed once, you can ignore this.",
+  "If it keeps happe program is one that opens files or messages from strangers, keep the evidence folder and ask a technical person to look.",
+]
+
+# ---- Exploit Protect
+
+[[rule]]
+id = "acg-block-kernel"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 1
+[rule.triage]
+what_happened = "A program tried to turn a chunk of its memory into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Some legitimate programs (games, old software, some developer tools) do this and simply crash under Arbitrary Code Guard. It is also the step almost every memory-corruption exploit needs. Look at which program it was."
+what_to_do = [
+  "Chect is known not to work with ACG, that is the cause.",
+  "If it is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "acg-block-user"
+title = "Windows blocked a program from creating new code in memory"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/UserMode"
+event_id = 1
+[rule.triage]
+what_happened = "ry into runnable code, and Windows' Arbitrary Code Guard refused."
+what_it_might_mean = "Same as the kernel-side version of this event: ofrop-stackcompatible leg sometimese  khtey step of an exploit."
+what_to_do = [
+  "Check which program it was. Known-incompatible software you installed yourself is the boring answer.",
+  "Otherwise keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "child-process-block"
+title = "Windows stopped a protected program from launching another program"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 4
+[rule.triage]
+what_happened = "A program that is not allowed to start other programs tried to, and Windows refused."
+what_it_might_mean = "Often a legitimag a second program is also how many exploits go from 'inside one app' to 'on the whole computer'."
+what_to_do = [
+  "Look at which program it was and whether you had just clicked something that would reasonably open another app.",
+  "If you had not, or the program is a browser, messaging or document app, keep the evidence and ask for help.",
+]
+
+[[rule]]
+id = "low-integrity-image-block"
+title = "Windows blocked a program from loading code from an untrusted download location"
+severity = "look"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitigations/KernelMode"
+event_id = 6
+[rule.triage]
+what_happened = "A protected program tried to load a code library from a location Windows marks as untrusted (usually somewhere a download or a web page wrote to), and Windows refused."
+what_it_might_mean = "Occasionally caused by legitim, so it is shown as worth ola ok rather than urgent until it has."
+what_to_do = [
+  "Keep the evidenolder, and do not turn the computer off yet; that can destroy evidence in memory.",
+  "Contact one of the helplines below and say which program it was.",
+]

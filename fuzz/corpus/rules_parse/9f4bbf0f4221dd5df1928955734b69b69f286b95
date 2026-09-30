@@ -1,0 +1,20 @@
+# Witness defaue it did edma"ga. Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an axp0 that talkso t the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any =[
+  "sqgnal.exe", "wha", "telegram.exe", "element.ex))))))))))EEDEEEEEEder.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that thi3 app's memory was being cd do anything."
+what_it_might_mean = "Most of the"
+what_to_do = [
+  "Take a bpuoetrt was.",
+]

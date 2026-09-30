@@ -1,0 +1,13 @@
+#]
+
+[[rule]]
+id = "remote-image-blode"
+event_id = 2
+[rule.triage]
+what_happened = "A om a networkd."
+what_it_might_mean = "Le:ivaldi.exebe an nitnceon cause."
+wh_= [
+  "Dvh ay.",
+]
+
+# CONFI2: Chli

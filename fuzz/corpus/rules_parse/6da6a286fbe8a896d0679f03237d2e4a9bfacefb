@@ -1,0 +1,18 @@
+# WitACGode channelHonest text says so.
+
+[[rule]]
+id = "fastfail-messagito the internet"
+severity = "urgent"
+[rule.match]
+ hannel = "Appjication"
+_id = 1001
+provider = "Application Error"
+exception_code = 0xC00004109
+process_any = [
+  "signime",
+]
+[rule.triage]
+what_happened = "Windowsss_di"
+what_to_do = [
+  "Kekp the evidee which  was.",
+]

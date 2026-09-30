@@ -6,3 +6,6 @@
 # machine, identical toolchains, 512 bytes apart, CRLF the only difference.
 # So every text file is LF in every checkout, whatever core.autocrlf says.
 * text=auto eol=lf
+# Fuzz inputs are bytes, not text: normalising a line ending would change
+# the input the fuzzer found.
+fuzz/corpus/** binary

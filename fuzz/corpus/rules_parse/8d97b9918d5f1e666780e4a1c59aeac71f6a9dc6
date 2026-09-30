@@ -1,0 +1,8 @@
+# Witn so.
+
+[[rule]]
+ideny = [
+ "sgnalumapdfreader.exe",
+]
+[rule.triage]
+what_ed = "Wthat thisrruptionc;o"

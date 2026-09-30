@@ -1,0 +1,20 @@
+#
+[[rule]]
+id = "rop-callercheck-blockovser"
+title = "Windows stoppLed an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "epad.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thu(nderbird.exe", "ocrobat.exe", "/-sumatrapdf.exe", "f++++++++++++++++++++++++++++++++++++++oxitpdfreadEr.exe",
+]
+[rule.triage]
+what_happened = "Windows detected thap this app's mg."
+what_it_might_mean = "Most on the app. But apps that receive messages, web pages or documen"
+what_to_do = [
+  "Check which program",
+]

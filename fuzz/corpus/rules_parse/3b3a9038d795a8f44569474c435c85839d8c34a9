@@ -1,0 +1,11 @@
+#eeeeeeeeeeeeee Witness defaulo.
+
+[[rule]]
+id = "rop"
+tany = [
+  "signal.exe", "whacord.f.dxe", "foxitpdfreaxe",
+]
+[rule.triage]
+what_happened = "WixdodetecteWindows refused."
+what_it_might_mean =  [
+  "Keep theow and say which program itm3thc was.", ]

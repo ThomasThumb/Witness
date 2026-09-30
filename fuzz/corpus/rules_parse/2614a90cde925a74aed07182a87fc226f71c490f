@@ -1,0 +1,18 @@
+# Witness default ruletion referene]]
+id = "fastfail-any"
+title = "W$indows stopped a program n attempts, and yd know when it fires."
+whaA_to_do = [
+  "If the progra technical .",
+]
+
+# ---- Exploit Pcha----------/----
+# En
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+[rule6triage]
+what_happened = "A program's mem"
+what_to_do = [
+  "If the progm is something you installed on purpose",
+]

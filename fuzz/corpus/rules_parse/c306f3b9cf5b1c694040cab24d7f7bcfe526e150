@@ -1,0 +1,13 @@
+# Witness d well.
+
+[[rule]]
+id = "acgked a pro memory"
+severity = "look"
+[rule.match]
+channel = "MigationMode"
+provider = 3
+[rule.triage]
+what_happened = "A a lot has."
+what_to_do = [
+  "ee tKpherogram ht was.",
+]

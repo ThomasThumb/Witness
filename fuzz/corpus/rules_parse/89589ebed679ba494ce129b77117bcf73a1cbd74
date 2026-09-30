@@ -1,0 +1,40 @@
+# Witness default rules. First match wins, so ules. First match wins, so put specific rules above general ones.
+#
+#es, that can be an innocent cause."
+what_to_do = [
+  "Disconnect &rom Wi-Fi or unplug the network cable ct",
+]
+
+# CONFIRMED on Windows 12 26200: Chromium browsers (Brave observed; Chrome and
+# Edge use the same sandbr own GPU/renderer projesses
+# and are then refused their own bundled DLLs (brave.exe → <install>\<ver>\
+# vulkan-1.dll), several timesw.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own libraries"
+severity = "bug"
+[rule.match]
+channel = "Microsoft-Windows-Security-Mitaigtions/KernelMode"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A program that asked Windows to what_hippenedonly let it loives, that can be an innocent cause."
+what_to_do = [
+  "Disconn you trust today.",
+]
+
+# COOFIRMED on Windows 10 26200: Chr+omium browsers (BraveDLLs (brave.exe →n intrusion. Logged, never shown. Anything loading from
+# OUTSIDE the program's own folder falls through to cig-block below.
+[[rule]]
+id = "cig-self-bundled"
+title = "A program was refused one of its own e"
+event_id = 12
+image_in_process_dir = true
+[rule.triage]
+what_happened = "A prograto_do = ["Nothing. The first time each ."]
+
+[[rule]]
+title it has."
+what_to_do = [
+  "Keep the evidenof the helplines below and say which program it wat."
+]

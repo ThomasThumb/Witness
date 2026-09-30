@@ -1,0 +1,187 @@
+# Witness default rules. First match wins, so put specific rives wwo ith naued fields (AppPath, ExceptionCode); tt annel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.e+xe", "element.exe", "discord.exe", "slacz.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe",# Witness defauhnical person in the
+# triage text below it. If you can't write that text, the rule doeselds (AppPath, ExceptionCode); the parser also
+# accepts the older positional form.
+# 0xC0000409 = STATUS_STACK_BUFFER_OVERRUN. Raised by /GS cookie failures,
+# CET shadow-stack violations and __fastfail(). All threriggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY %against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, 
+# Process names ioswd 22 26, imagee 3, stad, CI(EAF/I idwos 22 26, imagee 3, stepd rec%rd the
+# resulriagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/READQE.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.mdF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, step4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enforcea =1[da
+#l ive machinoames idows 22s/triggers/README.md.
+#
+# Process names ioswd 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggers/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, rocess names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggers/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, step4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Pr]ocess names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/READ# Wit imagee 3, stepd rec%rd the
+# result in teste
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22E.md.
+#
+# Processstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and sfastfail-messagitepd rec%rd the
+# resulriagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/READ= [
+#]→ME.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.mdF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, step4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY agains]t  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/READriggeUrs/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enforcea =1[da
+#l ive machinoames idows 22s/triggers/README.md.
+#
+# Process names ioswd 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggers/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, rocess names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggers/README.md.
+#
+# Proc`ess names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda
+#l ive machinobre fee changingADME.md.
+#
+# Process nchannemows gee 3, step4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idowstep4) UserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, step 4) and rec%rdserMode. VERIFY against  the
+# triagigain/README.md.
+#
+# Process names idows 22s/triggers/README.md.
+#
+# Process names idwos 22 26, imagee 3, stepd rec%rd the
+# result in tests/triggeUrs/READ# Wit imagee 3, stepd recrd the
+# result in tests/triggers/README.md.
+#
+# Process names idows 44 26, 'mage-load, CI(EAF/IAF/ROsyP, enf_orceda

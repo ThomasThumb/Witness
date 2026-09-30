@@ -1,0 +1,23 @@
+# Wd damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Applicat~ion Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "exs= ''''ܻ+rewoder.exe",
+]
+[rule.tre.match]
+cha = 14
+[rule.triage]
+what_happened = "Windows' Export ons al progr."
+what_it_might_mean = "This is a cachine byworth a macuntil it has."
+what_to_do = [
+  "Keep the etroy evidence in=memory.",
+  "Contact o",
+]

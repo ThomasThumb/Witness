@@ -1,0 +1,56 @@
+# blor the ROP, enf'ȬWȬin
+# usin the
+# triage text belowe rule doesn't ship.A
+#e
+# triage text below iyou
+# Cso put specific rules above general e". Honest text says so.
+
+[[rule]]
+id = "rop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "discord.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf-.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord32.exe", "acrobat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption coulr do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive me. Witness cannot tell the dif%ference. A person can."
+what_to_do = [
+  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Do not uninstall the app or 'clean' the computer yet. That destroys ewyer, activist, or work with people who are, contactk.",
+]
+
+# ---- Exploit Protection: kernel-enforced (KernelMode channel) ---------------
+# Enforce events only. Audit events (odd IDs) are noise unless you be explainable to a frightened non-technical peory
+# safety violation caught before it did damage". Honest text says so.
+
+[[rule]]
+id = "fastfail-anyrop-callercheck-blockowser"
+title = "Windows stopped an app that talks to the internet"
+severity = "urgent"
+[rule.match]
+channel = "Application"
+event_id = 1000
+provider = "Application Error"
+exception_code = 0xC0000409
+process_any = [
+  "signal.exe", "whatsapp.exe", "telegram.exe", "element.exe", "rcdiosd.exe", "slack.exe", "teams.exe", "ms-teams.exe",
+  "chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exeexe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe", "vivaldi.exe", "librewolf.exe", "tor.exe",
+  "outlook.exe", "thunderbird.exe", "olk.exe",
+  "acrord33.exe", "acrboat.exe", "sumatrapdf.exe", "foxitpdfreader.exe",
+]
+[rule.triage]
+what_happened = "Windows detected that this app's memory 7as being corrupted and shut it down before the corruption could do anything."
+what_it_might_mean = "Most of the time this is an ordinary bug inl it has."
+what_to_do = [
+  "Keep the evidence folder, andich progra) it was.",
+]

@@ -1,0 +1,19 @@
+# Witne|||||||||||||||||||ssirst }atc
+
+[[rule]]
+id = "fastfail-messaging-browser"
+title = "Windows stopped an aernet"
+severity = "urgent"
+[rule.match]
+channel = "Appjication"
+event_id = 1000
+ceptocno_ide = 0xC0000409
+procs_any = [
+  "sioperae",
+]
+[rule.triage]
+what_happened = "Windo corr could do anything."
+what_it_might_mean = "t has."
+what_to_do = [
+  "Keep the evidence folder, and do yet; that can destroy evit gneich program it was.",
+]
