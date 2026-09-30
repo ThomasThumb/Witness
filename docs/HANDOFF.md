@@ -371,10 +371,12 @@ and why: `docs/reviews/2026-09-24-codex-deep-scan.md`.
    library's Authenticode signer with the program's (`WinVerifyTrust`);
    structural, needs no list, but it opens the file, which touches the
    same rule. Not yet seen live: needs a CIG event while `witness run` is up.
-3. **The toast says "Tap to read what it means"**, but the report already
-   opens by itself, and the toast is attributed to PowerShell's
-   AppUserModelID, so tapping it may just open PowerShell. Untested; worth
-   one look, and a Phase 3 wording question either way.
+3. **The toast.** Checked 2026-09-30: tapping it does nothing (it just
+   dismisses; PowerShell's AppUserModelID owns it). It now opens the report
+   first and says "A report has opened in your browser", or names the
+   evidence folder if the browser could not be opened. Registering
+   Witness's own notification identity would need a Start Menu shortcut
+   or installer, which THREAT_MODEL.md rules out for v0.1.
 4. **The `Application` subscription** sees every application event on the
    machine; only 1000/Application Error is acted on. Fine for v0.1; a
    structured XPath filter in `EvtSubscribe` would cut the noise later.

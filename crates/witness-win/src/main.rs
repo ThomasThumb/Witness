@@ -192,12 +192,19 @@ impl App {
             return Ok(Some(dir));
         }
         self.last_notified.insert(key, now);
+        // Open the report first, then say what happened. The toast borrows
+        // PowerShell's notification identity, so tapping it does nothing
+        // (checked on Windows 11); it must never ask the person to tap.
         let title = if self.test { format!("TEST: {}", rule.title) } else { rule.title.clone() };
-        if let Err(e) = notify::toast(&title, "Witness noticed something. Tap to read what it means.") {
+        let body = match notify::open(&dir.join("report.html")) {
+            Ok(()) => "Witness noticed something. A report has opened in your browser.".to_string(),
+            Err(e) => {
+                log(&format!("open report failed (report still written): {e}"));
+                format!("Witness noticed something. The report is saved under {}", paths::SHOWN_BASE)
+            }
+        };
+        if let Err(e) = notify::toast(&title, &body) {
             log(&format!("toast failed (report still written): {e}"));
-        }
-        if let Err(e) = notify::open(&dir.join("report.html")) {
-            log(&format!("open report failed (report still written): {e}"));
         }
         Ok(Some(dir))
     }

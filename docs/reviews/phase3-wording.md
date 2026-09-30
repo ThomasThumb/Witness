@@ -37,12 +37,12 @@ asking you.
 ## 2. What the person sees
 
 1. A Windows notification. Its title is the rule's title (section 5); its
-   text is always *"Witness noticed something. Tap to read what it means."*
+   text is *"Witness noticed something. A report has opened in your browser."* (or, if the browser could not be opened, where the report is saved). Tapping the notification does nothing; it must never ask for a tap.
 2. A report opens in their web browser by itself. It is a file on their
    own computer, with no links, scripts or images.
 3. An evidence folder is written; the report says where.
 
-Rules marked `bug` show nothing; the event is only written to a log.
+Rules marked `bug` show nothing. The first time a program is refused a given library, signed evidence is kept quietly under the evidence folder for a helper to find; repeats are only noted in the log.
 
 The report, top to bottom:
 
@@ -89,8 +89,8 @@ never as links):
   Anything missing: a country, a secure channel such as a Signal number?
 - Addresses are text to type, never links, so a frightened person cannot
   be sent to a look-alike site. Sensible, or a barrier?
-- The notification says "Tap to read what it means", but the report has
-  already opened by itself. Better wording?
+- The notification wording: does "A report has opened in your browser"
+  send someone to the right place, or is it missed under other windows?
 - "What Witness is not": honest without being alarming?
 - The fingerprint check assumes the person wrote their fingerprint on
   paper when Witness was installed. Realistic?
