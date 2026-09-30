@@ -129,6 +129,7 @@ seed.dpapi        32-byte seed, DPAPI-wrapped, written via tmp+rename
 rules.toml        optional override
 contacts.toml     optional override
 witness.log       append-only plain text, epoch seconds + line
+alive             empty; its timestamp is the watcher's heartbeat (every 10 min and per event)
 evidence\
   20260922-040000-fastfail-messaging-browser\
     event.json  event.raw.xml  report.html  manifest.json  manifest.sig  pubkey.bin

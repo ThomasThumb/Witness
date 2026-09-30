@@ -237,13 +237,25 @@ fn run() -> Result<(), String> {
         }
     }
     let mut dropped_seen = 0;
-    for xml in rx {
+    paths::touch_alive();
+    loop {
+        // Wake at least every HEARTBEAT to touch `alive`, so `check` can
+        // tell a quiet machine from a dead watcher.
+        let xml = match rx.recv_timeout(paths::HEARTBEAT) {
+            Ok(xml) => xml,
+            Err(mpsc::RecvTimeoutError::Timeout) => {
+                paths::touch_alive();
+                continue;
+            }
+            Err(mpsc::RecvTimeoutError::Disconnected) => break,
+        };
         eventlog::dequeued(xml.len());
         match app.handle(&xml) {
             Ok(Some(dir)) => log(&format!("bundle written: {}", paths::shown(&dir))),
             Ok(None) => {}
             Err(e) => log(&e), // this event is lost; the watcher keeps running (DESIGN.md)
         }
+        paths::touch_alive();
         let dropped = eventlog::dropped();
         if dropped != dropped_seen {
             log(&format!(
@@ -280,6 +292,14 @@ fn check() -> Result<(), String> {
         }
     }
     println!("self:     {}", harden::status());
+    match paths::alive_age_secs() {
+        None => println!("watcher:  has never run on this machine. `witness install` prints how to start it at logon."),
+        Some(s) if s <= 2 * paths::HEARTBEAT.as_secs() => println!("watcher:  alive ({} min ago)", s / 60),
+        Some(s) => println!(
+            "watcher:  NOT RUNNING. Last alive {} ago; nothing has been watched since. `witness install` prints how to start it.",
+            if s < 86_400 { format!("{} h {} min", s / 3600, (s % 3600) / 60) } else { format!("{} days", s / 86_400) }
+        ),
+    }
     if let Err(e) = protect::report(&app.rules) {
         println!("apps:     could not list running programs ({e})");
     }
