@@ -233,6 +233,7 @@ fn shipped_rules_contain_no_false_reassurance() {
         "threat is gone",
         "threat has been removed",
         "no further action needed",
+        "no action needed",
         "before the corruption could do anything",
         "before it could do anything",
         "before it could do damage",

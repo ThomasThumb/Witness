@@ -167,7 +167,7 @@ image_in_process_dir = true
 [rule.triage]
 what_happened = "A program that asked Windows to only let it load Microsoft-signed code then tried to load one of its own, non-Microsoft libraries, and was refused."
 what_it_might_mean = "The program's own settings tripped its own protection. Browsers do this routinely and carry on working."
-what_to_do = ["No action needed for this specific event; it is the program's own configuration. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
+what_to_do = ["This kind of refusal is usually the program's own settings; you do not need to do anything about this particular event. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log."]
 
 [[rule]]
 id = "cig-block"
@@ -224,7 +224,7 @@ what_to_do = [
 
 [[rule]]
 id = "rop-stackpivot-block"
-title = "Windows blocked a suspicious program behaviour"
+title = "Windows blocked a program from switching its stack"
 severity = "look"
 [rule.match]
 channel = "Microsoft-Windows-Security-Mitigations/UserMode"
@@ -240,7 +240,7 @@ what_to_do = [
 
 [[rule]]
 id = "rop-callercheck-block"
-title = "Windows blocked a suspicious program behaviour"
+title = "Windows blocked a program from calling a function the wrong way"
 severity = "look"
 [rule.match]
 channel = "Microsoft-Windows-Security-Mitigations/UserMode"
@@ -255,7 +255,7 @@ what_to_do = [
 
 [[rule]]
 id = "rop-simexec-block"
-title = "Windows blocked a suspicious program behaviour"
+title = "Windows blocked a program from chaining code fragments"
 severity = "look"
 [rule.match]
 channel = "Microsoft-Windows-Security-Mitigations/UserMode"

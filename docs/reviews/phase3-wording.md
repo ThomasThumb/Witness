@@ -312,7 +312,7 @@ the rule rests on Microsoft's documentation alone.
 > *What it might mean:* The program's own settings tripped its own protection. Browsers do this routinely and carry on working.
 >
 > *What to do:*
-> 1. No action needed for this specific event; it is the program's own configuration. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log.
+> 1. This kind of refusal is usually the program's own settings; you do not need to do anything about this particular event. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log.
 
 **Questions for you:**
 
@@ -408,7 +408,7 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a suspicious program behaviour**
+> **Windows blocked a program from switching its stack**
 >
 > *What happened:* Windows' exploit protection detected a program's control flow behaving in a way that has no ordinary explanation (a 'stack pivot'), and stopped it.
 >
@@ -436,7 +436,7 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a suspicious program behaviour**
+> **Windows blocked a program from calling a function the wrong way**
 >
 > *What happened:* Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it.
 >
@@ -462,7 +462,7 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a suspicious program behaviour**
+> **Windows blocked a program from chaining code fragments**
 >
 > *What happened:* Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it.
 >
@@ -566,17 +566,17 @@ for statements that could:
 | `rules/default.toml` (`fastfail-messaging-browser`, what_happened) | "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything." | "Windows detected a memory safety check failure in this app and shut it down. The check caught this specific problem at this moment." | False reassurance | "before the corruption could do anything" implies nothing happened. A fast-fail check only tells us it tripped at that point, not that nothing happened earlier. |
 | `rules/default.toml` (`fastfail-messaging-browser`, what_it_might_mean) | "Witness cannot tell the difference. A person can." | "Witness cannot tell what happened before the check fired, only that it did. A person can help you understand what it means." | False reassurance (minor) | Previous wording was acceptable but the new version is more explicit about what Witness knows. |
 | `rules/default.toml` (`fastfail-any`, what_happened) | "A program's memory was being corrupted and Windows shut it down before the corruption could do anything." | "Windows detected a memory safety check failure in a program and shut it down. The check caught this specific problem at this moment." | False reassurance | Same issue as `fastfail-messaging-browser`. |
-| `rules/default.toml` (`rop-stackpivot-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | The title asserted "attack pattern" while the body said it isn't proof. Plain wording that keeps 'blocked' separate from 'attack confirmed'. |
+| `rules/default.toml` (`rop-stackpivot-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a program from switching its stack" | Unnecessary alarm | The title asserted "attack pattern" while the body said it isn't proof. Plain wording describing what was actually blocked. |
 | `rules/default.toml` (`rop-stackpivot-block`, what_it_might_mean) | "It is not proof of an attack, but it is the closest thing on this list." | "It is not proof of an attack, but it is among the more suspicious patterns on this list." | Unnecessary alarm | "the closest thing" implies near-certainty. "among the more suspicious" is appropriately calibrated. |
-| `rules/default.toml` (`rop-callercheck-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | Same as `rop-stackpivot-block`. |
+| `rules/default.toml` (`rop-callercheck-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a program from calling a function the wrong way" | Unnecessary alarm | Plain wording describing what was actually blocked. |
 | `rules/default.toml` (`rop-callercheck-block`, what_it_might_mean) | "This is a hallmark of return-oriented programming, the technique exploits use..." | "This pattern is often associated with exploit techniques..." | Unnecessary alarm | "hallmark" implies certainty. "often associated with" is more calibrated. |
-| `rules/default.toml` (`rop-simexec-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | Same as other ROP rules. |
+| `rules/default.toml` (`rop-simexec-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a program from chaining code fragments" | Unnecessary alarm | Plain wording describing what was actually blocked. |
 | `rules/default.toml` (`rop-simexec-block`, what_it_might_mean) | "Rarely innocent." | "This pattern has few innocent causes." | Unnecessary alarm | "Rarely innocent" implies near-certain guilt. "few innocent causes" is more measured and consistent with severity "look". |
 | `rules/default.toml` (`eaf-block`, title) | "Windows blocked a program from reading its own address book" | "Windows blocked a program from scanning system functions" | Clarity | "address book" is a confusing metaphor. "scanning system functions" is accurate and plain. |
 | `rules/default.toml` (`eaf-block`, what_it_might_mean) | "This is a classic step in exploit code..." | "This is a technique sometimes used by exploit code..." | Unnecessary alarm | "classic step" implies certainty. "sometimes used" is appropriately qualified. |
 | `rules/default.toml` (`iaf-block`, title) | "Windows blocked a program from reading its own address book" | "Windows blocked a program from scanning imported functions" | Clarity | Same issue as `eaf-block`. |
 | `rules/default.toml` (`iaf-block`, what_it_might_mean) | "a classic exploit step" | "a technique sometimes used by exploit code" | Unnecessary alarm | Same calibration as `eaf-block`. |
-| `rules/default.toml` (`cig-self-bundled`, what_to_do) | "Nothing. The first time..." | "No action needed for this specific event; it is the program's own configuration. The first time..." | False reassurance (minor) | "Nothing." alone could read as an all-clear. The replacement clarifies scope while being honest. |
+| `rules/default.toml` (`cig-self-bundled`, what_to_do) | "Nothing. The first time..." | "This kind of refusal is usually the program's own settings; you do not need to do anything about this particular event. The first time..." | False reassurance | "Nothing." alone could read as an all-clear. The replacement explains why while avoiding "no action needed". |
 | `README.md` (user-facing section) | "**The protection worked.**" | Removed; replaced with "Windows blocked this specific action." and explicit limitation statement | False reassurance | "The protection worked" implies complete safety. Witness can only confirm Windows blocked this specific action, not that no harm occurred. |
 | `docs/reviews/phase3-wording.md` (rule 1 example) | Same as rules/default.toml | Updated to match | False reassurance | Review packet must reflect actual shipped text. |
 | `rules/default.toml` (comment, line 25-26) | "All three mean 'memory safety violation caught before it did damage'. Honest text says so." | "All three mean 'a memory safety check fired at this moment'. The check caught what it caught; Witness cannot say what happened before or whether harm was already done." | False reassurance | The comment guided future edits toward false reassurance. |
@@ -604,7 +604,7 @@ Two tests guard against regression:
    - "you are safe", "your device is secure", "your computer is secure"
    - "the protection worked"
    - "threat is gone", "threat has been removed"
-   - "no further action needed"
+   - "no further action needed", "no action needed"
    - "before the corruption could do anything", "before it could do anything"
    - "before it could do damage", "before the corruption could do damage"
    - "before it did damage", "before it could cause damage"
