@@ -116,9 +116,9 @@ the rule rests on Microsoft's documentation alone.
 
 > **Windows stopped an app that talks to the internet**
 >
-> *What happened:* Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything.
+> *What happened:* Windows detected a memory safety check failure in this app and shut it down. The check caught this specific problem at this moment.
 >
-> *What it might mean:* Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked break-in attempt looks like from the outside. Witness cannot tell the difference. A person can.
+> *What it might mean:* Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked break-in attempt looks like from the outside. Witness cannot tell what happened before the check fired, only that it did. A person can help you understand what it means.
 >
 > *What to do:*
 > 1. Take a breath. Windows blocked this specific action. Witness cannot tell whether anything else happened before or after.
@@ -148,7 +148,7 @@ the rule rests on Microsoft's documentation alone.
 
 > **Windows stopped a program to protect its memory**
 >
-> *What happened:* A program's memory was being corrupted and Windows shut it down before the corruption could do anything.
+> *What happened:* Windows detected a memory safety check failure in a program and shut it down. The check caught this specific problem at this moment.
 >
 > *What it might mean:* Almost always an ordinary bug in that program. It is on this list because the same protection also stops break-in attempts, and you should know when it fires.
 >
@@ -312,7 +312,7 @@ the rule rests on Microsoft's documentation alone.
 > *What it might mean:* The program's own settings tripped its own protection. Browsers do this routinely and carry on working.
 >
 > *What to do:*
-> 1. Nothing. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log.
+> 1. No action needed for this specific event; it is the program's own configuration. The first time each program is refused each library, the evidence is kept under the quiet folder in case a technical helper wants to see it; repeats are only noted in witness.log.
 
 **Questions for you:**
 
@@ -356,11 +356,11 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a program from reading its own address book**
+> **Windows blocked a program from scanning system functions**
 >
 > *What happened:* Windows' Export Address Filtering caught a program reading the table of system functions in a way normal programs do not, and stopped it.
 >
-> *What it might mean:* This is a classic step in exploit code that has just gained a foothold and is looking for what to call next. A few security products and old programs trip it innocently; most software never does. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
+> *What it might mean:* This is a technique sometimes used by exploit code to find what to call next. A few security products and old programs trip it innocently; most software never does. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
 > 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
@@ -368,7 +368,6 @@ the rule rests on Microsoft's documentation alone.
 
 **Questions for you:**
 
-- The title ("reading its own address book") is a metaphor. Does it help or confuse? It is shared with the rule below.
 - These five unconfirmed rules are shown as "worth a look", not **urgent**, and say so, until one is seen for real. Right call, or should an unconfirmed check still be urgent?
 
 **Your verdict:** approve / approve with changes / rewrite / remove
@@ -383,11 +382,11 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a program from reading its own address book**
+> **Windows blocked a program from scanning imported functions**
 >
 > *What happened:* Windows' Import Address Filtering caught a program reading the table of functions it imports in a way normal programs do not, and stopped it.
 >
-> *What it might mean:* Like Export Address Filtering above: a classic exploit step with few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
+> *What it might mean:* Like Export Address Filtering above: a technique sometimes used by exploit code, with few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
 > 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
@@ -409,11 +408,11 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a return-oriented-programming attack pattern**
+> **Windows blocked a suspicious program behaviour**
 >
-> *What happened:* Windows' exploit protection detected a program's control flow being hijacked in a way that has no ordinary explanation, and stopped it.
+> *What happened:* Windows' exploit protection detected a program's control flow behaving in a way that has no ordinary explanation (a 'stack pivot'), and stopped it.
 >
-> *What it might mean:* This specific check (stack pivot detection) has very few innocent causes. It is not proof of an attack, but it is the closest thing on this list. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
+> *What it might mean:* This specific check has very few innocent causes. It is not proof of an attack, but it is among the more suspicious patterns on this list. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
 > 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
@@ -422,7 +421,7 @@ the rule rests on Microsoft's documentation alone.
 
 **Questions for you:**
 
-- "It is not proof of an attack, but it is the closest thing on this list": right tone, or too alarming?
+- "It is not proof of an attack, but it is among the more suspicious patterns on this list": right tone?
 - The third step ("say so when you call; it changes how they help you"): true for your helpline?
 
 **Your verdict:** approve / approve with changes / rewrite / remove
@@ -437,11 +436,11 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a return-oriented-programming attack pattern**
+> **Windows blocked a suspicious program behaviour**
 >
 > *What happened:* Windows' exploit protection saw a sensitive system function being called in a way that skips the normal path (a 'return' instead of a 'call'), and stopped it.
 >
-> *What it might mean:* This is a hallmark of return-oriented programming, the technique exploits use to run code without being allowed to write any. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
+> *What it might mean:* This pattern is often associated with exploit techniques. Some just-in-time compilers trigger it innocently, which is why it is only enabled for programs you opted in. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
 > 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
@@ -463,11 +462,11 @@ the rule rests on Microsoft's documentation alone.
 
 **What the person sees:**
 
-> **Windows blocked a return-oriented-programming attack pattern**
+> **Windows blocked a suspicious program behaviour**
 >
 > *What happened:* Windows' exploit protection simulated where a program was about to go next, found it was chaining together fragments of code in a way real programs do not, and stopped it.
 >
-> *What it might mean:* Same family as the two rules above. Rarely innocent. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
+> *What it might mean:* Same family as the two rules above. This pattern has few innocent causes. This check has not yet been seen firing on a real machine by the Witness project, so it is shown as worth a look rather than urgent until it has.
 >
 > *What to do:*
 > 1. Keep the evidence folder, and do not turn the computer off yet; that can destroy evidence in memory.
@@ -475,7 +474,7 @@ the rule rests on Microsoft's documentation alone.
 
 **Questions for you:**
 
-- "Rarely innocent": fair, given it only runs for opted-in programs?
+- "This pattern has few innocent causes": fair, given it only runs for opted-in programs?
 
 **Your verdict:** approve / approve with changes / rewrite / remove
 
@@ -564,28 +563,55 @@ for statements that could:
 | Location | Original statement | Replacement | Risk type | Reasoning |
 |----------|-------------------|-------------|-----------|-----------|
 | `rules/default.toml` (`fastfail-messaging-browser`, step 1) | "Take a breath. Nothing has been stolen by this event; the protection worked." | "Take a breath. Windows blocked this specific action. Witness cannot tell whether anything else happened before or after." | False reassurance | The original claimed "nothing has been stolen", which Witness cannot verify. Windows blocking one action says nothing about whether data was accessed before the block, whether other attacks succeeded, or whether the device is otherwise compromised. |
+| `rules/default.toml` (`fastfail-messaging-browser`, what_happened) | "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything." | "Windows detected a memory safety check failure in this app and shut it down. The check caught this specific problem at this moment." | False reassurance | "before the corruption could do anything" implies nothing happened. A fast-fail check only tells us it tripped at that point, not that nothing happened earlier. |
+| `rules/default.toml` (`fastfail-messaging-browser`, what_it_might_mean) | "Witness cannot tell the difference. A person can." | "Witness cannot tell what happened before the check fired, only that it did. A person can help you understand what it means." | False reassurance (minor) | Previous wording was acceptable but the new version is more explicit about what Witness knows. |
+| `rules/default.toml` (`fastfail-any`, what_happened) | "A program's memory was being corrupted and Windows shut it down before the corruption could do anything." | "Windows detected a memory safety check failure in a program and shut it down. The check caught this specific problem at this moment." | False reassurance | Same issue as `fastfail-messaging-browser`. |
+| `rules/default.toml` (`rop-stackpivot-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | The title asserted "attack pattern" while the body said it isn't proof. Plain wording that keeps 'blocked' separate from 'attack confirmed'. |
+| `rules/default.toml` (`rop-stackpivot-block`, what_it_might_mean) | "It is not proof of an attack, but it is the closest thing on this list." | "It is not proof of an attack, but it is among the more suspicious patterns on this list." | Unnecessary alarm | "the closest thing" implies near-certainty. "among the more suspicious" is appropriately calibrated. |
+| `rules/default.toml` (`rop-callercheck-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | Same as `rop-stackpivot-block`. |
+| `rules/default.toml` (`rop-callercheck-block`, what_it_might_mean) | "This is a hallmark of return-oriented programming, the technique exploits use..." | "This pattern is often associated with exploit techniques..." | Unnecessary alarm | "hallmark" implies certainty. "often associated with" is more calibrated. |
+| `rules/default.toml` (`rop-simexec-block`, title) | "Windows blocked a return-oriented-programming attack pattern" | "Windows blocked a suspicious program behaviour" | Unnecessary alarm | Same as other ROP rules. |
+| `rules/default.toml` (`rop-simexec-block`, what_it_might_mean) | "Rarely innocent." | "This pattern has few innocent causes." | Unnecessary alarm | "Rarely innocent" implies near-certain guilt. "few innocent causes" is more measured and consistent with severity "look". |
+| `rules/default.toml` (`eaf-block`, title) | "Windows blocked a program from reading its own address book" | "Windows blocked a program from scanning system functions" | Clarity | "address book" is a confusing metaphor. "scanning system functions" is accurate and plain. |
+| `rules/default.toml` (`eaf-block`, what_it_might_mean) | "This is a classic step in exploit code..." | "This is a technique sometimes used by exploit code..." | Unnecessary alarm | "classic step" implies certainty. "sometimes used" is appropriately qualified. |
+| `rules/default.toml` (`iaf-block`, title) | "Windows blocked a program from reading its own address book" | "Windows blocked a program from scanning imported functions" | Clarity | Same issue as `eaf-block`. |
+| `rules/default.toml` (`iaf-block`, what_it_might_mean) | "a classic exploit step" | "a technique sometimes used by exploit code" | Unnecessary alarm | Same calibration as `eaf-block`. |
+| `rules/default.toml` (`cig-self-bundled`, what_to_do) | "Nothing. The first time..." | "No action needed for this specific event; it is the program's own configuration. The first time..." | False reassurance (minor) | "Nothing." alone could read as an all-clear. The replacement clarifies scope while being honest. |
 | `README.md` (user-facing section) | "**The protection worked.**" | Removed; replaced with "Windows blocked this specific action." and explicit limitation statement | False reassurance | "The protection worked" implies complete safety. Witness can only confirm Windows blocked this specific action, not that no harm occurred. |
 | `docs/reviews/phase3-wording.md` (rule 1 example) | Same as rules/default.toml | Updated to match | False reassurance | Review packet must reflect actual shipped text. |
+| `rules/default.toml` (comment, line 25-26) | "All three mean 'memory safety violation caught before it did damage'. Honest text says so." | "All three mean 'a memory safety check fired at this moment'. The check caught what it caught; Witness cannot say what happened before or whether harm was already done." | False reassurance | The comment guided future edits toward false reassurance. |
 
 ### Statements reviewed and retained
 
 The following existing statements were reviewed and found appropriately calibrated:
 
-- "Witness cannot tell the difference. A person can." — Honest about limitations.
 - "This pattern is sometimes seen when someone tries to break into a computer. It does not mean that happened to you." — Appropriately qualified.
 - "If your computer is already compromised, this report could be wrong." — Clear limitation statement.
 - "Witness cannot prevent attacks and cannot tell you for certain whether one happened." — Accurate disclaimer.
 - "Once is usually a bug. Repeats are what a break-in attempt looks like from the outside." — Uses "looks like", not definitive claims.
 - All "worth a look" vs "urgent" classifications — These describe pattern severity, not attack certainty.
 
+### Statements moved from "reviewed and retained" to "findings and changes"
+
+- "Witness cannot tell the difference. A person can." — Updated to "A person can help you understand what it means" for clarity about what a person provides.
+
 ### Test coverage added
 
-A new test (`shipped_rules_contain_no_false_reassurance`) fails if alert
-text contains phrases like "nothing has been stolen", "you are safe",
-"your device is secure", or "the protection worked". This guards against
-regression.
+Two tests guard against regression:
+
+1. `shipped_rules_contain_no_false_reassurance` — fails if any rule text contains:
+   - "nothing has been stolen", "nothing was stolen"
+   - "you are safe", "your device is secure", "your computer is secure"
+   - "the protection worked"
+   - "threat is gone", "threat has been removed"
+   - "no further action needed"
+   - "before the corruption could do anything", "before it could do anything"
+   - "before it could do damage", "before the corruption could do damage"
+   - "before it did damage", "before it could cause damage"
+
+2. `report_templates_contain_no_false_reassurance` — checks the HTML report templates (normal, repeat, and test banners) for the same forbidden phrases.
 
 ### Status
 
-- [x] Internal audit complete
+- [x] Internal audit complete (October 2026)
 - [ ] External review by digital security support practitioners (still required per BUILD_PLAN.md Phase 3)
