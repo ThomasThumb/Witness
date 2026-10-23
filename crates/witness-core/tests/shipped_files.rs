@@ -219,3 +219,36 @@ fn shipped_contacts_parse_and_are_dated() {
         assert!(ok, "{}: checked must be YYYY-MM, got {:?}", k.name, k.checked);
     }
 }
+
+#[test]
+fn shipped_rules_contain_no_false_reassurance() {
+    let set = RuleSet::parse(RULES).expect("rules parse");
+    let forbidden = [
+        "nothing has been stolen",
+        "nothing was stolen",
+        "you are safe",
+        "your device is secure",
+        "your computer is secure",
+        "the protection worked",
+        "threat is gone",
+        "threat has been removed",
+        "no further action needed",
+        "no action needed",
+    ];
+    for r in &set.rules {
+        let all_text = format!(
+            "{} {} {} {}",
+            r.title,
+            r.triage.what_happened,
+            r.triage.what_it_might_mean,
+            r.triage.what_to_do.join(" ")
+        ).to_lowercase();
+        for phrase in &forbidden {
+            assert!(
+                !all_text.contains(phrase),
+                "rule {} contains false reassurance phrase: {:?}",
+                r.id, phrase
+            );
+        }
+    }
+}

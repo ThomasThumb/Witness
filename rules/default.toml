@@ -43,7 +43,7 @@ process_any = [
 what_happened = "Windows detected that this app's memory was being corrupted and shut it down before the corruption could do anything."
 what_it_might_mean = "Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked break-in attempt looks like from the outside. Witness cannot tell the difference. A person can."
 what_to_do = [
-  "Take a breath. Nothing has been stolen by this event; the protection worked.",
+  "Take a breath. Windows blocked this specific action. Witness cannot tell whether anything else happened before or after.",
   "Do not uninstall the app or 'clean' the computer yet. That destroys evidence.",
   "Note what you were doing: had you just received a message, file, link or call from someone you don't know?",
   "If it happens again with the same app within a few days, treat it as serious.",

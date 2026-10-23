@@ -121,7 +121,7 @@ the rule rests on Microsoft's documentation alone.
 > *What it might mean:* Most of the time this is an ordinary bug in the app. But apps that receive messages, web pages or documents from strangers are exactly the ones attackers target, and this is what a blocked break-in attempt looks like from the outside. Witness cannot tell the difference. A person can.
 >
 > *What to do:*
-> 1. Take a breath. Nothing has been stolen by this event; the protection worked.
+> 1. Take a breath. Windows blocked this specific action. Witness cannot tell whether anything else happened before or after.
 > 2. Do not uninstall the app or 'clean' the computer yet. That destroys evidence.
 > 3. Note what you were doing: had you just received a message, file, link or call from someone you don't know?
 > 4. If it happens again with the same app within a few days, treat it as serious.
@@ -533,3 +533,59 @@ credit you choose (BUILD_PLAN.md phases 3 and 5).
    asks "so am I hacked?", the text is not done.
 5. Selftest only shows a "worth a look" report. Repeat with an "urgent"
    rule by reading them rule 7 (`remote-image-block`) from section 5.
+
+## Appendix: internal wording audit (October 2026)
+
+This section records an internal audit of all user-facing alert language
+against the detection limitations documented in THREAT_MODEL.md. External
+review by people who support at-risk users remains outstanding.
+
+### Audit methodology
+
+Searched all user-facing text (rules, reports, notifications, documentation)
+for statements that could:
+1. **Give false reassurance**: claiming nothing was stolen, the device is safe,
+   no further action needed, or the threat is gone.
+2. **Create unnecessary alarm**: implying the device is definitely hacked,
+   data was definitely taken, or using urgent/scary phrasing beyond what
+   the evidence supports.
+
+### Detection limitations (from THREAT_MODEL.md)
+
+- Witness cannot prevent attacks; Windows does that.
+- Witness cannot detect spyware that got past every mitigation.
+- Silence from Witness is not safety.
+- Witness cannot tell you for certain whether an attack happened.
+- If the computer is already compromised, reports may be wrong.
+- Witness never says "you have been hacked".
+
+### Findings and changes
+
+| Location | Original statement | Replacement | Risk type | Reasoning |
+|----------|-------------------|-------------|-----------|-----------|
+| `rules/default.toml` (`fastfail-messaging-browser`, step 1) | "Take a breath. Nothing has been stolen by this event; the protection worked." | "Take a breath. Windows blocked this specific action. Witness cannot tell whether anything else happened before or after." | False reassurance | The original claimed "nothing has been stolen", which Witness cannot verify. Windows blocking one action says nothing about whether data was accessed before the block, whether other attacks succeeded, or whether the device is otherwise compromised. |
+| `README.md` (user-facing section) | "**The protection worked.**" | Removed; replaced with "Windows blocked this specific action." and explicit limitation statement | False reassurance | "The protection worked" implies complete safety. Witness can only confirm Windows blocked this specific action, not that no harm occurred. |
+| `docs/reviews/phase3-wording.md` (rule 1 example) | Same as rules/default.toml | Updated to match | False reassurance | Review packet must reflect actual shipped text. |
+
+### Statements reviewed and retained
+
+The following existing statements were reviewed and found appropriately calibrated:
+
+- "Witness cannot tell the difference. A person can." — Honest about limitations.
+- "This pattern is sometimes seen when someone tries to break into a computer. It does not mean that happened to you." — Appropriately qualified.
+- "If your computer is already compromised, this report could be wrong." — Clear limitation statement.
+- "Witness cannot prevent attacks and cannot tell you for certain whether one happened." — Accurate disclaimer.
+- "Once is usually a bug. Repeats are what a break-in attempt looks like from the outside." — Uses "looks like", not definitive claims.
+- All "worth a look" vs "urgent" classifications — These describe pattern severity, not attack certainty.
+
+### Test coverage added
+
+A new test (`shipped_rules_contain_no_false_reassurance`) fails if alert
+text contains phrases like "nothing has been stolen", "you are safe",
+"your device is secure", or "the protection worked". This guards against
+regression.
+
+### Status
+
+- [x] Internal audit complete
+- [ ] External review by digital security support practitioners (still required per BUILD_PLAN.md Phase 3)

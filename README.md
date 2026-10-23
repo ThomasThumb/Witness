@@ -16,11 +16,12 @@ Read [BUILD_PLAN.md](BUILD_PLAN.md) before trusting anything here.*
 
 ## If Witness just showed you a message
 
-Take a breath. Witness noticed that Windows stopped a program from doing
-something dangerous with its memory. **The protection worked.** Most of the
-time this is an ordinary bug in that program. Sometimes it is what a blocked
-break-in attempt looks like from the outside. Witness cannot tell which. A
-person can.
+Take a breath. Witness noticed that Windows blocked a program from doing
+something dangerous with its memory. Windows blocked this specific action.
+Most of the time this is an ordinary bug in that program. Sometimes it is
+what a blocked break-in attempt looks like from the outside. Witness cannot
+tell which, and cannot tell whether anything else happened before or after.
+A person can help you understand what it means.
 
 Open the report Witness showed you. It has three parts: what happened, what
 it might mean, and what to do. Do the steps in order. If the report lists
