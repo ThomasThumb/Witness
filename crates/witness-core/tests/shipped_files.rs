@@ -219,3 +219,99 @@ fn shipped_contacts_parse_and_are_dated() {
         assert!(ok, "{}: checked must be YYYY-MM, got {:?}", k.name, k.checked);
     }
 }
+
+#[test]
+fn shipped_rules_contain_no_false_reassurance() {
+    let set = RuleSet::parse(RULES).expect("rules parse");
+    let forbidden_phrases = [
+        "nothing has been stolen",
+        "nothing was stolen",
+        "you are safe",
+        "your device is secure",
+        "your computer is secure",
+        "the protection worked",
+        "threat is gone",
+        "threat has been removed",
+        "no further action needed",
+        "no action needed",
+        "before the corruption could do anything",
+        "before it could do anything",
+        "before it could do damage",
+        "before the corruption could do damage",
+        "before it did damage",
+        "before it could cause damage",
+    ];
+    for r in &set.rules {
+        let all_text = format!(
+            "{} {} {} {}",
+            r.title,
+            r.triage.what_happened,
+            r.triage.what_it_might_mean,
+            r.triage.what_to_do.join(" ")
+        )
+        .to_lowercase();
+        for phrase in &forbidden_phrases {
+            assert!(!all_text.contains(phrase), "rule {} contains false reassurance phrase: {:?}", r.id, phrase);
+        }
+    }
+}
+
+#[test]
+fn report_templates_contain_no_false_reassurance() {
+    use std::collections::BTreeMap;
+    use witness_core::event::Event;
+    use witness_core::report;
+    use witness_core::rules::{Match, Rule, Triage};
+
+    let ev = Event {
+        time: "2026-01-01T00:00:00Z".into(),
+        channel: "Application".into(),
+        provider: "Test".into(),
+        event_id: 1,
+        record_id: 1,
+        process: Some("test.exe".into()),
+        exception_code: None,
+        data: BTreeMap::new(),
+        raw: String::new(),
+    };
+    let rule = Rule {
+        id: "test".into(),
+        title: "Test".into(),
+        severity: Severity::Urgent,
+        matcher: Match::default(),
+        triage: Triage {
+            what_happened: "test".into(),
+            what_it_might_mean: "test".into(),
+            what_to_do: vec!["test".into()],
+        },
+    };
+    let contacts = vec![report::Contact {
+        name: "Test".into(),
+        for_whom: "test".into(),
+        how: "test.example".into(),
+        checked: "2026-01".into(),
+    }];
+
+    let html_normal = report::render(&ev, &rule, &contacts, "xxxx-xxxx", r"C:\test", false, 1);
+    let html_repeat = report::render(&ev, &rule, &contacts, "xxxx-xxxx", r"C:\test", false, 3);
+    let html_test = report::render(&ev, &rule, &contacts, "xxxx-xxxx", r"C:\test", true, 1);
+
+    let forbidden_phrases = [
+        "nothing has been stolen",
+        "nothing was stolen",
+        "you are safe",
+        "your device is secure",
+        "your computer is secure",
+        "the protection worked",
+        "threat is gone",
+        "before the corruption could do anything",
+        "before it could do damage",
+    ];
+
+    for html in [&html_normal, &html_repeat, &html_test] {
+        let lower = html.to_lowercase();
+        for phrase in &forbidden_phrases {
+            assert!(!lower.contains(phrase), "report template contains false reassurance phrase: {:?}", phrase);
+        }
+    }
+}
