@@ -248,23 +248,20 @@ fn shipped_rules_contain_no_false_reassurance() {
             r.triage.what_happened,
             r.triage.what_it_might_mean,
             r.triage.what_to_do.join(" ")
-        ).to_lowercase();
+        )
+        .to_lowercase();
         for phrase in &forbidden_phrases {
-            assert!(
-                !all_text.contains(phrase),
-                "rule {} contains false reassurance phrase: {:?}",
-                r.id, phrase
-            );
+            assert!(!all_text.contains(phrase), "rule {} contains false reassurance phrase: {:?}", r.id, phrase);
         }
     }
 }
 
 #[test]
 fn report_templates_contain_no_false_reassurance() {
+    use std::collections::BTreeMap;
+    use witness_core::event::Event;
     use witness_core::report;
     use witness_core::rules::{Match, Rule, Triage};
-    use witness_core::event::Event;
-    use std::collections::BTreeMap;
 
     let ev = Event {
         time: "2026-01-01T00:00:00Z".into(),
@@ -314,11 +311,7 @@ fn report_templates_contain_no_false_reassurance() {
     for html in [&html_normal, &html_repeat, &html_test] {
         let lower = html.to_lowercase();
         for phrase in &forbidden_phrases {
-            assert!(
-                !lower.contains(phrase),
-                "report template contains false reassurance phrase: {:?}",
-                phrase
-            );
+            assert!(!lower.contains(phrase), "report template contains false reassurance phrase: {:?}", phrase);
         }
     }
 }
